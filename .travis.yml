@@ -1,29 +1,21 @@
 language: python
-
 python: 
-	- "3.7"
-
+ - "3.7"
 install:
-	- pip install -r requirements.txt
-
+ - pip install -r requirements.txt
 sudo: required
-
 services:
-	- docker
-
+ - docker
 before_install:
-	-cd docker
-	-docker-compose up -d
-	-docker exec -ti decide_web ./manage.py createsuperuser
-	-cd ..
-	-sudo su - postgres
-	-psql -c "create user decide with password 'decide'"
-	-psql -c "create database decide owner decide"
-	-exit
-	-./manage.py migrate
-	-./manage.py runserver
-
+ - cd docker
+ - docker-compose up -d
+ - docker exec -ti decide_web ./manage.py createsuperuser
+ - cd ..
+ - sudo su - postgres
+ - psql -c "create user decide with password 'decide'"
+ - psql -c "create database decide owner decide"
+ - exit
+ - ./manage.py migrate
+ - ./manage.py runserver
 script:
-	-docker exec -ti decide_web ./manage.py test
-
-
+ - docker exec -ti decide_web ./manage.py test
