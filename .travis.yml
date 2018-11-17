@@ -6,11 +6,14 @@ install:
 sudo: required
 services:
  - docker
-before_install:
+script:
+ - sonar-scanner
  - cd docker
  - docker-compose up -d
- - cd ..
-script:
- - cd docker
  - docker exec -ti decide_web ./manage.py test
  - cd ..
+addons:
+  sonarcloud:
+    organization: "pablotabares-github"
+notifications:
+  email: false
