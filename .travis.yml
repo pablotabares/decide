@@ -9,5 +9,8 @@ services:
 before_install:
  - cd docker
  - docker-compose up -d
+ - cd ..
 script:
+ - cd docker
  - docker exec -ti decide_web ./manage.py test
+ - cd ..
