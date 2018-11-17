@@ -9,13 +9,5 @@ services:
 before_install:
  - cd docker
  - docker-compose up -d
- - printf 'root\nroot@decide.es\nroot1234\nroot1234' | docker exec -ti decide_web ./manage.py createsuperuser
- - cd ..
- - sudo su - postgres
- - psql -c "create user decide with password 'decide'"
- - psql -c "create database decide owner decide"
- - exit
- - ./manage.py migrate
- - ./manage.py runserver
 script:
  - docker exec -ti decide_web ./manage.py test
