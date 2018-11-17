@@ -9,7 +9,7 @@ services:
 before_install:
  - cd docker
  - docker-compose up -d
- - docker exec -ti decide_web ./manage.py createsuperuser
+ - printf 'root\nroot@decide.es\nroot1234\nroot1234' | docker exec -ti decide_web ./manage.py createsuperuser
  - cd ..
  - sudo su - postgres
  - psql -c "create user decide with password 'decide'"
