@@ -4,8 +4,7 @@ from rest_framework.authtoken.models import Token
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 
-from .serializers import UserSerializer
-
+from .serializers import UserSerializer, AuthCustomTokenSerializer
 
 class GetUserView(APIView):
     def post(self, request):
