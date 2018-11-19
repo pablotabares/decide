@@ -44,7 +44,7 @@
 	\begin{minipage}{0.4\textwidth}
 		\begin{flushleft} \large
 			\emph{Autores:}\\
-			Álvaro González 			
+			Álvaro González \\		
 			Luca Bonacini\\
             Antonio Millan \\
             Rodrigo Rojas \\
@@ -82,13 +82,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Resumen}
-This is a simple report template with the UCT logo. Feel free to use/modify it to suit your needs. Variables that need to be altered have been commented to make modifications easier. For example if you need to change the university logo, look for the comment \texttt{\% University Logo} in this file and then make appropriate modifications in that line.
+Decide es una herramienta Open Source que se desarrolla con el fin de facilitar el voto online de manera segura, anonima y eficaz. Decide es un software heredado realizado por el equpo de Wadobo \url{https://github.com/wadobo/decide}.
+En un primer momento se realizó un fork de este sistema para que podamos trabajar de forma aislada sin tener que modificar el sistema original.
+El sistema se divide en varios subsistemas para facilitar el escalado y el mantenimiento del software. Dichos subsistemas se comunican entre ellos a través de llamadas REST.  
 
-A Table of Contents and a bibliography have also been implemented. To add entries to your bibliography, simply edit \texttt{biblist.bib} in the root folder and then use the \texttt{\textbackslash cite\{\ldots\}} command in \texttt{main.tex} \cite{bibtex}. The Table of Contents will be updated automatically.
 
-I hope that you find this template both visually appealing and useful. \\
+Nuestro grupo se encarga del subsistema de autenticación. Es el primer paso  para que un usuario pueda votar, garantizar que la persona que va a realizar el voto es quien dice ser. Como se ha comentado previamente el codigo fuente es heredado por lo que teniamos que seguir el lenguaje, estrategia y estructura que se había definido en un principio. El equipo decidió no desarrollar el subsistema con otra tecnologia ya que podría afectar al buen funcionamiento del sistema y podríamos encontrarnos con conflictos con los resto de subsistemas.  
 
-\hspace{1 cm}--- Linus
+
+Despues el equipo llego a un acuerdo sobre las tareas que se iban a desarrollar a lo largo del proyecto entre los que se encuentran distintos métodos de autenticación, documentación de la API, interfaz de usuario, etc. Cada miembro del equipo tenia asignadas unas tareas (\emph{issues}) y para gestionar el codigo se ha usado un repositorio GIT con el fin de que tuvieramos siempre la última versión del sistema (tanto por nuestra parte como con el resto de los equipos) y poder resolver conflictos de una forma mas eficiente.
+
+
 
 \section{Introducción y contexto}
 
