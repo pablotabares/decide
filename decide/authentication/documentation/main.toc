@@ -1,0 +1,13 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Resumen}{2}
+\contentsline {section}{\numberline {2}Introducci\IeC {\'o}n y contexto}{3}
+\contentsline {section}{\numberline {3}Descripci\IeC {\'o}n del sistema}{3}
+\contentsline {section}{\numberline {4}Planificaci\IeC {\'o}n del proyecto}{3}
+\contentsline {section}{\numberline {5}Entorno de desarrollo}{3}
+\contentsline {section}{\numberline {6}Gesti\IeC {\'o}n del cambio, incidencias y depuraci\IeC {\'o}n}{3}
+\contentsline {subsection}{\numberline {6.1}Gesti\IeC {\'o}n del c\IeC {\'o}digo fuente}{3}
+\contentsline {subsection}{\numberline {6.2}Gesti\IeC {\'o}n de la construcci\IeC {\'o}n e integraci\IeC {\'o}n continua}{3}
+\contentsline {subsection}{\numberline {6.3}Gesti\IeC {\'o}n de liberaciones, despliegue y entregas}{3}
+\contentsline {section}{\numberline {7}Mapa de herramientas}{3}
+\contentsline {section}{\numberline {8}Ejercicio de propuesta de cambio}{3}
+\contentsline {section}{\numberline {9}Conclusiones y trabajo futuro}{3}
