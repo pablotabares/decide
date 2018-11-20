@@ -12,9 +12,7 @@ services:
  - docker
 script:
  - sonar-scanner
- - cd docker
  - docker exec -ti decide_web ./manage.py test
- - cd ..
 addons:
   postgresql: "9.6"
   sonarcloud:
@@ -29,5 +27,4 @@ notifications:
 before_install:
  - cd docker
  - docker-compose up -d
- - cd ..
 
