@@ -43,7 +43,7 @@ class PostProcView(APIView):
 
         t = request.data.get('type', 'IDENTITY')
         opts = request.data.get('options', [])
-        t = 'WEIGHT'
+
         if t == 'IDENTITY':
             return self.identity(opts)
         elif t =='WEIGHT':
