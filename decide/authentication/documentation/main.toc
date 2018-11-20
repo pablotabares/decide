@@ -1,8 +1,8 @@
 \babel@toc {spanish}{}
 \contentsline {section}{\numberline {1}Resumen}{2}
 \contentsline {section}{\numberline {2}Introducci\IeC {\'o}n y contexto}{3}
-\contentsline {section}{\numberline {3}Descripci\IeC {\'o}n del sistema}{4}
-\contentsline {section}{\numberline {4}Planificaci\IeC {\'o}n del proyecto}{4}
+\contentsline {section}{\numberline {3}Descripci\IeC {\'o}n del sistema}{3}
+\contentsline {section}{\numberline {4}Planificaci\IeC {\'o}n del proyecto}{3}
 \contentsline {section}{\numberline {5}Entorno de desarrollo}{4}
 \contentsline {section}{\numberline {6}Gesti\IeC {\'o}n del cambio, incidencias y depuraci\IeC {\'o}n}{4}
 \contentsline {subsection}{\numberline {6.1}Gesti\IeC {\'o}n del c\IeC {\'o}digo fuente}{4}
