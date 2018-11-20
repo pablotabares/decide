@@ -1,6 +1,5 @@
 \documentclass[12pt]{article}
 \usepackage[spanish]{babel}
-\usepackage{natbib}
 \usepackage{url}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
@@ -94,7 +93,26 @@ Despues el equipo llego a un acuerdo sobre las tareas que se iban a desarrollar 
 
 
 
+\newpage	
 \section{Introducción y contexto}
+
+Es un proyecto para que el equipo de trabajo ponga en práctica y observe cómo se ponen en funcionamiento un proyecto real, en este caso se trabaja con Decide que es una plataforma didáctica de votación electrónica.
+
+En el proyecto definimos diferentes subsistemas que serán más o menos independientes entre sí y que se interconectan implementando una API concreta.
+Cada subsistema se encarga de una tarea concreta en el sistema de voto. Los subsistemas a realizar son los siguientes \cite{decide-subsistemas}
+
+ \begin{enumerate}
+    \item Autenticación
+    \item Censo
+    \item Votaciones
+    \item Cabina de votación
+    \item Almacenamiento de votos (cifrados)
+    \item Recuento/ MixNet
+    \item Post-procesado
+    \item Visualización de resultados
+ \end{enumerate}
+
+Nuestro equipo se encargará del subsistema de autenticación que consistirá en autenticar al votante (con esto nos referimos a que se verifique que realmente la persona que vota dice ser quién es sin que se de el caso de suplantación de identidad), y que el votante solo pueda votar una vez en esa votación.
 
 \section{Descripción del sistema}
 
@@ -112,7 +130,14 @@ Despues el equipo llego a un acuerdo sobre las tareas que se iban a desarrollar 
 \section{Conclusiones y trabajo futuro}
 
 \newpage	
-\bibliographystyle{plain}
-\bibliography{biblist}
+
+
+\begin{thebibliography}{9}
+\bibitem{decide-subsistemas} 
+Dani GM
+\textit
+{https://github.com/EGCETSII/decide/blob/master/doc/subsistemas.md}
+ 
+\end{thebibliography}
 
 \end{document}
