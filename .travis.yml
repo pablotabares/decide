@@ -20,10 +20,10 @@ addons:
 before_script:
  - cd decide
  - cp local_settings.example.py local_settings.py
- - cd ..
  - psql -c "create user decide with password 'decide'"
  - psql -c "create database decide owner decide"
- - python manage.py migrate
+ - python ./manage.py migrate
+ - cd ..
 notifications:
   email: false
 before_install:
