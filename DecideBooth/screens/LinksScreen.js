@@ -1,6 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
+import { StyleSheet } from 'react-native';
+import { Container, Header, Content, Form, Item, Input, Button, Text } from 'native-base';
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
@@ -9,11 +9,22 @@ export default class LinksScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links */}
-        <ExpoLinksView />
-      </ScrollView>
+        <Container>
+            <Header />
+            <Content>
+                <Form>
+                    <Item>
+                        <Input placeholder="Username" />
+                    </Item>
+                    <Item last>
+                        <Input placeholder="Password" />
+                    </Item>
+                  <Button full success>
+                      <Text>Login</Text>
+                  </Button>
+                </Form>
+            </Content>
+        </Container>
     );
   }
 }
@@ -23,5 +34,5 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff',
-  },
+  }
 });
