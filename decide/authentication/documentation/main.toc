@@ -5,9 +5,9 @@
 \contentsline {section}{\numberline {4}Planificaci\IeC {\'o}n del proyecto}{3}
 \contentsline {section}{\numberline {5}Entorno de desarrollo}{4}
 \contentsline {section}{\numberline {6}Gesti\IeC {\'o}n del cambio, incidencias y depuraci\IeC {\'o}n}{4}
-\contentsline {subsection}{\numberline {6.1}Gesti\IeC {\'o}n del c\IeC {\'o}digo fuente}{4}
-\contentsline {subsection}{\numberline {6.2}Gesti\IeC {\'o}n de la construcci\IeC {\'o}n e integraci\IeC {\'o}n continua}{4}
-\contentsline {subsection}{\numberline {6.3}Gesti\IeC {\'o}n de liberaciones, despliegue y entregas}{4}
-\contentsline {section}{\numberline {7}Mapa de herramientas}{4}
-\contentsline {section}{\numberline {8}Ejercicio de propuesta de cambio}{4}
-\contentsline {section}{\numberline {9}Conclusiones y trabajo futuro}{4}
+\contentsline {subsection}{\numberline {6.1}Gesti\IeC {\'o}n del c\IeC {\'o}digo fuente}{5}
+\contentsline {subsection}{\numberline {6.2}Gesti\IeC {\'o}n de la construcci\IeC {\'o}n e integraci\IeC {\'o}n continua}{6}
+\contentsline {subsection}{\numberline {6.3}Gesti\IeC {\'o}n de liberaciones, despliegue y entregas}{6}
+\contentsline {section}{\numberline {7}Mapa de herramientas}{6}
+\contentsline {section}{\numberline {8}Ejercicio de propuesta de cambio}{6}
+\contentsline {section}{\numberline {9}Conclusiones y trabajo futuro}{6}

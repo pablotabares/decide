@@ -119,14 +119,46 @@ Nuestro equipo se encargará del subsistema de autenticación que consistirá en
 \section{Planificación del proyecto}
 Para la planificación del proyecto el equipo tuvo una reunión al principio del milestone para discutir y llegar a un acuerdo en las tareas que se iba a realizar durante el desarrollo del mismo. Las tareas estan definidas en el apartado de issues del repositorio \url{https://github.com/pablotabares/decide/issues} cada tarea tiene asignada una/s persona/s que seran los repsonsables de que dicha tarea se lleve a cabo en tiempo y en forma. 
 
-Para gestionar el tiempo que ha dedicado cada miembro del equipo hemos utilizado la herramienta Toggle \cites{toggl} y se han incluido los reportes en el diario del equipo. 
+Para gestionar el tiempo que ha dedicado cada miembro del equipo hemos utilizado la herramienta Toggle \cite{toggl} y se han incluido los reportes en el diario del equipo. 
 
 Debido a que uno de los miembros se encuentra fuera de Sevilla y debe trabajar de forma remota el equipo llego a un acuerdo de reunirse los miercoles para conocer los avances y problemas que ha tenido el proyecto. Además se usaría Telegram \cite{telegram} como herramienta de comunicación de forma diaria.
 
 \section{Entorno de desarrollo}
 
 \section{Gestión del cambio, incidencias y depuración}
+
+Las incidencias y cambios en el sistema se deben publicar en el apartado de  \emph{issues} en el repositorio del proyecto. Ya que estamos trabajando con otros subsistemas y otros equipos se propone que el titulo de la incidencia debería comenzar con Auth seguido de la incidencia o cambio propuesto. Por ejemplo: Auth - Email authentication \cite{auth-issue}
+
+Además se debe indicar la persona responsable, una etiqueta, proyecto asociado y si es posible indicar el milestone como se muestra en la siguiente imagen:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{issue-example.png}
+\caption{Ejemplo de incidencia}
+\end{figure}
+
 \subsection{Gestión del código fuente}
+La gestión del código fuente de nuestro proyecto se hará a través de Git ya sea por comandos (en la terminal) o a través de una interfaz de usuario. 
+Los commits deben seguir la siguiente estructura \cite{commit-structure}:
+
+Titulo: Extracto de los cambios en 50 caracteres o menos.
+
+Texto explicativo más detallado, solo si es necesario. La línea en blanco que separa el titulo del resto del texto es crucial.
+En el pie, se pueden poner referencias (ids) de las incidencias.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{commits.png}
+\caption{Ejemplo de estructuras de commits}
+\end{figure}
+
+
+Para la gestión de ramas se empleará una rama por incidencia (aunque la incidencia sea muy leve o facil de realizar). El estructura de la rama debe ser ortosia-auth-\emph{titulo de la incidencia} como por ejemplo se puede ver en la imagen previa \emph{ortosia-auth-login-email}
+
+Una vez que se haya finalizado el desarrollo de la incidencia se debe realizar un \emph{Pull Request (PR)} a la rama ortosia-auth. Este PR debe ser revisado por una/s persona/s que no sean los responsables y/o desarrolladores de la incidencia.
+
+Cuando la rama base de nuestro equipo (ortosia-auth) sea estable y no tenga  fallos ni conflictos se realizará un PR a la rama master y posteriormente el proceso de despligue. 
+
 \subsection{Gestión de la construcción e integración continua}
 \subsection{Gestión de liberaciones, despliegue y entregas}
 
@@ -149,6 +181,16 @@ Dani GM
 \bibitem{telegram} 
 \textit{https://web.telegram.org/}
 
+\bibitem{github-student} 
+\textit{https://education.github.com/pack}
+
+\bibitem{auth-issue} 
+\textit{https://github.com/pablotabares/decide/issues/5}
+
+
+\bibitem{commit-structure}
+Miguel Angel Bueno Ferrer, 23 Abril 2017. 
+\textit{https://blog.kirei.io/}
 \end{thebibliography}
 
 \end{document}
