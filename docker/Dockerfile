@@ -10,7 +10,8 @@ RUN pip install ipython
 
 WORKDIR /app
 
-RUN git clone --single-branch -b ortosia-cabina2 https://github.com/pablotabares/decide.git .
+COPY decide/ decide/
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
