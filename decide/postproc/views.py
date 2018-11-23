@@ -52,32 +52,32 @@ class PostProcView(APIView):
         out.sort(key=lambda x: -x['postproc'])
         return Response(out)
 
-    def hondt(self, options, escanyos):
+    def hondt(self, options, seats):
         out = []
-        votos = []
-        reparto = []
+        votes = []
+        assignment = []
 
         for opt in options:
-            votos.append({
+            votes.append({
                 'votes': opt['votes'],
             })
-            reparto.append({
-                'escanyos': 0
+            assignment.append({
+                'seats': 0
             })
 
-        for i in range(escanyos):
+        for i in range(seats):
             max = 0;
             imax = 0;
-            for i in range(len(votos)):
-                cociente = votos[i]['votes'] / (reparto[i]['escanyos'] + 1)
+            for i in range(len(votes)):
+                cociente = votes[i]['votes'] / (assignment[i]['seats'] + 1)
                 if (cociente > max):
                     max = cociente
                     imax = i
-            reparto[imax]['escanyos'] += 1
+            assignment[imax]['seats'] += 1
         for i in range(len(options)):
             out.append({
                 **options[i],
-                'postproc': reparto[i]['escanyos'],
+                'postproc': assignment[i]['seats'],
             })
 
         out.sort(key=lambda x: -x['postproc'])
@@ -106,7 +106,7 @@ class PostProcView(APIView):
         elif t == 'WEIGHTED-RANDOM':
             return self.weightedRandomSelection(opts)
         elif t == 'HONDT':
-            escanyos = request.data.get('escanyos', 1)
-            return self.hondt(opts, escanyos)
+            seats = request.data.get('seats', 1)
+            return self.hondt(opts, seats)
 
         return Response({})
