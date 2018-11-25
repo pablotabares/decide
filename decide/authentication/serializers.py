@@ -9,12 +9,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class AuthCustomTokenSerializer(serializers.Serializer):
     """ Login by Username and Email"""
-    email_or_username = serializers.CharField()
+    username = serializers.CharField()
     password = serializers.CharField()
 
     def validate(self, attrs):
         # Ask for the request attributes
-        email_or_username = attrs.get('email_or_username')
+        email_or_username = attrs.get('username')
         password = attrs.get('password')
 
         if email_or_username and password:
