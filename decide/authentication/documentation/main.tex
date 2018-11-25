@@ -2,6 +2,7 @@
 \usepackage[spanish]{babel}
 \usepackage{url}
 \usepackage[utf8x]{inputenc}
+\usepackage{blindtext}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \graphicspath{{images/}}
@@ -114,6 +115,7 @@ Cada subsistema se encarga de una tarea concreta en el sistema de voto. Los subs
 
 Nuestro equipo se encargará del subsistema de autenticación que consistirá en autenticar al votante (con esto nos referimos a que se verifique que realmente la persona que vota dice ser quién es sin que se de el caso de suplantación de identidad), y que el votante solo pueda votar una vez en esa votación.
 
+
 \section{Descripción del sistema}
 
 \section{Planificación del proyecto}
@@ -124,6 +126,19 @@ Para gestionar el tiempo que ha dedicado cada miembro del equipo hemos utilizado
 Debido a que uno de los miembros se encuentra fuera de Sevilla y debe trabajar de forma remota el equipo llego a un acuerdo de reunirse los miercoles para conocer los avances y problemas que ha tenido el proyecto. Además se usaría Telegram \cite{telegram} como herramienta de comunicación de forma diaria.
 
 \section{Entorno de desarrollo}
+Nuestra primera aproximación fue usar como entorno de desarrollo Docker ya que este sería tambien el entorno de producción. Sin embargo, encontramos una serie de problemas para cumplir con este objetivo. El primero fue que los cambios que se hicieran en local tenían que verse reflejados en la imagen de Docker y por tanto actualizarse sin problemas. Para ello había que cambiar y configurar el Dockerfile y usar Volumes \cite{update-code-docker}. Logramos que los cambios se producesen pero no nos era posible debugear el codigo. 
+
+Finalmente optamos por la otra alternativa que aparece en el repositorio principal. Que consta de las siguientes tecnologias:
+
+\begin{itemize}
+\item Python 3.6.5
+\item Django 3.7.7
+\item PostgresSQL 10.6
+\item Pycharm Studio Professional 2018
+\end{itemize}
+
+Decidimos usar Pycharm Studio Professional ya que la Universidad de Sevilla cuenta con una licencia para estudiantes \cite{github-student}, por lo que tiene mas soporte y más caracteristicas que Pycharm Studio Community. Además se puede configurar un entorno de Django desde el mismo IDE para que el desarrollo sea más efectivo.
+
 
 \section{Gestión del cambio, incidencias y depuración}
 
@@ -137,6 +152,7 @@ Además se debe indicar la persona responsable, una etiqueta, proyecto asociado 
 \caption{Ejemplo de incidencia}
 \end{figure}
 
+\newpage
 \subsection{Gestión del código fuente}
 La gestión del código fuente de nuestro proyecto se hará a través de Git ya sea por comandos (en la terminal) o a través de una interfaz de usuario. 
 Los commits deben seguir la siguiente estructura \cite{commit-structure}:
@@ -152,10 +168,16 @@ En el pie, se pueden poner referencias (ids) de las incidencias.
 \caption{Ejemplo de estructuras de commits}
 \end{figure}
 
-
+\newpage
 Para la gestión de ramas se empleará una rama por incidencia (aunque la incidencia sea muy leve o facil de realizar). El estructura de la rama debe ser ortosia-auth-\emph{titulo de la incidencia} como por ejemplo se puede ver en la imagen previa \emph{ortosia-auth-login-email}
 
 Una vez que se haya finalizado el desarrollo de la incidencia se debe realizar un \emph{Pull Request (PR)} a la rama ortosia-auth. Este PR debe ser revisado por una/s persona/s que no sean los responsables y/o desarrolladores de la incidencia.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{pr.png}
+\caption{Ejemplo de Pull Request a ortosia-auth}
+\end{figure}
 
 Cuando la rama base de nuestro equipo (ortosia-auth) sea estable y no tenga  fallos ni conflictos se realizará un PR a la rama master y posteriormente el proceso de despligue. 
 
@@ -175,6 +197,10 @@ Dani GM
 \textit
 {https://github.com/EGCETSII/decide/blob/master/doc/subsistemas.md}
 
+\bibitem{update-code-docker}
+Bialba, 21 Septiembre 2016. 
+\textit{https://stackoverflow.com/questions/39615405/updating-code-in-a-docker-container/}
+
 \bibitem{toggl} 
 \textit{https://toggl.com/}
 
@@ -191,6 +217,12 @@ Dani GM
 \bibitem{commit-structure}
 Miguel Angel Bueno Ferrer, 23 Abril 2017. 
 \textit{https://blog.kirei.io/}
+
+
+
+
+
 \end{thebibliography}
+
 
 \end{document}
