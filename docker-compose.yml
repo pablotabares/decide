@@ -10,8 +10,8 @@ services:
     networks:
       - decide
     build: 
-	context: .
-	dockerfile: Dockerfile.db
+        context: .
+        dockerfile: Dockerfile.db
     environment:
       POSTGRES_PASSWORD: postgres
   web:
@@ -19,8 +19,8 @@ services:
     container_name: decide_web
     image: decide_web:latest
     build: 
-	context: .
-	dockerfile: Dockerfile.web
+        context: .
+        dockerfile: Dockerfile.web
     command: ash -c "python manage.py migrate && gunicorn -w 5 decide.wsgi --timeout=500 -b 0.0.0.0:5000"
     expose:
       - "5000"

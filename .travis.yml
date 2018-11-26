@@ -27,6 +27,5 @@ before_script:
 notifications:
   email: false
 before_install:
- - cd docker
  - docker-compose up -d
 
