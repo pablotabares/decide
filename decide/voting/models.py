@@ -9,7 +9,7 @@ from base.models import Auth, Key
 
 class Question(models.Model):
     desc = models.TextField()
-    referendum = models.BooleanField()
+    referendum = models.BooleanField(default=False)
 
     def __str__(self):
         return self.desc
@@ -18,6 +18,9 @@ class Question(models.Model):
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
     number = models.PositiveIntegerField(blank=True, null=True)
+    #Adding the weight of this option
+    weight = models.FloatField(blank=False, null=True)
+
     option = models.TextField()
 
     def save(self):
@@ -32,6 +35,7 @@ class QuestionOption(models.Model):
 class Voting(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True)
+    isWeighted = models.BooleanField(default=False)
     question = models.ForeignKey(Question, related_name='voting', on_delete=models.CASCADE)
 
     start_date = models.DateTimeField(blank=True, null=True)
@@ -50,7 +54,7 @@ class Voting(models.Model):
         auth = self.auths.first()
         data = {
             "voting": self.id,
-            "auths": [ {"name": a.name, "url": a.url} for a in self.auths.all() ],
+            "auths": [{"name": a.name, "url": a.url} for a in self.auths.all()],
         }
         key = mods.post('mixnet', baseurl=auth.url, json=data)
         pk = Key(p=key["p"], g=key["g"], y=key["y"])
@@ -77,9 +81,9 @@ class Voting(models.Model):
         auths = [{"name": a.name, "url": a.url} for a in self.auths.all()]
 
         # first, we do the shuffle
-        data = { "msgs": votes }
+        data = {"msgs": votes}
         response = mods.post('mixnet', entry_point=shuffle_url, baseurl=auth.url, json=data,
-                response=True)
+                             response=True)
         if response.status_code != 200:
             # TODO: manage error
             pass
@@ -87,7 +91,7 @@ class Voting(models.Model):
         # then, we can decrypt that
         data = {"msgs": response.json()}
         response = mods.post('mixnet', entry_point=decrypt_url, baseurl=auth.url, json=data,
-                response=True)
+                             response=True)
 
         if response.status_code != 200:
             # TODO: manage error
@@ -114,7 +118,12 @@ class Voting(models.Model):
                 'votes': votes
             })
 
-        data = { 'type': 'IDENTITY', 'options': opts }
+        # we have two types of tally the wheighted one or the traditional
+        if not self.isWeighted:
+            data = {'type': 'IDENTITY', 'options': opts}
+        else:
+            data = {'type': 'WEIGHT', 'options': opts}
+
         postp = mods.post('postproc', json=data)
 
         self.postproc = postp
