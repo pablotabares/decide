@@ -1,4 +1,4 @@
-version: '3.4'
+poversion: '3.4'
 
 services:
   db:
@@ -9,11 +9,18 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       - decide
+    build: 
+	context: .
+	dockerfile: Dockerfile.db
+    environment:
+      POSTGRES_PASSWORD: postgres
   web:
     restart: always
     container_name: decide_web
     image: decide_web:latest
-    build: .
+    build: 
+	context: .
+	dockerfile: Dockerfile.web
     command: ash -c "python manage.py migrate && gunicorn -w 5 decide.wsgi --timeout=500 -b 0.0.0.0:5000"
     expose:
       - "5000"
@@ -29,7 +36,7 @@ services:
     image: decide_nginx:latest
     build:
         context: .
-        dockerfile: Dockerfile-nginx
+        dockerfile: Dockerfile.nginx
     volumes:
       - static:/app/static
     ports:
