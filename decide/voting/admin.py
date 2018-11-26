@@ -4,8 +4,6 @@ from django.utils import timezone
 from .models import QuestionOption
 from .models import Question
 from .models import Voting
-from .models import OpenQuestion
-from .models import AnswerOpenQuestion
 
 from .filters import StartedFilter
 
@@ -50,5 +48,3 @@ class VotingAdmin(admin.ModelAdmin):
 
 admin.site.register(Voting, VotingAdmin)
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(OpenQuestion)
-admin.site.register(AnswerOpenQuestion)
