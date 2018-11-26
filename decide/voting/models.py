@@ -9,6 +9,7 @@ from base.models import Auth, Key
 
 class Question(models.Model):
     desc = models.TextField()
+    referendum = models.BooleanField()
 
     def __str__(self):
         return self.desc

@@ -4,11 +4,32 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.response import Response
+from django.shortcuts import render, redirect
 
 from .models import Question, QuestionOption, Voting
 from .serializers import VotingSerializer
 from base.perms import UserIsStaff
 from base.models import Auth
+from voting.forms import QuestionForm
+
+
+def crear_referendum(request):
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+
+        question = form.save()
+        question.referendum = True
+        question.save()
+
+        opt_yes = QuestionOption(question=question, option="Yes", number=1)
+        opt_no = QuestionOption(question=question, option="No", number=2)
+        opt_yes.save()
+        opt_no.save()
+        return render(request, 'referendumcreated.html')
+    else:
+        form = QuestionForm()
+
+    return render(request, 'referendumform.html', {'form': form})
 
 
 class VotingView(generics.ListCreateAPIView):
@@ -29,6 +50,7 @@ class VotingView(generics.ListCreateAPIView):
 
         question = Question(desc=request.data.get('question'))
         question.save()
+
         for idx, q_opt in enumerate(request.data.get('question_opt')):
             opt = QuestionOption(question=question, option=q_opt, number=idx)
             opt.save()

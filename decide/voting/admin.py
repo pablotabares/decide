@@ -8,7 +8,7 @@ from .models import Voting
 from .filters import StartedFilter
 
 
-def start(modeladmin, request, queryset):
+def start(ModelAdmin, request, queryset):
     for v in queryset.all():
         v.create_pubkey()
         v.start_date = timezone.now()
