@@ -20,7 +20,6 @@ script:
 before_script:
  - cd decide
  - cp local_settings.example.py local_settings.py
- - cp local_settings.example.py ../local_settings.py
  - psql -c "create user decide with password 'decide'"
  - psql -c "create database decide owner decide"
  - python ./manage.py migrate
@@ -28,6 +27,7 @@ before_script:
 notifications:
   email: false
 before_install:
+ - cd docker
  - docker-compose up -d
 before_deploy:
  - cp requirements.txt decide/requirements.txt
