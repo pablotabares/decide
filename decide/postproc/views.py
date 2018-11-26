@@ -92,6 +92,25 @@ class PostProcView(APIView):
         out.sort(key=lambda x: -x['postproc'])
         return Response(out)
 
+    def multiquestion(self, questions):
+        out = []
+
+        for question in questions:
+            votes = []
+
+            for opt in question['options']:
+                votes.append({
+                    **opt,
+                    'postproc': opt['votes'],
+                })
+
+            votes.sort(key=lambda x: -x['postproc'])
+            out.append({
+                'text': question['text'],
+                'options': votes
+            })
+        return Response(out)
+
     def post(self, request):
         """
          * type: IDENTITY | EQUALITY | WEIGHT
@@ -117,5 +136,8 @@ class PostProcView(APIView):
         elif t == 'HONDT':
             seats = request.data.get('seats', 1)
             return self.hondt(opts, seats)
+        elif t == 'MULTIPLE':
+            questions = request.data.get('questions', [])
+            return self.multiquestion(questions)
 
         return Response({})

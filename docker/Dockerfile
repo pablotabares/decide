@@ -11,7 +11,6 @@ RUN pip install ipython
 WORKDIR /app
 
 ADD . .
-RUN ls
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
