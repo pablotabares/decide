@@ -28,4 +28,11 @@ notifications:
   email: false
 before_install:
  - docker-compose up -d
-
+deploy:
+  provider: heroku
+  api_key:
+    secure: "12d10fb9-7aba-4270-97a8-9058515b8887"
+  app: decide-ortosia
+  on:
+    all_branches: true
+  skip_cleanup: true
