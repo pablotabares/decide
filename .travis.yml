@@ -12,7 +12,7 @@ services:
  - docker
 script:
  - sonar-scanner
- - docker exec -ti decide_web ./manage.py test
+ - docker exec -ti --privileged decide_web python ./manage.py test
 addons:
   postgresql: "9.6"
   sonarcloud:
