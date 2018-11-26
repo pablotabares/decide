@@ -1,0 +1,10 @@
+
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+build:
+  languages:
+    - python
+run:
+  web: ./manage.py migrate
