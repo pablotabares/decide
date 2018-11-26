@@ -7,12 +7,10 @@ from base import mods
 from base.models import Auth, Key
 
 
-
-
 class Voting(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True)
-    #question = models.ForeignKey(Question, related_name='voting', on_delete=models.CASCADE)
+    # question = models.ForeignKey(Question, related_name='voting', on_delete=models.CASCADE)
 
     start_date = models.DateTimeField(blank=True, null=True)
     end_date = models.DateTimeField(blank=True, null=True)
@@ -103,13 +101,28 @@ class Voting(models.Model):
     def __str__(self):
         return self.name
 
+
 class Question(models.Model):
     desc = models.TextField()
     voting = models.ForeignKey(Voting, related_name='question', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.desc
+
+
+class OpenQuestion(models.Model):
+    desc = models.TextField()
 
     def __str__(self):
         return self.desc
+
+
+class AnswerOpenQuestion(models.Model):
+    answer = models.TextField()
+    question = models.ForeignKey(OpenQuestion, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.answer
 
 
 class QuestionOption(models.Model):
