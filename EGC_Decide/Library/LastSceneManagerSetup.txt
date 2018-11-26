@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/fences/Maps/fence_road.unity
+  isLoaded: 1
+  isActive: 1
