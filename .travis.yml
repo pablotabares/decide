@@ -1,23 +1,23 @@
 language: python
 python: 
- - "3.6.6"
+  - "3.6.6"
 env:
- - DJANGO=2.0 DB=postgres
+  - DJANGO=2.0 DB=postgres
 global:
- - PGPORT=5432
+  - PGPORT=5432
 addons:
   postgresql: "9.6"
   sonarcloud:
     organization: "pablotabares-github"
 install:
- - pip install -r requirements.txt
+  - pip install -r requirements.txt
 sudo: required
 services:
- - docker
+  - docker
 notifications:
   email: false
 before_install:
- - docker-compose up -d
+  - docker-compose up -d
 jobs:
   include:
     - stage: test
@@ -25,18 +25,18 @@ jobs:
       - sonar-scanner
       - docker exec -ti --privileged decide_web python ./manage.py test
     before_script:
-     - cd decide
-     - cp local_settings.example.py local_settings.py
-     - cp local_settings.example.py ../local_settings.py
-     - psql -c "create user decide with password 'decide'"
-     - psql -c "create database decide owner decide"
-     - python ./manage.py migrate
-     - cd ..
+      - cd decide
+      - cp local_settings.example.py local_settings.py
+      - cp local_settings.example.py ../local_settings.py
+      - psql -c "create user decide with password 'decide'"
+      - psql -c "create database decide owner decide"
+      - python ./manage.py migrate
+      - cd ..
     - stage: deploy
     script: skip
     before_deploy:
-     - cp requirements.txt decide/requirements.txt
-     - cd decide
+      - cp requirements.txt decide/requirements.txt
+      - cd decide
     deploy:
       provider: heroku
       api_key:
