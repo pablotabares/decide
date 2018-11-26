@@ -34,6 +34,15 @@ class PostProcView(APIView):
         nVotes = 0
         for opt in options:
             nVotes += opt["votes"]
+
+        if nVotes == 0:
+            for opt in options:
+                out.append({
+                    **opt,
+                    'postproc': False
+                })
+            return Response(out)
+
         randomValue = random.randint(0, nVotes-1)
         found = False
         for i in range(0, len(options)):
