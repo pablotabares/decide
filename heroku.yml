@@ -6,5 +6,8 @@ setup:
 build:
   languages:
     - python
+  pre:
+    - cp decide/local_settings.example.py decide/local_settings.py
+    - cp decide/local_settings.example.py local_settings.py
 run:
   web: ./manage.py migrate
