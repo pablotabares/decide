@@ -83,9 +83,30 @@ class PostProcView(APIView):
         out.sort(key=lambda x: -x['postproc'])
         return Response(out)
 
+    def borda(self, options):
+        option_positions = {} # {'A': [1,1,2], 'B':[2,2,1]}
+        out = {} # {'A':'5', 'B':'4'}
+
+        for opt in options:
+            opcion = opt['option']
+            posiciones = opt['positions']
+            option_positions[opcion] = posiciones
+
+        # We add 1, we have 2 options, I want to do 2+1 - posicion. Fist position 3-1=2 points
+        nOptions = len(options) + 1
+        for opt_p in option_positions:
+            suma = 0
+            for p in option_positions.get(opt_p): #We caugth positions [1,1,2]
+                suma += nOptions - p #We add points
+                
+            out[opt_p] = suma 
+        print(out)
+        return Response(out)
+ 
+
     def post(self, request):
         """
-         * type: IDENTITY | EQUALITY | WEIGHT
+         * type: IDENTITY | EQUALITY | WEIGHT | BORDA
          * options: [
             {
              option: str,
@@ -108,5 +129,7 @@ class PostProcView(APIView):
         elif t == 'HONDT':
             escanyos = request.data.get('escanyos', 1)
             return self.hondt(opts, escanyos)
+        elif t == 'BORDA':
+            return self.borda(opts)
 
         return Response({})
