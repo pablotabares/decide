@@ -1,2 +1,3 @@
 worker: heroku_db.py
 release: bash ./release-tasks.sh
+web: python ./manage.py runserver
