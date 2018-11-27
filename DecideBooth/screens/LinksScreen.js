@@ -14,13 +14,13 @@ export default class LinksScreen extends React.Component {
             <Content>
                 <Form>
                     <Item>
-                        <Input placeholder="Username" />
+                        <Input placeholder="Nombre de usuario" />
                     </Item>
                     <Item last>
-                        <Input placeholder="Password" />
+                        <Input placeholder="Contraseña" />
                     </Item>
                   <Button full success>
-                      <Text>Login</Text>
+                      <Text>Logon</Text>
                   </Button>
                 </Form>
             </Content>
