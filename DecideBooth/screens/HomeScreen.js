@@ -70,14 +70,14 @@ export default class HomeScreen extends React.Component {
 
       return (
         <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
+          Development mode is enableds, your app will be slower but you can use useful development
           tools. {learnMoreButton}
         </Text>
       );
     } else {
       return (
         <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
+          Bienvenido a la aplicación de Decide. Desde aquí podrá hacer distintas votaciones así como visualizar resultados.
         </Text>
       );
     }
