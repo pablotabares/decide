@@ -42,5 +42,5 @@ deploy:
   on: ortosia-cabina2
   skip_cleanup: true
   run:
-   - "plugins:install heroku-repo"
-   - "repo:purge_cache -a decide-ortosia"
+   - "heroku plugins:install heroku-repo"
+   - "heroku repo:purge_cache -a decide-ortosia"
