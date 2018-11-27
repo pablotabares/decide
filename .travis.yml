@@ -33,7 +33,7 @@ before_deploy:
  - cp requirements.txt decide/requirements.txt
  - cd decide
  - rm local_settings.py
- - cp heroku_db.py local_settings.py
+ - cp heroku_settings.py local_settings.py
 deploy:
   provider: heroku
   api_key:

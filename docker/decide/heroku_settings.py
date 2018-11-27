@@ -1,6 +1,7 @@
 import psycopg2
 import urllib.parse as urlparse
 import os
+import django_heroku
 
 url = urlparse.urlparse(os.environ['DATABASE_URL'])
 dbname = url.path[1:]
@@ -8,7 +9,6 @@ user = url.username
 password = url.password
 host = url.hostname
 port = url.port
-print(user, password, host, port, dbname);
 
 ALLOWED_HOSTS = ["*"]
 
@@ -52,3 +52,6 @@ DATABASES = {
 
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
