@@ -34,8 +34,6 @@ before_deploy:
  - cd decide
  - rm local_settings.py
  - cp heroku_settings.py local_settings.py
- - "plugins:install heroku-repo"
- - "repo:purge_cache -a decide-ortosia"
 deploy:
   provider: heroku
   api_key:
@@ -43,3 +41,6 @@ deploy:
   app: decide-ortosia
   on: ortosia-cabina2
   skip_cleanup: true
+  run:
+   - "plugins:install heroku-repo"
+   - "repo:purge_cache -a decide-ortosia"
