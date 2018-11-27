@@ -33,7 +33,9 @@ before_deploy:
  - cp requirements.txt decide/requirements.txt
  - cd decide
  - rm local_settings.py
- - cp heroku_db.py local_settings.py
+ - cp heroku_settings.py local_settings.py
+ - heroku plugins:install heroku-repo
+ - heroku repo:purge_cache -a decide-ortosia
 deploy:
   provider: heroku
   api_key:
