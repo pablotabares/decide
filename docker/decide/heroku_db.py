@@ -8,6 +8,7 @@ user = url.username
 password = url.password
 host = url.hostname
 port = url.port
+print(user, password, host, port, dbname);
 
 ALLOWED_HOSTS = ["*"]
 
