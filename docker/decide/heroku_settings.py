@@ -26,18 +26,18 @@ MODULES = [
 ]
 
 APIS = {
-    'authentication': 'http://localhost:8000',
-    'base': 'http://localhost:8000',
-    'booth': 'http://localhost:8000',
-    'census': 'http://localhost:8000',
-    'mixnet': 'http://localhost:8000',
-    'postproc': 'http://localhost:8000',
-    'store': 'http://localhost:8000',
-    'visualizer': 'http://localhost:8000',
-    'voting': 'http://localhost:8000',
+    'authentication': os.environ['APP_URL']+':80',
+    'base': os.environ['APP_URL']+':80',
+    'booth': os.environ['APP_URL']+':80',
+    'census': os.environ['APP_URL']+':80',
+    'mixnet': os.environ['APP_URL']+':80',
+    'postproc': os.environ['APP_URL']+':80',
+    'store': os.environ['APP_URL']+':80',
+    'visualizer': os.environ['APP_URL']+':80',
+    'voting': os.environ['APP_URL']+':80',
 }
 
-BASEURL = 'http://localhost:8000'
+BASEURL = os.environ['APP_URL']+':80'
 
 DATABASES = {
     'default': {
