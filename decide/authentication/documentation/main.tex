@@ -168,20 +168,32 @@ En el pie, se pueden poner referencias (ids) de las incidencias.
 \caption{Ejemplo de estructuras de commits}
 \end{figure}
 
-\newpage
 Para la gestión de ramas se empleará una rama por incidencia (aunque la incidencia sea muy leve o facil de realizar). El estructura de la rama debe ser ortosia-auth-\emph{titulo de la incidencia} como por ejemplo se puede ver en la imagen previa \emph{ortosia-auth-login-email}
 
-Una vez que se haya finalizado el desarrollo de la incidencia se debe realizar un \emph{Pull Request (PR)} a la rama ortosia-auth. Este PR debe ser revisado por una/s persona/s que no sean los responsables y/o desarrolladores de la incidencia.
+Una vez que se haya finalizado el desarrollo de la incidencia se debe realizar un \emph{Pull Request (PR)} a la rama ortosia-auth. Este PR debe ser revisado por una/s persona/s que no sean los responsables y/o desarrolladores de la incidencia. En caso de que apruebe el PR se mergeara, en caso contrario, el responsable deberá realizar los cambios propuestos. 
 
-\begin{figure}[h]
+\begin{figure}[hbt!]
 \centering
 \includegraphics[width=0.8\textwidth]{pr.png}
 \caption{Ejemplo de Pull Request a ortosia-auth}
 \end{figure}
 
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=0.8\textwidth]{approved.png}
+\caption{Ejemplo de Pull Request revisado y aprobado}
+\end{figure}
+
+
 Cuando la rama base de nuestro equipo (ortosia-auth) sea estable y no tenga  fallos ni conflictos se realizará un PR a la rama master y posteriormente el proceso de despligue. 
 
+
+
 \subsection{Gestión de la construcción e integración continua}
+El proyecto que estamos realizando va ser desplegado en un servidor remoto. Para la integración continua usaremos Travis CI.
+Travis CI es un servicio de integración continua distribuido y alojado que se utiliza para crear y probar proyectos de software alojados en GitHub. Travis CI recoge el código de nuestra aplicación, lo compila y realiza una serie de test con el fin de probar que funciona correctamente.
+Una vez registrados en Travis CI, procedemos a sincronizado el repositorio de GitHub que vamos a utilizar, creamos un archivo llamado .travis.yml en la raíz de nuestro proyecto. Éste archivo contiene una serie de comandos para hacer que los test funcionen y así poder comprobar el buen funcionamiento de nuestro proyecto.
+
 \subsection{Gestión de liberaciones, despliegue y entregas}
 
 \section{Mapa de herramientas}
