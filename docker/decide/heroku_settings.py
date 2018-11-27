@@ -1,7 +1,7 @@
 import psycopg2
 import urllib.parse as urlparse
 import os
-import django_heroku
+#import django_heroku
 
 url = urlparse.urlparse(os.environ['DATABASE_URL'])
 dbname = url.path[1:]
@@ -54,4 +54,4 @@ DATABASES = {
 KEYBITS = 256
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
