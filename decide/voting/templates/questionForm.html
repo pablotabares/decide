@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    {% for i in form.lista %}
+    <fieldset>
+    {{i.as_p}}
+    </fieldset>
+    {% endfor %}
+
+    <button id="add">Add another option to your question</button>
+    <button type="submit">Guardar</button>
+
+</form>
+{% endblock %}
+
+<!-- TODO: JS para añadir más elementos  -->

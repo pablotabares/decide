@@ -10,7 +10,7 @@ from .models import Question, QuestionOption, Voting
 from .serializers import VotingSerializer
 from base.perms import UserIsStaff
 from base.models import Auth
-from voting.forms import QuestionForm
+from voting.forms import QuestionForm, QuestionOptionsForm, someQuestionsOptions
 
 
 def crear_referendum(request):
@@ -32,11 +32,21 @@ def crear_referendum(request):
     return render(request, 'referendumform.html', {'form': form})
 
 
+def create_options(request):
+    if request.method == "POST":
+        print() #TODO: manejar las entradas
+    else:
+        form = someQuestionsOptions()
+
+
+    return render(request, 'questionForm.html', {'form': form})
+
+
 class VotingView(generics.ListCreateAPIView):
     queryset = Voting.objects.all()
     serializer_class = VotingSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    filter_fields = ('id', )
+    filter_fields = ('id',)
 
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
@@ -55,11 +65,11 @@ class VotingView(generics.ListCreateAPIView):
             opt = QuestionOption(question=question, option=q_opt, number=idx)
             opt.save()
         voting = Voting(name=request.data.get('name'), desc=request.data.get('desc'),
-                question=question)
+                        question=question)
         voting.save()
 
         auth, _ = Auth.objects.get_or_create(url=settings.BASEURL,
-                                          defaults={'me': True, 'name': 'test auth'})
+                                             defaults={'me': True, 'name': 'test auth'})
         auth.save()
         voting.auths.add(auth)
         return Response({}, status=status.HTTP_201_CREATED)
