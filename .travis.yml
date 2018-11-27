@@ -34,6 +34,7 @@ before_deploy:
  - cd decide
  - rm local_settings.py
  - cp heroku_settings.py local_settings.py
+ - heroku repo:purge_cache -a decide-ortosia
 deploy:
   provider: heroku
   api_key:
