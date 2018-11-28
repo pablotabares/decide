@@ -23,7 +23,7 @@ before_script:
  - psql -c "create user decide with password 'decide'"
  - psql -c "create database decide owner decide"
  - python ./manage.py migrate
- - yes | python3 manage.py collectstatic
+ - python3 manage.py collectstatic --no-input
  - ls
  - cd ..
 notifications:
