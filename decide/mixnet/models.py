@@ -68,7 +68,7 @@ class Mixnet(models.Model):
         })
 
         if next_auths:
-            auth = next_auths.first().url
+            auth = list(next_auths)[0].url
             r = mods.post('mixnet', entry_point=path,
                            baseurl=auth, json=data)
             return r
@@ -81,4 +81,4 @@ class Mixnet(models.Model):
         if self.auths.count() == next_auths.count():
             next_auths = next_auths[1:]
 
-        return next_auths
+return next_auths
