@@ -2,24 +2,26 @@
 {% load i18n static %}
 
 {% block content %}
-<div class="container">
-    <h1 class="text-center bg-primary">{{ voting.id }} - {{ voting.name }}</span></h1>
+<body class="bg-secondary">
+    <div class="container">
+        <h1 class="text-center bg-primary">{{ voting.id }} - {{ voting.name }}</h1>
 
-    {% if not voting.start_date %}
-        <h2 class="text-danger">{% trans ' Voting not started' %}</h2>
-    {% elif not voting.end_date %}
-        <h2 class="text-warning">{% trans ' Voting is opened' %}</h2>
-    {% else %}
-        <h2>{% trans ' The Results: ' %}</h2>
+        {% if not voting.start_date %}
+            <h2 class="text-danger">{% trans ' Voting not started' %}</h2>
+        {% elif not voting.end_date %}
+            <h2 class="text-warning">{% trans ' Voting is opened' %}</h2>
+        {% else %}
+            <h2 class="text-left bg-secondary">{% trans ' Results: ' %}</h2>
 
-        <ul>
-            {% for option in voting.postproc %}
-            <ol>
+            <ul>
+                {% for option in voting.postproc %}
+                
                 <li>{{option.option}}: {{option.postproc}} <span>({{option.votes}})</span></li>
-            </ol>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</div>
+                
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
 
 {% endblock %}
