@@ -99,7 +99,6 @@ class PostProcView(APIView):
                 suma += nOptions - p #We add points
                 
             out[opt_p] = suma 
-
         return Response(out)
  
 
