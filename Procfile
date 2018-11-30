@@ -1,1 +1,1 @@
-worker: python telegram-bot/bot/start.py
+worker: python bot/start.py
