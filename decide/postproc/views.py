@@ -34,6 +34,15 @@ class PostProcView(APIView):
         nVotes = 0
         for opt in options:
             nVotes += opt["votes"]
+
+        if nVotes == 0:
+            for opt in options:
+                out.append({
+                    **opt,
+                    'postproc': False
+                })
+            return Response(out)
+
         randomValue = random.randint(0, nVotes-1)
         found = False
         for i in range(0, len(options)):
@@ -52,32 +61,32 @@ class PostProcView(APIView):
         out.sort(key=lambda x: -x['postproc'])
         return Response(out)
 
-    def hondt(self, options, escanyos):
+    def hondt(self, options, seats):
         out = []
-        votos = []
-        reparto = []
+        votes = []
+        assignment = []
 
         for opt in options:
-            votos.append({
+            votes.append({
                 'votes': opt['votes'],
             })
-            reparto.append({
-                'escanyos': 0
+            assignment.append({
+                'seats': 0
             })
 
-        for i in range(escanyos):
+        for i in range(seats):
             max = 0;
             imax = 0;
-            for i in range(len(votos)):
-                cociente = votos[i]['votes'] / (reparto[i]['escanyos'] + 1)
+            for i in range(len(votes)):
+                cociente = votes[i]['votes'] / (assignment[i]['seats'] + 1)
                 if (cociente > max):
                     max = cociente
                     imax = i
-            reparto[imax]['escanyos'] += 1
+            assignment[imax]['seats'] += 1
         for i in range(len(options)):
             out.append({
                 **options[i],
-                'postproc': reparto[i]['escanyos'],
+                'postproc': assignment[i]['seats'],
             })
 
         out.sort(key=lambda x: -x['postproc'])
@@ -101,6 +110,24 @@ class PostProcView(APIView):
             out[opt_p] = suma 
         return Response(out)
  
+    def multiquestion(self, questions):
+        out = []
+
+        for question in questions:
+            votes = []
+
+            for opt in question['options']:
+                votes.append({
+                    **opt,
+                    'postproc': opt['votes'],
+                })
+
+            votes.sort(key=lambda x: -x['postproc'])
+            out.append({
+                'text': question['text'],
+                'options': votes
+            })
+        return Response(out)
 
     def post(self, request):
         """
@@ -129,5 +156,10 @@ class PostProcView(APIView):
             return self.hondt(opts, escanyos)
         elif t == 'BORDA':
             return self.borda(opts)
+            seats = request.data.get('seats', 1)
+            return self.hondt(opts, seats)
+        elif t == 'MULTIPLE':
+            questions = request.data.get('questions', [])
+            return self.multiquestion(questions)
 
         return Response({})
