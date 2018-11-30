@@ -86,7 +86,6 @@ class PostProcView(APIView):
     def borda(self, options):
         option_positions = {} # {'A': [1,1,2], 'B':[2,2,1]}
         out = {} # {'A':'5', 'B':'4'}
-
         for opt in options:
             opcion = opt['option']
             posiciones = opt['positions']
@@ -100,7 +99,7 @@ class PostProcView(APIView):
                 suma += nOptions - p #We add points
                 
             out[opt_p] = suma 
-        print(out)
+
         return Response(out)
  
 
