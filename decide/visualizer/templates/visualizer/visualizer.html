@@ -13,8 +13,12 @@
         {% else %}
             <h2 class="text-left bg-secondary">{% trans ' Results table: ' %}</h2>
 
-            <ul>
-                
+            <ul>  
+                {{voting.question.desc}}
+                {{voting.desc}}
+                {% trans 'Fecha de inicio: ' %}{{voting.start_date}}
+                {{voting.end_date}}
+                {{voting.tally|length}}
                 <table class="table">
                     <thead>
                       <tr>
@@ -31,7 +35,6 @@
                         {% endfor %} 
                     </tbody>
                   </table>
-                
             </ul>
         {% endif %}
     </div>
