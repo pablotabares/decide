@@ -11,27 +11,14 @@
         {% elif not voting.end_date %}
             <h2 class="text-warning">{% trans ' Voting is opened' %}</h2>
         {% else %}
-            <h2 class="text-left bg-secondary">{% trans ' Results table: ' %}</h2>
+            <h2 class="text-left bg-secondary">{% trans ' Results: ' %}</h2>
 
             <ul>
+                {% for option in voting.postproc %}
                 
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Option</th>
-                        <th>Total votes</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        {% for option in voting.postproc %}
-                        <td>{{option.option}}</td>
-                        <td>{{option.votes}}</td>
-                      </tr>
-                        {% endfor %} 
-                    </tbody>
-                  </table>
+                <li>{{option.option}}: {{option.postproc}} <span>({{option.votes}})</span></li>
                 
+                {% endfor %}
             </ul>
         {% endif %}
     </div>
