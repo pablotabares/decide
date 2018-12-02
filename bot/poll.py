@@ -42,3 +42,6 @@ def main(dispatcher):
      fallbacks=[CommandHandler('cancel', cancel)]
      )
      dispatcher.add_handler(conv_handler)
+
+if __name__ == '__main__':
+     main()

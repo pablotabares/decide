@@ -6,6 +6,4 @@ def main(dispatcher):
     dispatcher.add_handler(start_handler)
     
 def start(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="""Soy el bot de Decide-Ortosia :) \nPuedes usar los siguientes comandos:\n
-                                                            - /login para iniciar sesión\n
-                                                            - /poll para crear una nueva votación""")
+    bot.send_message(chat_id=update.message.chat_id, text="""Soy el bot de Decide-Ortosia :) \nPuedes usar los siguientes comandos:\n - /login para iniciar sesión\n- /poll para crear una nueva votación""")
