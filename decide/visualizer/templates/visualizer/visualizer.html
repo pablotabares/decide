@@ -3,8 +3,8 @@
 
 {% block content %}
 <body class="bg-secondary">
-    <div class="container">
-        <h1 class="text-center bg-primary">{{ voting.id }} - {{ voting.name }}</h1>
+    <div class="container" id="maindiv">
+        <h1 class="text-center bg-primary">{{ voting.id }} - <div id="name">{{ voting.name }}</div></h1>
 
         {% if not voting.start_date %}
             <h2 class="text-danger">{% trans ' Voting not started' %}</h2>
@@ -40,6 +40,47 @@
             </ul>
         {% endif %}
     </div>
+
+    <div class="container">
+        <canvas id="myChart"></canvas>   
+    </div>
+
+    <div id="showtitle"></div>
+    <div id="showoptions"></div>
+    <div id="showdata"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+<script>
+    var myChart = document.getElementById('myChart').getContext('2d');
+    var allDivTd = document.getElementById("maindiv").getElementsByTagName("TD");
+    var title = document.getElementById("name").innerHTML;
+
+    var data = [];
+    var labels = [];
+    
+for(var i = 0; i < allDivTd.length; i++){
+    var td = allDivTd[i];
+    if(i%2 != 0){
+        data.push(parseInt(td.innerHTML));
+    }else{
+        labels.push(td.innerHTML);
+    }
+}
+    document.getElementById("showtitle").innerHTML=title;
+    document.getElementById("showdata").innerHTML=data[0]+data[1]+data[2];
+    document.getElementById("showoptions").innerHTML = labels[0] + labels[1]+ labels[2];
+
+    var firstChart = new Chart(myChart,{
+        type:'bar', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
+        data:{
+            labels,
+            datasets:[{title, data}]
+        },
+        options:{}
+    });
+
+</script>
+
 </body>
 
 {% endblock %}
