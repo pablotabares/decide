@@ -31,8 +31,6 @@ def main(dispatcher):
      # start_handler = CommandHandler('poll', poll)
      # dispatcher.add_handler(start_handler)
      conv_handler = ConversationHandler(
-     entry_points=[CommandHandler('name', name)],
-
      states={
           DESCRIPTION: [MessageHandler(Filters.text, description)],
 
@@ -42,3 +40,6 @@ def main(dispatcher):
      fallbacks=[CommandHandler('cancel', cancel)]
      )
      dispatcher.add_handler(conv_handler)
+
+     start_handler = CommandHandler('name', name)
+     dispatcher.add_handler(start_handler)
