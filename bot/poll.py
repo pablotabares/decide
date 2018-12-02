@@ -43,5 +43,4 @@ def main(dispatcher):
      )
      dispatcher.add_handler(conv_handler)
 
-if __name__ == '__main__':
-     main()
+     dispatcher.start_polling()
