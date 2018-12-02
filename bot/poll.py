@@ -30,6 +30,7 @@ def cancel(bot, update):
 def main(dispatcher):
      # start_handler = CommandHandler('poll', poll)
      # dispatcher.add_handler(start_handler)
+     print("entered main")
      conv_handler = ConversationHandler(
      entry_points=[CommandHandler('name', name)],
 
@@ -42,5 +43,3 @@ def main(dispatcher):
      fallbacks=[CommandHandler('cancel', cancel)]
      )
      dispatcher.add_handler(conv_handler)
-
-     dispatcher.start_polling()
