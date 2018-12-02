@@ -11,14 +11,16 @@
         {% elif not voting.end_date %}
             <h2 class="text-warning">{% trans ' Voting is opened' %}</h2>
         {% else %}
+
             <h2 class="text-left bg-secondary">{% trans ' Results table: ' %}</h2>
 
             <ul>  
-                {{voting.question.desc}}
-                {{voting.desc}}
-                {% trans 'Fecha de inicio: ' %}{{voting.start_date}}
-                {{voting.end_date}}
-                {{voting.tally|length}}
+                {% trans 'Answer: ' %} {{voting.question.desc}}</br>
+                {% trans 'Description: ' %} {{voting.desc}}</br>
+                {% trans 'Start date: ' %}{{voting.start_date}}</br>
+                {% trans 'End date: ' %}{{voting.end_date}}</br>
+                {% trans 'Total votes: ' %}{{voting.tally|length}}</br>
+
                 <table class="table">
                     <thead>
                       <tr>
