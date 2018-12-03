@@ -129,6 +129,91 @@ class PostProcView(APIView):
             })
         return Response(out)
 
+    def genderBalanced(self, options):
+        dataIn = options
+        dataIn.sort(key=lambda x: -x['votes'])
+        out = []
+        
+        votes = False
+        for o in options:
+            if o['votes'] != 0:
+                votes = True
+                break
+
+        if not votes:
+            for opt in options:
+                out.append({
+                    **opt,
+                    'postproc': 0
+                })
+            return Response(out)
+
+
+        maleList = [x for x in dataIn if x['gender'] == 'MALE']
+        femaleList = [x for x in dataIn if x['gender'] == 'FEMALE']
+
+        pos = 1
+        if maleList[0]['votes'] > femaleList[0]['votes']:
+            for i in range(0, max(len(maleList), len(femaleList))):
+                if i < len(maleList):
+                    out.append({
+                        **maleList[i],
+                        'postproc': pos,
+                    })
+                    pos += 1
+                if i < len(femaleList):
+                    out.append({
+                        **femaleList[i],
+                        'postproc': pos,
+                    })
+                    pos += 1
+        elif maleList[0]['votes'] == femaleList[0]['votes']:
+            sel = random.randint(0, 1)
+            if sel == 0:
+                for i in range(0, max(len(maleList), len(femaleList))):
+                    if i < len(maleList):
+                        out.append({
+                            **maleList[i],
+                            'postproc': pos,
+                        })
+                        pos += 1
+                    if i < len(femaleList):
+                        out.append({
+                            **femaleList[i],
+                            'postproc': pos,
+                        })
+                        pos += 1
+            else:
+                for i in range(0, max(len(maleList), len(femaleList))):
+                    if i <= len(femaleList):
+                        out.append({
+                            **femaleList[i],
+                            'postproc': pos,
+                        })
+                        pos += 1
+                    if i <= len(maleList):
+                        out.append({
+                            **maleList[i],
+                            'postproc': pos,
+                        })
+                        pos += 1                    
+        else:
+            for i in range(0, max(len(maleList), len(femaleList))):
+                if i <= len(femaleList):
+                    out.append({
+                        **femaleList[i],
+                        'postproc': pos,
+                    })
+                    pos += 1
+                if i <= len(maleList):
+                    out.append({
+                        **maleList[i],
+                        'postproc': pos,
+                    })
+                    pos += 1
+        out.sort(key=lambda x: x['postproc'])
+        return Response(out)
+
     def post(self, request):
         """
          * type: IDENTITY | EQUALITY | WEIGHT | BORDA
@@ -161,5 +246,7 @@ class PostProcView(APIView):
         elif t == 'MULTIPLE':
             questions = request.data.get('questions', [])
             return self.multiquestion(questions)
+        elif t == 'GENDER-BALANCED':
+            return self.genderBalanced(opts)
 
         return Response({})
