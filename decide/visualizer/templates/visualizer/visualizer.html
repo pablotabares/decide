@@ -42,21 +42,25 @@
     </div>
 
     <div class="container">
-        <canvas id="myChart"></canvas>   
+        <canvas id="myChart" width="200" height="100" style="border:1px solid #000000;"></canvas>   
+    </br>
+        <canvas id="my2Chart" width="200" height="100" style="border:1px solid #000000;"></canvas>
+    </br> 
+        <canvas id="my3Chart" width="200" height="100" style="border:1px solid #000000;"></canvas>  
+    </br>
     </div>
-
-    <div id="showtitle"></div>
-    <div id="showoptions"></div>
-    <div id="showdata"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
 <script>
     var myChart = document.getElementById('myChart').getContext('2d');
+    var my2Chart = document.getElementById('my2Chart').getContext('2d');
+    var my3Chart = document.getElementById('my3Chart').getContext('2d');
     var allDivTd = document.getElementById("maindiv").getElementsByTagName("TD");
     var title = document.getElementById("name").innerHTML;
 
     var data = [];
     var labels = [];
+    var label = title;
     
 for(var i = 0; i < allDivTd.length; i++){
     var td = allDivTd[i];
@@ -66,17 +70,90 @@ for(var i = 0; i < allDivTd.length; i++){
         labels.push(td.innerHTML);
     }
 }
-    document.getElementById("showtitle").innerHTML=title;
-    document.getElementById("showdata").innerHTML=data[0]+data[1]+data[2];
-    document.getElementById("showoptions").innerHTML = labels[0] + labels[1]+ labels[2];
 
+    // barchart.
     var firstChart = new Chart(myChart,{
         type:'bar', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
         data:{
             labels,
-            datasets:[{title, data}]
+            datasets:[{
+            label,
+            data , 
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
+            }]
         },
-        options:{}
+        options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        legend:{display:false},
+        responsive:true
+    }
+    });
+
+    // Doghnut chart.
+    var secondChart = new Chart(my2Chart,{
+        type:'doughnut', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
+        data:{
+            labels,
+            datasets:[{
+            label,
+            data , 
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
+            }]
+        },
+        options: {responsive:true}
+    });
+
+
+    var thirdChart = new Chart(my3Chart,{
+        type:'polarArea', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
+        data:{
+            labels,
+            datasets:[{
+            label,
+            data , 
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
+            }]
+        },
+        options: {responsive:true}
     });
 
 </script>
