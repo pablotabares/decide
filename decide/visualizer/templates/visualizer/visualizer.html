@@ -26,24 +26,26 @@
 
             <h2 class="text-left bg-secondary">{% trans ' Results table: ' %}</h2>
 
-            <ul>
-                <table class="table table-bordered table-hover table-condensed">
-                    <thead class="bg-success">
-                      <tr>
-                        <th>Options</th>
-                        <th>Total votes</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        {% for option in voting.postproc %}
-                        <td>{{option.option}}</td>
-                        <td>{{option.votes}}</td>
-                      </tr>
-                        {% endfor %} 
-                    </tbody>
-                  </table>
-            </ul>
+            <div data-spy="scroll">
+                <ul>
+                    <table class="table table-bordered table-hover table-condensed table-responsive">
+                        <thead class="bg-success">
+                        <tr>
+                            <th>Options</th>
+                            <th>Total votes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {% for option in voting.postproc %}
+                            <td>{{option.option}}</td>
+                            <td>{{option.votes}}</td>
+                        </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </ul>
+            </div>
         {% endif %}
         <h2 class="text-left bg-secondary">{% trans ' Graph results: ' %}</h2>
     </div>
