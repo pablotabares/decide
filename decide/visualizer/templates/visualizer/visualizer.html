@@ -21,8 +21,8 @@
                 {% trans 'End date: ' %}{{voting.end_date|slice:"0:10"}}</br>
                 {% trans 'Total votes: ' %}{{voting.tally|length}}</br>
 
-                <table class="table">
-                    <thead>
+                <table class="table table-bordered table-hover table-condensed">
+                    <thead class="bg-success">
                       <tr>
                         <th>Options</th>
                         <th>Total votes</th>
