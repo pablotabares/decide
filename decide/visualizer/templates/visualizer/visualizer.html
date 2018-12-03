@@ -17,10 +17,10 @@
             <ul>  
                 {% trans 'Question: ' %} {{voting.question.desc}}</br>
                 {% trans 'Description: ' %} {{voting.desc}}</br>
-                {% trans 'Start date: ' %}{{voting.start_date|slice:"0:10"}}</br>
-                {% trans 'End date: ' %}{{voting.end_date|slice:"0:10"}}</br>
+                {% trans 'Start date: ' %}{{voting.start_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.start_date|slice:"11:19"}}</br>
+                {% trans 'End date: ' %}{{voting.end_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.end_date|slice:"11:19"}}</br>
                 {% trans 'Total votes: ' %}{{voting.tally|length}}</br>
-
+            </br>
                 <table class="table table-bordered table-hover table-condensed">
                     <thead class="bg-success">
                       <tr>
