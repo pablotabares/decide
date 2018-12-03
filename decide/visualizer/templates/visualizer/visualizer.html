@@ -4,7 +4,7 @@
 {% block content %}
 <body class="bg-secondary">
     <div class="container" id="maindiv">
-        <h1 class="text-center bg-primary">{{ voting.id }} - <div id="name">{{ voting.name }}</div></h1>
+        <h1 class="text-center bg-primary"><div id="name">{{ voting.name }}</div></h1>
 
         {% if not voting.start_date %}
             <h2 class="text-danger">{% trans ' Voting not started' %}</h2>
@@ -12,15 +12,21 @@
             <h2 class="text-warning">{% trans ' Voting is opened' %}</h2>
         {% else %}
 
-            <h2 class="text-left bg-secondary">{% trans ' Results table: ' %}</h2>
+            <h2 class="text-left bg-secondary">{% trans ' Voting data: ' %}</h2>
+            </br>
 
             <ul>  
-                {% trans 'Question: ' %} {{voting.question.desc}}</br>
-                {% trans 'Description: ' %} {{voting.desc}}</br>
-                {% trans 'Start date: ' %}{{voting.start_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.start_date|slice:"11:19"}}</br>
-                {% trans 'End date: ' %}{{voting.end_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.end_date|slice:"11:19"}}</br>
-                {% trans 'Total votes: ' %}{{voting.tally|length}}</br>
+                <h4><strong>{% trans 'Question: ' %}</strong> {{voting.question.desc}}</h4>
+                <h4><strong>{% trans 'Description: ' %}</strong> {{voting.desc}}</h4>
+                <h4><strong>{% trans 'Start date: ' %}</strong> {{voting.start_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.start_date|slice:"11:19"}}</h4>
+                <h4><strong>{% trans 'End date: ' %}</strong> {{voting.end_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.end_date|slice:"11:19"}}</h4>
+                <h4><strong>{% trans 'Total votes: ' %}</strong> {{voting.tally|length}}</h4>
             </br>
+            </ul>
+
+            <h2 class="text-left bg-secondary">{% trans ' Results table: ' %}</h2>
+
+            <ul>
                 <table class="table table-bordered table-hover table-condensed">
                     <thead class="bg-success">
                       <tr>
@@ -39,7 +45,10 @@
                   </table>
             </ul>
         {% endif %}
+        <h2 class="text-left bg-secondary">{% trans ' Graph results: ' %}</h2>
     </div>
+
+    
 
     <div class="container">
         <canvas id="myChart" width="200" height="100" style="border:1px solid #000000;"></canvas>   
