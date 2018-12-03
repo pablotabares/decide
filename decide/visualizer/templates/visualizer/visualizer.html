@@ -15,7 +15,7 @@
             <h2 class="text-left bg-secondary">{% trans ' Results table: ' %}</h2>
 
             <ul>  
-                {% trans 'Answer: ' %} {{voting.question.desc}}</br>
+                {% trans 'Question: ' %} {{voting.question.desc}}</br>
                 {% trans 'Description: ' %} {{voting.desc}}</br>
                 {% trans 'Start date: ' %}{{voting.start_date|slice:"0:10"}}</br>
                 {% trans 'End date: ' %}{{voting.end_date|slice:"0:10"}}</br>
