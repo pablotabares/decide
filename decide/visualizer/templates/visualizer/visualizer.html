@@ -17,8 +17,8 @@
             <ul>  
                 {% trans 'Answer: ' %} {{voting.question.desc}}</br>
                 {% trans 'Description: ' %} {{voting.desc}}</br>
-                {% trans 'Start date: ' %}{{voting.start_date}}</br>
-                {% trans 'End date: ' %}{{voting.end_date}}</br>
+                {% trans 'Start date: ' %}{{voting.start_date|slice:"0:10"}}</br>
+                {% trans 'End date: ' %}{{voting.end_date|slice:"0:10"}}</br>
                 {% trans 'Total votes: ' %}{{voting.tally|length}}</br>
 
                 <table class="table">

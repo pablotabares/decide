@@ -4,7 +4,6 @@ from django.http import Http404
 
 from base import mods
 
-
 class VisualizerView(TemplateView):
     template_name = 'visualizer/visualizer.html'
 
