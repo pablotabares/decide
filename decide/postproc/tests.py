@@ -309,3 +309,378 @@ class PostProcTestCase(APITestCase):
 
         values = response.json()
         self.assertEqual(values, expected_result)
+
+    def test_gender_balanced_1(self):
+        data = {
+            "type": "GENDER-BALANCED",
+            "options": [{
+                "votes": 5,
+                "option": "Man 1",
+                "number": 1,
+                "gender": "MALE"
+            }, {
+                "votes": 4,
+                "option": "Man 2",
+                "number": 3,
+                "gender": "MALE"
+            }, {
+                "votes": 3,
+                "option": "Woman 1",
+                "number": 2,
+                "gender": "FEMALE"
+            }, {
+                "votes": 1,
+                "option": "Woman 2",
+                "number": 4,
+                "gender": "FEMALE"
+            }]
+        }
+
+        expected_result = [
+            {
+                "votes": 5,
+                "option": "Man 1",
+                "number": 1,
+                "gender": "MALE",
+                "postproc": 1
+            },
+            {
+                "votes": 3,
+                "option": "Woman 1",
+                "number": 2,
+                "gender": "FEMALE",
+                "postproc": 2
+            },
+            {
+                "votes": 4,
+                "option": "Man 2",
+                "number": 3,
+                "gender": "MALE",
+                "postproc": 3
+            },
+            {
+                "votes": 1,
+                "option": "Woman 2",
+                "number": 4,
+                "gender": "FEMALE",
+                "postproc": 4
+            }
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+    def test_gender_balanced_2(self):
+        data = {
+            "type": "GENDER-BALANCED",
+            "options": [{
+                "votes": 0,
+                "option": "Man 1",
+                "number": 1,
+                "gender": "MALE"
+            }, {
+                "votes": 0,
+                "option": "Woman 1",
+                "number": 2,
+                "gender": "FEMALE"
+            }, {
+                "votes": 0,
+                "option": "Man 2",
+                "number": 3,
+                "gender": "MALE"
+            }, {
+                "votes": 0,
+                "option": "Woman 2",
+                "number": 4,
+                "gender": "FEMALE"
+            }]
+        }
+
+        expected_result = [
+            {
+                "votes": 0,
+                "option": "Man 1",
+                "number": 1,
+                "gender": "MALE",
+                "postproc": 0
+            },
+            {
+                "votes": 0,
+                "option": "Woman 1",
+                "number": 2,
+                "gender": "FEMALE",
+                "postproc": 0
+            },
+            {
+                "votes": 0,
+                "option": "Man 2",
+                "number": 3,
+                "gender": "MALE",
+                "postproc": 0
+            },
+            {
+                "votes": 0,
+                "option": "Woman 2",
+                "number": 4,
+                "gender": "FEMALE",
+                "postproc": 0
+            }
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+    def test_gender_balanced_3(self):
+        data = {
+            "type": "GENDER-BALANCED",
+            "options": [{
+                "votes": 5,
+                "option": "Man 1",
+                "number": 1,
+                "gender": "MALE"
+            }, {
+                "votes": 4,
+                "option": "Man 2",
+                "number": 3,
+                "gender": "MALE"
+            }, {
+                "votes": 1,
+                "option": "Woman 1",
+                "number": 2,
+                "gender": "FEMALE"
+            }, {
+                "votes": 3,
+                "option": "Man 3",
+                "number": 4,
+                "gender": "MALE"
+            }]
+        }
+
+        expected_result = [
+            {
+                "votes": 5,
+                "option": "Man 1",
+                "number": 1,
+                "gender": "MALE",
+                "postproc": 1
+            },
+            {
+                "votes": 1,
+                "option": "Woman 1",
+                "number": 2,
+                "gender": "FEMALE",
+                "postproc": 2
+            },
+            {
+                "votes": 4,
+                "option": "Man 2",
+                "number": 3,
+                "gender": "MALE",
+                "postproc": 3
+            },
+            {
+                "votes": 3,
+                "option": "Man 3",
+                "number": 4,
+                "gender": "MALE",
+                "postproc": 4
+            }
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+    def test_gender_balanced_4(self):
+        data = {
+            "type": "GENDER-BALANCED",
+            "options": [{
+                "votes": 5,
+                "option": "Man 1",
+                "number": 1,
+                "gender": "MALE"
+            }, {
+                "votes": 10,
+                "option": "Woman 1",
+                "number": 2,
+                "gender": "FEMALE"
+            }, {
+                "votes": 4,
+                "option": "Man 2",
+                "number": 3,
+                "gender": "MALE"
+            }, {
+                "votes": 3,
+                "option": "Man 3",
+                "number": 4,
+                "gender": "MALE"
+            }]
+        }
+
+        expected_result = [      
+            {
+                "votes": 10,
+                "option": "Woman 1",
+                "number": 2,
+                "gender": "FEMALE",
+                "postproc": 1
+            },{
+                "votes": 5,
+                "option": "Man 1",
+                "number": 1,
+                "gender": "MALE",
+                "postproc": 2
+            },
+            {
+                "votes": 4,
+                "option": "Man 2",
+                "number": 3,
+                "gender": "MALE",
+                "postproc": 3
+            },
+            {
+                "votes": 3,
+                "option": "Man 3",
+                "number": 4,
+                "gender": "MALE",
+                "postproc": 4
+            }
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+    def test_gender_balanced_5(self):
+        data = {
+            "type": "GENDER-BALANCED",
+            "options": [{
+                "votes": 5,
+                "option": "Man 1",
+                "number": 1,
+                "gender": "MALE"
+            }, {
+                "votes": 10,
+                "option": "Man 2",
+                "number": 2,
+                "gender": "MALE"
+            }, {
+                "votes": 4,
+                "option": "Man 3",
+                "number": 3,
+                "gender": "MALE"
+            }, {
+                "votes": 3,
+                "option": "Man 4",
+                "number": 4,
+                "gender": "MALE"
+            }]
+        }
+
+        expected_result = [      
+            {
+                "votes": 10,
+                "option": "Man 2",
+                "number": 2,
+                "gender": "MALE",
+                "postproc": 1
+            },{
+                "votes": 5,
+                "option": "Man 1",
+                "number": 1,
+                "gender": "MALE",
+                "postproc": 2
+            },
+            {
+                "votes": 4,
+                "option": "Man 3",
+                "number": 3,
+                "gender": "MALE",
+                "postproc": 3
+            },
+            {
+                "votes": 3,
+                "option": "Man 4",
+                "number": 4,
+                "gender": "MALE",
+                "postproc": 4
+            }
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+    def test_gender_balanced_6(self):
+        data = {
+            "type": "GENDER-BALANCED",
+            "options": [{
+                "votes": 5,
+                "option": "Woman 1",
+                "number": 1,
+                "gender": "FEMALE"
+            }, {
+                "votes": 10,
+                "option": "Woman 2",
+                "number": 2,
+                "gender": "FEMALE"
+            }, {
+                "votes": 40,
+                "option": "Woman 3",
+                "number": 3,
+                "gender": "FEMALE"
+            }, {
+                "votes": 3,
+                "option": "Woman 4",
+                "number": 4,
+                "gender": "FEMALE"
+            }]
+        }
+
+        expected_result = [
+            {
+                "votes": 40,
+                "option": "Woman 3",
+                "number": 3,
+                "gender": "FEMALE",
+                "postproc": 1
+            },{
+                "votes": 10,
+                "option": "Woman 2",
+                "number": 2,
+                "gender": "FEMALE",
+                "postproc": 2
+            },
+            {
+                "votes": 5,
+                "option": "Woman 1",
+                "number": 1,
+                "gender": "FEMALE",
+                "postproc": 3
+            },
+            {
+                "votes": 3,
+                "option": "Woman 4",
+                "number": 4,
+                "gender": "FEMALE",
+                "postproc": 4
+            }
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
