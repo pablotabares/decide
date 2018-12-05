@@ -21,6 +21,7 @@
                 <h4><strong>{% trans 'Start date: ' %}</strong> {{voting.start_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.start_date|slice:"11:19"}}</h4>
                 <h4><strong>{% trans 'End date: ' %}</strong> {{voting.end_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.end_date|slice:"11:19"}}</h4>
                 <h4><strong>{% trans 'Total votes: ' %}</strong> {{voting.tally|length}}</h4>
+                <h4><strong>{% trans 'People registered in the Census: ' %}</strong>{{census.voters|length}}</h4>
             </br>
             </ul>
 
