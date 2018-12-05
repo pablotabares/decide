@@ -43,11 +43,11 @@ class PostProcView(APIView):
                 })
             return Response(out)
 
-        randomValue = random.randint(0, nVotes-1)
+        random_value = random.randint(0, nVotes-1)
         found = False
         for i in range(0, len(options)):
-            randomValue -= options[i]["votes"]
-            if randomValue < 0 and not found:
+            random_value -= options[i]["votes"]
+            if random_value < 0 and not found:
                 out.append({
                     **options[i],
                     'postproc': True
@@ -130,8 +130,8 @@ class PostProcView(APIView):
         return Response(out)
 
     def genderBalanced(self, options):
-        dataIn = options
-        dataIn.sort(key=lambda x: -x['votes'])
+        data_in = options
+        data_in.sort(key=lambda x: -x['votes'])
         out = []
 
         votes = False
@@ -152,14 +152,14 @@ class PostProcView(APIView):
             return Response(out)
 
 
-        maleList = [x for x in dataIn if x['gender'] == 'MALE']
-        femaleList = [x for x in dataIn if x['gender'] == 'FEMALE']
+        male_list = [x for x in data_in if x['gender'] == 'MALE']
+        female_list = [x for x in data_in if x['gender'] == 'FEMALE']
 
         pos = 0
 
         # If there is no male options in the voting
-        if not maleList:
-            for i in femaleList:
+        if not male_list:
+            for i in female_list:
                 out.append({
                     **i,
                     'postproc': pos+1,
@@ -168,8 +168,8 @@ class PostProcView(APIView):
             return Response(out)
 
         # If there is no female options in the voting
-        elif not femaleList:
-            for i in maleList:
+        elif not female_list:
+            for i in male_list:
                 out.append({
                     **i,
                     'postproc': pos+1,
@@ -178,67 +178,67 @@ class PostProcView(APIView):
             return Response(out)
 
         # If the most voted option is a man
-        if maleList[0]['votes'] > femaleList[0]['votes']:
-            for i in range(0, max(len(maleList), len(femaleList))):
-                if i < len(maleList):
+        if male_list[0]['votes'] > female_list[0]['votes']:
+            for i in range(0, max(len(male_list), len(female_list))):
+                if i < len(male_list):
                     out.append({
-                        **maleList[i],
+                        **male_list[i],
                         'postproc': pos+1,
                     })
                     pos += 1
-                if i < len(femaleList):
+                if i < len(female_list):
                     out.append({
-                        **femaleList[i],
+                        **female_list[i],
                         'postproc': pos+1,
                     })
                     pos += 1
-        elif maleList[0]['votes'] == femaleList[0]['votes']:
+        elif male_list[0]['votes'] == female_list[0]['votes']:
             sel = random.randint(0, 1)
 
             # If randomly selected, the first option is a man
             if sel == 0:
-                for i in range(0, max(len(maleList), len(femaleList))):
-                    if i < len(maleList):
+                for i in range(0, max(len(male_list), len(female_list))):
+                    if i < len(male_list):
                         out.append({
-                            **maleList[i],
+                            **male_list[i],
                             'postproc': pos+1,
                         })
                         pos += 1
-                    if i < len(femaleList):
+                    if i < len(female_list):
                         out.append({
-                            **femaleList[i],
+                            **female_list[i],
                             'postproc': pos+1,
                         })
                         pos += 1
 
             # If randomly selected, the first option is a woman
             else:
-                for i in range(0, max(len(maleList), len(femaleList))):
-                    if i < len(femaleList):
+                for i in range(0, max(len(male_list), len(female_list))):
+                    if i < len(female_list):
                         out.append({
-                            **femaleList[i],
+                            **female_list[i],
                             'postproc': pos+1,
                         })
                         pos += 1
-                    if i < len(maleList):
+                    if i < len(male_list):
                         out.append({
-                            **maleList[i],
+                            **male_list[i],
                             'postproc': pos+1,
                         })
                         pos += 1
 
         # If the most voted option is a woman
         else:
-            for i in range(0, max(len(maleList), len(femaleList))):
-                if i < len(femaleList):
+            for i in range(0, max(len(male_list), len(female_list))):
+                if i < len(female_list):
                     out.append({
-                        **femaleList[i],
+                        **female_list[i],
                         'postproc': pos+1,
                     })
                     pos += 1
-                if i < len(maleList):
+                if i < len(male_list):
                     out.append({
-                        **maleList[i],
+                        **male_list[i],
                         'postproc': pos+1,
                     })
                     pos += 1
