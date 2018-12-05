@@ -31,11 +31,11 @@ class PostProcView(APIView):
 
     def weightedRandomSelection(self, options):
         out = []
-        nVotes = 0
+        n_votes = 0
         for opt in options:
-            nVotes += opt["votes"]
+            n_votes += opt["votes"]
 
-        if nVotes == 0:
+        if n_votes == 0:
             for opt in options:
                 out.append({
                     **opt,
@@ -43,7 +43,7 @@ class PostProcView(APIView):
                 })
             return Response(out)
 
-        random_value = random.randint(0, nVotes-1)
+        random_value = random.randint(0, n_votes-1)
         found = False
         for i in range(0, len(options)):
             random_value -= options[i]["votes"]
@@ -130,6 +130,42 @@ class PostProcView(APIView):
         return Response(out)
 
     def genderBalanced(self, options):
+        def male_first(male_list, female_list):
+            pos = 0
+            out = []
+            for i in range(0, max(len(male_list), len(female_list))):
+                if i < len(male_list):
+                    out.append({
+                        **male_list[i],
+                        'postproc': pos+1,
+                    })
+                    pos += 1
+                if i < len(female_list):
+                    out.append({
+                        **female_list[i],
+                        'postproc': pos+1,
+                    })
+                    pos += 1
+            return out
+
+        def female_first(male_list, female_list):
+            pos = 0
+            out = []
+            for i in range(0, max(len(male_list), len(female_list))):
+                if i < len(female_list):
+                    out.append({
+                        **female_list[i],
+                        'postproc': pos+1,
+                    })
+                    pos += 1
+                if i < len(male_list):
+                    out.append({
+                        **male_list[i],
+                        'postproc': pos+1,
+                    })
+                    pos += 1
+            return out
+
         data_in = options
         data_in.sort(key=lambda x: -x['votes'])
         out = []
@@ -156,7 +192,6 @@ class PostProcView(APIView):
         female_list = [x for x in data_in if x['gender'] == 'FEMALE']
 
         pos = 0
-
         # If there is no male options in the voting
         if not male_list:
             for i in female_list:
@@ -168,7 +203,7 @@ class PostProcView(APIView):
             return Response(out)
 
         # If there is no female options in the voting
-        elif not female_list:
+        if not female_list:
             for i in male_list:
                 out.append({
                     **i,
@@ -179,69 +214,22 @@ class PostProcView(APIView):
 
         # If the most voted option is a man
         if male_list[0]['votes'] > female_list[0]['votes']:
-            for i in range(0, max(len(male_list), len(female_list))):
-                if i < len(male_list):
-                    out.append({
-                        **male_list[i],
-                        'postproc': pos+1,
-                    })
-                    pos += 1
-                if i < len(female_list):
-                    out.append({
-                        **female_list[i],
-                        'postproc': pos+1,
-                    })
-                    pos += 1
+            return  Response(male_first(male_list, female_list))
         elif male_list[0]['votes'] == female_list[0]['votes']:
             sel = random.randint(0, 1)
 
             # If randomly selected, the first option is a man
             if sel == 0:
-                for i in range(0, max(len(male_list), len(female_list))):
-                    if i < len(male_list):
-                        out.append({
-                            **male_list[i],
-                            'postproc': pos+1,
-                        })
-                        pos += 1
-                    if i < len(female_list):
-                        out.append({
-                            **female_list[i],
-                            'postproc': pos+1,
-                        })
-                        pos += 1
+                return Response(male_first(male_list, female_list))
 
             # If randomly selected, the first option is a woman
             else:
-                for i in range(0, max(len(male_list), len(female_list))):
-                    if i < len(female_list):
-                        out.append({
-                            **female_list[i],
-                            'postproc': pos+1,
-                        })
-                        pos += 1
-                    if i < len(male_list):
-                        out.append({
-                            **male_list[i],
-                            'postproc': pos+1,
-                        })
-                        pos += 1
+                return Response(female_first(male_list, female_list))
 
         # If the most voted option is a woman
         else:
-            for i in range(0, max(len(male_list), len(female_list))):
-                if i < len(female_list):
-                    out.append({
-                        **female_list[i],
-                        'postproc': pos+1,
-                    })
-                    pos += 1
-                if i < len(male_list):
-                    out.append({
-                        **male_list[i],
-                        'postproc': pos+1,
-                    })
-                    pos += 1
+            return Response(female_first(male_list, female_list))
+
         return Response(out)
 
     def post(self, request):
