@@ -656,21 +656,19 @@ class PostProcTestCase(APITestCase):
                 "number": 3,
                 "gender": "FEMALE",
                 "postproc": 1
-            },{
+            }, {
                 "votes": 10,
                 "option": "Woman 2",
                 "number": 2,
                 "gender": "FEMALE",
                 "postproc": 2
-            },
-            {
+            }, {
                 "votes": 5,
                 "option": "Woman 1",
                 "number": 1,
                 "gender": "FEMALE",
                 "postproc": 3
-            },
-            {
+            }, {
                 "votes": 3,
                 "option": "Woman 4",
                 "number": 4,

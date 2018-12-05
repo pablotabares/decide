@@ -1,6 +1,6 @@
+import random
 from rest_framework.views import APIView
 from rest_framework.response import Response
-import random
 
 
 class PostProcView(APIView):
@@ -109,7 +109,7 @@ class PostProcView(APIView):
                 
             out[opt_p] = suma 
         return Response(out)
- 
+
     def multiquestion(self, questions):
         out = []
 
@@ -173,21 +173,11 @@ class PostProcView(APIView):
         if male_list[0]['votes'] > female_list[0]['votes']:
             return  Response(add_first(male_list, female_list))
         elif male_list[0]['votes'] == female_list[0]['votes']:
-            sel = random.randint(0, 1)
-
-            # If randomly selected, the first option is a man
-            if sel == 0:
-                return Response(add_first(male_list, female_list))
-
-            # If randomly selected, the first option is a woman
-            else:
-                return Response(add_first(female_list, male_list))
-
+            out = add_first(male_list, female_list) if random.randint(0, 1) else add_first(female_list, male_list)
+            return Response(out)
+            
         # If the most voted option is a woman
-        else:
-            return Response(add_first(female_list, male_list))
-
-        return Response(out)
+        return Response(add_first(female_list, male_list))
 
     def post(self, request):
         """
