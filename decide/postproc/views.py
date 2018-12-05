@@ -170,16 +170,8 @@ class PostProcView(APIView):
         data_in.sort(key=lambda x: -x['votes'])
         out = []
 
-        votes = False
-
-        #Checking if there is any vote
-        for o in options:
-            if o['votes'] != 0:
-                votes = True
-                break
-
         # If there is no votes, 'postproc' will be 0 in all the options
-        if not votes:
+        if data_in[0]['votes'] == 0:
             for opt in options:
                 out.append({
                     **opt,
