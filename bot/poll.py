@@ -2,7 +2,6 @@
 from telegram.ext import (CommandHandler, Filters, ConversationHandler, MessageHandler)
 from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
 import utils.logger as logger
-from test.test_enum import Question
 
 NAME, DESCRIPTION, QUESTION, ANSWERS, NEXT_QUESTION = range(5)
 
