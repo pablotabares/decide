@@ -156,8 +156,6 @@ class PostProcView(APIView):
             return self.hondt(opts, escanyos)
         elif t == 'BORDA':
             return self.borda(opts)
-            seats = request.data.get('seats', 1)
-            return self.hondt(opts, seats)
         elif t == 'MULTIPLE':
             questions = request.data.get('questions', [])
             return self.multiquestion(questions)
