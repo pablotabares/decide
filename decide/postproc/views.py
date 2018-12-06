@@ -152,8 +152,8 @@ class PostProcView(APIView):
         elif t == 'WEIGHTED-RANDOM':
             return self.weightedRandomSelection(opts)
         elif t == 'HONDT':
-            escanyos = request.data.get('escanyos', 1)
-            return self.hondt(opts, escanyos)
+            seats = request.data.get('seats', 1)
+            return self.hondt(opts, seats)
         elif t == 'BORDA':
             return self.borda(opts)
         elif t == 'MULTIPLE':
