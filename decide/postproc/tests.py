@@ -60,11 +60,11 @@ class PostProcTestCase(APITestCase):
         values = response.json()
         selected = False
         for v in values:
-            if selected and v['postproc'] == True:
+            if selected and v['postproc']:
                 selected = False
                 print("Two values are selected!")
                 break
-            if v['postproc'] == True:
+            if v['postproc']:
                 selected = True
 
         self.assertTrue(selected)
@@ -84,20 +84,20 @@ class PostProcTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
 
         values = response.json()
-        firstTrue = False
-        if values[0]['postproc'] == True:
-            firstTrue = True
+        first_true = False
+        if values[0]['postproc']:
+            first_true = True
 
         selected = False
         for v in values:
-            if selected and v['postproc'] == True:
+            if selected and v['postproc']:
                 selected = False
                 print("Two values are selected!")
                 break
-            if v['postproc'] == True:
+            if v['postproc']:
                 selected = True
 
-        self.assertTrue(firstTrue)
+        self.assertTrue(first_true)
         self.assertTrue(selected)
 
     def test_weighted_random_test3(self):
@@ -116,7 +116,7 @@ class PostProcTestCase(APITestCase):
         values = response.json()
         selected = False
         for v in values:
-            if v['postproc'] == True:
+            if v['postproc']:
                 selected = True
                 break
 
@@ -656,21 +656,19 @@ class PostProcTestCase(APITestCase):
                 "number": 3,
                 "gender": "FEMALE",
                 "postproc": 1
-            },{
+            }, {
                 "votes": 10,
                 "option": "Woman 2",
                 "number": 2,
                 "gender": "FEMALE",
                 "postproc": 2
-            },
-            {
+            }, {
                 "votes": 5,
                 "option": "Woman 1",
                 "number": 1,
                 "gender": "FEMALE",
                 "postproc": 3
-            },
-            {
+            }, {
                 "votes": 3,
                 "option": "Woman 4",
                 "number": 4,
