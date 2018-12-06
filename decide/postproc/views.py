@@ -65,8 +65,10 @@ class PostProcView(APIView):
         out = []
         votes = []
         assignment = []
+        votesCount = 0
 
         for opt in options:
+            votesCount += opt['votes'];
             votes.append({
                 'votes': opt['votes'],
             })
@@ -84,10 +86,16 @@ class PostProcView(APIView):
                     imax = i
             assignment[imax]['seats'] += 1
         for i in range(len(options)):
-            out.append({
-                **options[i],
-                'postproc': assignment[i]['seats'],
-            })
+            if(votesCount != 0):
+                out.append({
+                    **options[i],
+                    'postproc': assignment[i]['seats'],
+                })
+            else:
+                out.append({
+                    **options[i],
+                    'postproc': 0,
+                })
 
         out.sort(key=lambda x: -x['postproc'])
         return Response(out)
