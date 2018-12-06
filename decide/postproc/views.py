@@ -129,25 +129,29 @@ class PostProcView(APIView):
             })
         return Response(out)
 
-    def genderBalanced(self, options):
-        def add_first(first_list, second_list):
-            pos = 0
-            out = []
-            for i in range(0, max(len(first_list), len(second_list))):
-                if i < len(first_list):
-                    out.append({
-                        **first_list[i],
-                        'postproc': pos+1,
-                    })
-                    pos += 1
-                if i < len(second_list):
-                    out.append({
-                        **second_list[i],
-                        'postproc': pos+1,
-                    })
-                    pos += 1
-            return out
+    def add_first(self, first_list, second_list):
+        """
+            This function alternate the elements of the first list and the second list. The first element of the
+            new list will be the first element of the first list.
+        """
+        pos = 0
+        out = []
+        for i in range(0, max(len(first_list), len(second_list))):
+            if i < len(first_list):
+                out.append({
+                    **first_list[i],
+                    'postproc': pos+1,
+                })
+                pos += 1
+            if i < len(second_list):
+                out.append({
+                    **second_list[i],
+                    'postproc': pos+1,
+                })
+                pos += 1
+        return out
 
+    def genderBalanced(self, options):
         data_in = options
         data_in.sort(key=lambda x: -x['votes'])
         out = []
@@ -167,17 +171,17 @@ class PostProcView(APIView):
 
         # If there is no male or female options in the voting
         if not female_list or not male_list:
-            return Response(add_first(male_list, female_list))
+            return Response(self.add_first(male_list, female_list))
 
         # If the most voted option is a man
         if male_list[0]['votes'] > female_list[0]['votes']:
-            return  Response(add_first(male_list, female_list))
+            return  Response(self.add_first(male_list, female_list))
         elif male_list[0]['votes'] == female_list[0]['votes']:
-            out = add_first(male_list, female_list) if random.randint(0, 1) else add_first(female_list, male_list)
+            out = self.add_first(male_list, female_list) if random.randint(0, 1) else self.add_first(female_list, male_list)
             return Response(out)
-            
-        # If the most voted option is a woman
-        return Response(add_first(female_list, male_list))
+        else:
+            # If the most voted option is a woman
+            return Response(self.add_first(female_list, male_list))
 
     def post(self, request):
         """
