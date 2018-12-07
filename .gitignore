@@ -105,3 +105,8 @@ venv.bak/
 
 # Visual Studio Code
 .vscode/
+\.project
+
+\.pydevproject
+
+\.settings/org\.eclipse\.core\.resources\.prefs
