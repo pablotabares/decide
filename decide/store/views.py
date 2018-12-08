@@ -22,6 +22,32 @@ class StoreView(generics.ListAPIView):
         self.check_permissions(request)
         return super().get(request)
 
+    def __singleQuestion(self,qid,vote,vid,uid):
+        err = 0
+
+        if not vote or not qid:
+            err = err+1
+        a = vote.get("a")
+        b = vote.get("b")
+
+        defs = { "a": a, "b": b }
+        v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,question_id=qid,
+                                        defaults=defs)
+        v.a = a
+        v.b = b
+        v.save()
+
+        return err
+
+    def __multipleQuestion(self, answers,vid,uid):
+        err = 0
+        for question in answers:
+            vote = question.get('vote')
+            qid = question.get('question')
+            err = err+self.__singleQuestion(qid,vote,vid,uid)
+        return err
+        
+                
     def post(self, request):
         """
          * voting: id
@@ -29,10 +55,8 @@ class StoreView(generics.ListAPIView):
          * question: id
          * vote: { "a": int, "b": int }
         """
-
-        print('here')
+        questions = request.data.get('questions')
         vid = request.data.get('voting')
-        qid = request.data.get('question')
         voting = mods.get('voting', params={'id': vid})
         if not voting or not isinstance(voting, list):
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
@@ -44,11 +68,12 @@ class StoreView(generics.ListAPIView):
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
         uid = request.data.get('voter')
-        vote = request.data.get('vote')
+        
 
-        if not vid or not uid or not vote:
+        if not vid or not uid:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
-
+        
+        
         # validating voter
         token = request.auth.key
         voter = mods.post('authentication', entry_point='/getuser/', json={'token': token})
@@ -60,16 +85,20 @@ class StoreView(generics.ListAPIView):
         perms = mods.get('census/{}'.format(vid), params={'voter_id': uid}, response=True)
         if perms.status_code == 401:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
+        if not questions:
+            vote = request.data.get('vote')
+            #validating question
+            if len(voting[0].get('questions')) == 1:
+                question = voting[0].get('questions')[0]
+            else:
+                return Response({}, status=status.HTTP_400_BAD_REQUEST)
+            err = self.__singleQuestion(question.get('id'),vote,vid,uid)
 
-        a = vote.get("a")
-        b = vote.get("b")
-
-        defs = { "a": a, "b": b }
-        v, _ = Vote.objects.get_or_create(voting_id=vid, voter_id=uid,question_id=qid,
-                                          defaults=defs)
-        v.a = a
-        v.b = b
-
-        v.save()
-
+        else:
+            answers = request.data.get('questions')
+            err = self.__multipleQuestion(answers,vid,uid)
+        if(err!=0):
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
         return  Response({})
+
+        

@@ -16,7 +16,7 @@
 
     <div id="voting">
         <a href="#" onClick="decideLogout()">{% trans "logout" %}</a>
-        <h2>{{ voting }}</h2>
+        <h2>{{ voting.desc }}</h2>
         {% for question in voting.questions %}
             <h2>{{ question.desc }}</h2>
 
@@ -86,13 +86,15 @@
         }
 
         function decideSend() {
+            var answers = []
             {% for question in voting.questions%}
             var q = "input[name=q{{question.id}}]:checked"
             var v = decideEncrypt(q);
+            answers.push({vote: {a: v.alpha.toString(), b: v.beta.toString()},question: {{question.id}}});
+            {% endfor %}
             var data = {
-                vote: {a: v.alpha.toString(), b: v.beta.toString()},
                 voting: {{voting.id}},
-                question: {{question.id}},
+                questions: answers,
                 voter: user.id,
                 token: token
             }
@@ -105,7 +107,7 @@
                 alert("{% trans "Error: " %}" + error);
                 console.error(error);
               });
-              {% endfor %}
+              
         }
 
         function decideLogout() {
