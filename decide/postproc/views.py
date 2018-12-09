@@ -65,10 +65,10 @@ class PostProcView(APIView):
         out = []
         votes = []
         assignment = []
-        votesCount = 0
+        votescount = 0
 
         for opt in options:
-            votesCount += opt['votes'];
+            votescount += opt['votes'];
             votes.append({
                 'votes': opt['votes'],
             })
@@ -86,7 +86,7 @@ class PostProcView(APIView):
                     imax = i
             assignment[imax]['seats'] += 1
         for i in range(len(options)):
-            if(votesCount != 0):
+            if(votescount != 0):
                 out.append({
                     **options[i],
                     'postproc': assignment[i]['seats'],
@@ -109,11 +109,11 @@ class PostProcView(APIView):
             option_positions[opcion] = posiciones
 
         # We add 1, we have 2 options, I want to do 2+1 - posicion. Fist position 3-1=2 points
-        nOptions = len(options) + 1
+        noptions = len(options) + 1
         for opt_p in option_positions:
             suma = 0
             for p in option_positions.get(opt_p): #We caugth positions [1,1,2]
-                suma += nOptions - p #We add points
+                suma += noptions - p #We add points
                 
             out[opt_p] = suma 
         return Response(out)
@@ -218,8 +218,6 @@ class PostProcView(APIView):
             return self.hondt(opts, seats)
         elif t == 'BORDA':
             return self.borda(opts)
-            seats = request.data.get('seats', 1)
-            return self.hondt(opts, seats)
         elif t == 'MULTIPLE':
             questions = request.data.get('questions', [])
             return self.multiquestion(questions)
