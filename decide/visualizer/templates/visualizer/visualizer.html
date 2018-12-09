@@ -20,8 +20,8 @@
                 <h4><strong>{% trans 'Description: ' %}</strong> {{voting.desc}}</h4>
                 <h4><strong>{% trans 'Start date: ' %}</strong> {{voting.start_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.start_date|slice:"11:19"}}</h4>
                 <h4><strong>{% trans 'End date: ' %}</strong> {{voting.end_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.end_date|slice:"11:19"}}</h4>
-                <h4><strong>{% trans 'Total votes: ' %}</strong> {{voting.tally|length}}</h4>
-                <h4><strong>{% trans 'People registered in the Census: ' %}</strong>{{census.voters|length}}</h4>
+                <h4><strong>{% trans 'Total votes: ' %}</strong> <div id="tally">{{voting.tally|length}}</div></h4>
+                <h4><strong>{% trans 'People registered in the Census: ' %}</strong><div id="censusVoters">{{census.voters|length}}</div></h4>
             </br>
             </ul>
 
@@ -54,11 +54,13 @@
     
 
     <div class="container">
+        <h4 class="text-left bg-secondary">Votos</h4>
         <canvas id="myChart" width="200" height="100" style="border:1px solid #000000;"></canvas>   
     </br>
-        <canvas id="my2Chart" width="200" height="100" style="border:1px solid #000000;"></canvas>
+        <canvas id="my3Chart" width="200" height="100" style="border:1px solid #000000;"></canvas> 
     </br> 
-        <canvas id="my3Chart" width="200" height="100" style="border:1px solid #000000;"></canvas>  
+        <h4 class="text-left bg-secondary">Participacion</h4>
+        <canvas id="my2Chart" width="200" height="100" style="border:1px solid #000000;"></canvas> 
     </br>
     </div>
 
@@ -69,6 +71,8 @@
     var my3Chart = document.getElementById('my3Chart').getContext('2d');
     var allDivTd = document.getElementById("maindiv").getElementsByTagName("TD");
     var title = document.getElementById("name").innerHTML;
+    var census = parseInt(document.getElementById("censusVoters").innerHTML);
+    var tally = parseInt(document.getElementById("tally").innerHTML)
 
     var data = [];
     var labels = [];
@@ -118,9 +122,8 @@ for(var i = 0; i < allDivTd.length; i++){
     }
     });
 
-    // Doghnut chart.
-    var secondChart = new Chart(my2Chart,{
-        type:'doughnut', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
+    var thirdChart = new Chart(my3Chart,{
+        type:'polarArea', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
         data:{
             labels,
             datasets:[{
@@ -143,21 +146,21 @@ for(var i = 0; i < allDivTd.length; i++){
         options: {responsive:true}
     });
 
+    data = [];
+    data[0]= tally;
+    data[1]= census-tally;
 
-    var thirdChart = new Chart(my3Chart,{
-        type:'polarArea', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
+    // Doghnut chart.
+    var secondChart = new Chart(my2Chart,{
+        type:'doughnut', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
         data:{
-            labels,
+            labels: ["Participants", "Non Participants"],
             datasets:[{
-            label,
-            data , 
+            label:"Voters",
+            data, 
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(54, 162, 235, 0.2)'
             ],
             borderWidth:1,
             borderColor:'#777',
