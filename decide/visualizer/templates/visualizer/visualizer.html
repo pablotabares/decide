@@ -2,6 +2,9 @@
 {% load i18n static %}
 
 {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <body class="bg-secondary">
     <div class="container" id="maindiv">
         <h1 class="text-center bg-primary"><div id="name">{{ voting.name }}</div></h1>
@@ -49,22 +52,47 @@
             </div>
         {% endif %}
         <h2 class="text-left bg-secondary">{% trans ' Graph results: ' %}</h2>
-    </div>
-
     
 
-    <div class="container" style= "text-align:center;">
-        <h4 class="text-left bg-secondary">Votos</h4>
-        <div style="width: 500px; height:300px; display:inline-block;">
-            <canvas id="myChart" style="border:1px solid #000000;"></canvas> 
-        </div>
-        <div style="width: 500px; height:300px; display:inline-block;">
-            <canvas id="my3Chart" style="border:1px solid #000000;"></canvas>
+    <!-- buttons to show graphs -->
+
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Voting Bar-Chart</a>
+            </h4>
+          </div>
+          <div id="collapse1" class="panel-collapse collapse in">
+            <div style="width: 500px; height:300px; margin:0 auto;">
+                <canvas id="myChart" style="border:1px solid #000000;"></canvas> 
+            </div>
+          </div>
         </div> 
-        <h4 class="text-left bg-secondary">Participacion</h4>
-        <div style="width: 500px; height:300px; margin:0 auto; ">
-            <canvas id="my2Chart" style="border:1px solid #000000;"></canvas>
-        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Voting Cake-Chart</a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div style="width: 500px; height:300px; margin:0 auto; ">
+                    <canvas id="my3Chart" style="border:1px solid #000000;"></canvas>
+                </div>
+            </div>
+        </div> 
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Participation</a>
+            </h4>
+          </div>
+          <div id="collapse3" class="panel-collapse collapse">
+            <div style="width: 500px; height:300px; margin:0 auto; ">
+                <canvas id="my2Chart" style="border:1px solid #000000;"></canvas>
+            </div>
+            </div>
+        </div> 
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
@@ -148,6 +176,9 @@ for(var i = 0; i < allDivTd.length; i++){
         },
         options: {responsive:true, maintainAspectRatio: true}
     });
+</script>
+
+<script>
 
     data = [];
     data[0]= tally;
