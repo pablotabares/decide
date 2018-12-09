@@ -53,15 +53,18 @@
 
     
 
-    <div class="container">
+    <div class="container" style= "text-align:center;">
         <h4 class="text-left bg-secondary">Votos</h4>
-        <canvas id="myChart" width="200" height="100" style="border:1px solid #000000;"></canvas>   
-    </br>
-        <canvas id="my3Chart" width="200" height="100" style="border:1px solid #000000;"></canvas> 
-    </br> 
+        <div style="width: 500px; height:300px; display:inline-block;">
+            <canvas id="myChart" style="border:1px solid #000000;"></canvas> 
+        </div>
+        <div style="width: 500px; height:300px; display:inline-block;">
+            <canvas id="my3Chart" style="border:1px solid #000000;"></canvas>
+        </div> 
         <h4 class="text-left bg-secondary">Participacion</h4>
-        <canvas id="my2Chart" width="200" height="100" style="border:1px solid #000000;"></canvas> 
-    </br>
+        <div style="width: 500px; height:300px; margin:0 auto; ">
+            <canvas id="my2Chart" style="border:1px solid #000000;"></canvas>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
@@ -110,6 +113,7 @@ for(var i = 0; i < allDivTd.length; i++){
             }]
         },
         options: {
+        responsive:true,
         scales: {
             yAxes: [{
                 ticks: {
@@ -117,8 +121,7 @@ for(var i = 0; i < allDivTd.length; i++){
                 }
             }]
         },
-        legend:{display:false},
-        responsive:true
+        legend:{display:false}
     }
     });
 
@@ -143,7 +146,7 @@ for(var i = 0; i < allDivTd.length; i++){
             hoverBorderColor:'#000'
             }]
         },
-        options: {responsive:true}
+        options: {responsive:true, maintainAspectRatio: true}
     });
 
     data = [];
@@ -168,7 +171,7 @@ for(var i = 0; i < allDivTd.length; i++){
             hoverBorderColor:'#000'
             }]
         },
-        options: {responsive:true}
+        options: {responsive: true, maintainAspectRatio: true}
     });
 
 </script>
