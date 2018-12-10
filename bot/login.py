@@ -10,13 +10,13 @@ STORE = range(1)
 
 def main(dispatcher):
     conv_handler = ConversationHandler(
-          entry_points=[CommandHandler('login', login)],
+        entry_points=[CommandHandler('login', login)],
 
-          states={
-               STORE: [MessageHandler(Filters.text, store_token)]
-          },
+        states={
+            STORE: [MessageHandler(Filters.text, store_token)]
+        },
 
-          fallbacks=[CommandHandler('cancel', cancel)]
+        fallbacks=[CommandHandler('cancel', cancel)]
     )
     
     dispatcher.add_handler(conv_handler)
@@ -27,13 +27,13 @@ def login(bot, update):
     return STORE 
 
 def cancel(bot, update):
-     update.message.reply_text('La creación de la votación se ha cancelado :(')
+    update.message.reply_text('La creación de la votación se ha cancelado :(')
 
-     return ConversationHandler.END
+    return ConversationHandler.END
 
 def get_token(credentials):
     headers = {"Content-type": "application/json",
-           "Accept": "text/plain"}
+        "Accept": "text/plain"}
     r = requests.post("https://decide-ortosia.herokuapp.com/authentication/login/", credentials)
     
     return r
@@ -42,18 +42,22 @@ def store_token(bot,update):
     credentials = {}
     next_state = ConversationHandler.END
     for index, i in enumerate(update.message.text.split("\n")):
-          if index == 0:
-              credentials["username"] = i
-          else:
-              credentials["password"] = i
+        if index == 0:
+            credentials["username"] = i
+        else:
+            credentials["password"] = i
     
     print(credentials)
     response = get_token(credentials)
     print(response.status_code)
     print(response.text)
     if response.status_code == 200:
-        save_token(credentials['username'], json.loads(response.text)["token"], update.message.chat_id)
-        update.message.reply_text("Se han guardado tus credenciales :)")
+        user = save_token(credentials['username'], json.loads(response.text)["token"], update.message.chat_id)
+
+        if user:
+            update.message.reply_text("¡Ya has iniciado sesión, " + user + "!")
+        else:
+            update.message.reply_text("Se han guardado tus credenciales :)")
     else:
         update.message.reply_text("Los credenciales son incorrectos, índicalos o escribe /cancel para salir")
         next_state = STORE
@@ -71,11 +75,21 @@ def save_token(username, token, chat_id):
     cur = conn.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS user_token (username text PRIMARY KEY, token text);")
     cur.execute("CREATE TABLE IF NOT EXISTS user_chat (username text REFERENCES user_token(username), chat_id integer, last_connection timestamp);")
-    cur.execute("INSERT INTO user_token (username, token) VALUES (%s,%s)", (username, token))
-    cur.execute("INSERT INTO user_chat (username, chat_id, last_connection) VALUES (%s,%s,%s)", (username, chat_id, datetime.datetime.now()))
+
+    cur.execute("SELECT * FROM user_chat WHERE username = %s AND chat_id = %s", (username, chat_id))
+
+    user = cur.fetchone()[0];
+
+    if not user:
+        cur.execute("INSERT INTO user_token (username, token) VALUES (%s,%s)", (username, token))
+        cur.execute("INSERT INTO user_chat (username, chat_id, last_connection) VALUES (%s,%s,%s)", (username, chat_id, datetime.datetime.now()))
     
+
     conn.commit()
     cur.close()
     conn.close()
+
+    return user
+    
     
     

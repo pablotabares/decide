@@ -66,9 +66,9 @@ def set_next_question(bot, update):
           response = save_poll(token)
           
           if response.status_code == 201:
-              update.message.reply_text('¡Nos vemos!' + token)
+               update.message.reply_text('¡Nos vemos!')
           else:
-              update.message.reply_text('Error al crear la votación, inténtalo de nuevo')
+               update.message.reply_text('Error al crear la votación, inténtalo de nuevo')
               
      return next_state
 
