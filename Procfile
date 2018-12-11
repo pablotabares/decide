@@ -1,2 +1,2 @@
-worker: sh -c 'cd telegram-bot && python main.py'
-worker: sh -c 'cd slack-bot && python slackbot.py'
+telegram-bot: sh -c 'cd telegram-bot && python main.py'
+slack-bot: sh -c 'cd slack-bot && python slackbot.py'
