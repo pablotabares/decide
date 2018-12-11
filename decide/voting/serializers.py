@@ -18,7 +18,7 @@ class QuestionSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class VotingSerializer(serializers.HyperlinkedModelSerializer):
-    question = QuestionSerializer(many=False)
+    question = QuestionSerializer(many=True)
     pub_key = KeySerializer()
     auths = AuthSerializer(many=True)
 
