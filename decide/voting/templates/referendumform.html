@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index voting</title>
-</head>
-<body>
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-
-    <button type="submit">Guardar</button>
-</form>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Create referendum</title>
+    </head>
+    <body>
+        <h1>Create referendum</h1>
+        <form method="post">
+            {% csrf_token %}
+            <h2>Voting</h2>
+            <p>Name {{form.name_voting}}</p>
+            <p>Description {{form.desc_voting}}</p>
+            <h2>Auth</h2>
+            <p>Name {{form.name_auth}}</p>
+            <p>URL {{form.url_auth}}</p>
+            <h2>Question</h2>
+            <p>Description {{form.desc_question}}</p>
+            <button type="submit">Save</button>
+        </form>
+    </body>
 </html>

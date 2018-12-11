@@ -3,22 +3,14 @@ from voting.models import Question, QuestionOption
 
 
 #TODO: agrupar en un solo formulario
-class QuestionForm(forms.ModelForm):
-    class Meta:
-        model = Question
+class QuestionForm(forms.Form):
+    name_voting = forms.CharField()
+    desc_voting = forms.CharField()
 
-        fields = [
-            'desc',
-            'referendum'
-        ]
-        labels = {
-            'desc': 'Descripcion',
-            'referendum': 'Referendum'
-        }
-        widgets = {
-            'desc': forms.TextInput(),
-            'referendum': forms.HiddenInput()
-        }
+    name_auth = forms.CharField()
+    url_auth = forms.URLField()
+
+    desc_question = forms.CharField()
 
 
 class QuestionOptionsForm(forms.ModelForm):

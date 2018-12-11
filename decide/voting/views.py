@@ -13,19 +13,36 @@ from base.models import Auth
 from voting.forms import QuestionForm, QuestionOptionsForm, someQuestionsOptions
 
 
+def home(request):
+    return render(request, 'home.html')
+
+
 def crear_referendum(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
+        if form.is_valid():
+            name_voting = form.cleaned_data['name_voting']
+            desc_voting = form.cleaned_data['desc_voting']
+            name_auth = form.cleaned_data['name_auth']
+            url_auth = form.cleaned_data['url_auth']
+            desc_question = form.cleaned_data['desc_question']
 
-        question = form.save()
-        question.referendum = True
-        question.save()
+            question = Question(desc=desc_question)
+            question.save()
 
-        opt_yes = QuestionOption(question=question, option="Yes", number=1)
-        opt_no = QuestionOption(question=question, option="No", number=2)
-        opt_yes.save()
-        opt_no.save()
-        return render(request, 'referendumcreated.html')
+            opt_yes = QuestionOption(question=question, option="Yes", number=1)
+            opt_no = QuestionOption(question=question, option="No", number=2)
+            opt_yes.save()
+            opt_no.save()
+
+            voting = Voting(name=name_voting, desc=desc_voting, question=question)
+            voting.save()
+
+            auth = Auth(name=name_auth, url=url_auth, me=True)
+            auth.save()
+            voting.auths.add(auth)
+
+            return render(request, 'referendumcreated.html')
     else:
         form = QuestionForm()
 
