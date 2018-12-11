@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aa1a0574-6b3c-4e54-99ae-747195c550d0" name="Default Changelist" comment="Added question type referendum. Now, you can create a question with options Yes or No from the url &quot;admin/referendum&quot;">
-      <change afterPath="$PROJECT_DIR$/../Procfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/decide/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/voting/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/voting/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/voting/static/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/voting/static/js/scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/voting/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/voting/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/voting/templates/referendumcreated.html" beforeDir="false" afterPath="$PROJECT_DIR$/voting/templates/referendumcreated.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/voting/templates/referendumform.html" beforeDir="false" afterPath="$PROJECT_DIR$/voting/templates/referendumform.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/voting/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/voting/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/voting/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/voting/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="aa1a0574-6b3c-4e54-99ae-747195c550d0" name="Default Changelist" comment="Added question type referendum. Now, you can create a question with options Yes or No from the url &quot;admin/referendum&quot;" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,11 +40,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/decide/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
               <caret line="71" selection-start-line="71" selection-end-line="71" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/voting/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="35" lean-forward="true" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -334,13 +336,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/voting/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="28" lean-forward="true" selection-start-column="28" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python3.6/dist-packages/django/urls/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -453,6 +448,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="71" selection-start-line="71" selection-end-line="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/voting/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="35" lean-forward="true" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
