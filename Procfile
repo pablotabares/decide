@@ -1,0 +1,1 @@
+worker: sh -c 'cd telegram-bot && python main.py'
