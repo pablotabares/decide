@@ -9,3 +9,4 @@ django-rest-swagger==2.2.0
 python-telegram-bot 
 inflection
 datetime
+slackclient>=1.1.0
