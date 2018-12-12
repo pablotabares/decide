@@ -5,7 +5,10 @@ name = "pypi"
 
 [packages]
 python-telegram-bot = "*"
+psycopg2 = "*"
 inflection = "*"
+requests = "*"
+datetime = "*"
 
 [dev-packages]
 pylint = "*"
