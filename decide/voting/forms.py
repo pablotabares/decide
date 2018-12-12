@@ -1,5 +1,5 @@
 from django import forms
-from voting.models import Question, QuestionOption
+from voting.models import Question, QuestionOption, Voting
 
 
 #TODO: agrupar en un solo formulario
@@ -36,6 +36,33 @@ class QuestionOptionsForm(forms.ModelForm):
             'question': forms.HiddenInput()
         }
 
+
+class VotingForm(forms.ModelForm):
+    class Meta:
+        model = Voting
+
+        fields = [
+            'name',
+            'desc',
+            'isWeighted',
+            'start_date',
+            'end_date'
+        ]
+
+        labels = {
+            'name' : 'Name',
+            'desc' : 'Description',
+            'isWeighted' : 'Is weighted',
+            'start_date' : 'Start date',
+            'end date' : 'End date'
+        }
+        widgets = {
+            'name' : forms.TextInput(),
+            'desc' : forms.TextInput(),
+            'isWeighted' : forms.CheckboxInput(),
+            'start date' : forms.DateInput(),
+            'end date' : forms.DateInput()
+        }
 
 class someQuestionsOptions(forms.Form):
     description = forms.CharField()
