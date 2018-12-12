@@ -9,7 +9,7 @@ services:
 script:
  - sonar-scanner
  - cd docker
- - docker exec -ti decide_web ./manage.py test
+ - docker exec -ti decide_web python manage.py test
  - cd ..
 addons:
   sonarcloud:
