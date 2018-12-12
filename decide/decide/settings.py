@@ -156,6 +156,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'authentication/styles')
+]
 
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
