@@ -13,6 +13,22 @@ class QuestionForm(forms.Form):
     desc_question = forms.CharField()
 
 
+class VotingForm2(forms.Form):
+
+    CHOICES = [(True, 'True'), (False, 'False')]
+
+    name_voting = forms.CharField()
+    desc_voting = forms.CharField()
+    is_weighted = forms.ChoiceField(choices=CHOICES)
+    #start_date = forms.DateTimeField()
+    #end_date = forms.DateTimeField()
+
+    questions_ = forms.ModelMultipleChoiceField(queryset=Question.objects.all())
+
+    name_auth = forms.CharField()
+    url_auth = forms.URLField()
+
+
 class QuestionOptionsForm(forms.ModelForm):
     class Meta:
         model = QuestionOption

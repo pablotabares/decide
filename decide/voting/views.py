@@ -6,12 +6,13 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from django.shortcuts import render, redirect
 
+from django.http.response import HttpResponse
 from .models import Question, QuestionOption, Voting
 from .serializers import VotingSerializer
 from base.perms import UserIsStaff
 from base.models import Auth
-from voting.forms import QuestionForm, QuestionOptionsForm, someQuestionsOptions
-
+from voting.forms import QuestionForm, QuestionOptionsForm, someQuestionsOptions, VotingForm2
+from django.template import loader
 
 def home(request):
     return render(request, 'home.html')
@@ -57,6 +58,35 @@ def create_options(request):
 
 
     return render(request, 'questionForm.html', {'form': form})
+
+
+def create_voting(request):
+
+    if request.method == "POST":
+        form = VotingForm2(request.POST)
+        if form.is_valid():
+            name_voting = form.cleaned_data['name_voting']
+            desc_voting = form.cleaned_data['desc_voting']
+            is_weighted = form.cleaned_data['is_weighted']
+
+            name_auth = form.cleaned_data['name_auth']
+            url_auth = form.cleaned_data['url_auth']
+
+            question_ = form.cleaned_data['questions_']
+            voting = Voting(name=name_voting, desc=desc_voting, isWeighted=is_weighted)
+
+            voting.save()
+            voting.questions.set(question_)
+
+            auth = Auth(name=name_auth, url=url_auth, me=True)
+            auth.save()
+            voting.auths.add(auth)
+
+            return render(request, 'votingCreated.html')
+    else:
+        form = VotingForm2()
+
+    return render(request, 'votingForm.html', {'form' : form})
 
 
 class VotingView(generics.ListCreateAPIView):

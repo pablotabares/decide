@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a voting</title>
+</head>
+<body>
+    <h1>Create a voting</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <h2>Voting</h2>
+        <p>Name {{form.name_voting}}</p>
+        <p>Description {{form.desc_voting}}</p>
+        <p>Is weighted? {{form.is_weighted}}</p>
+        <!--<p>Start date: {{form.start_date}}</p>
+        <p>End date: {{form.end_date}}</p>
+        <br/>-->
+        <h2>Auth</h2>
+        <p>Name {{form.name_auth}}</p>
+        <p>URL {{form.url_auth}}</p>
+        <br/>
+        <h2>Questions</h2>
+        <p>Questions {{form.questions_}}</p>
+        <br/>
+        <button type="submit">Save</button>
+    </form>
+
+</body>
+</html>
