@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
+import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -150,7 +151,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
@@ -161,3 +162,5 @@ except ImportError:
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
+# Activate Django-Heroku.
+django_heroku.settings(locals())
