@@ -9,7 +9,6 @@ services:
 script:
  - sonar-scanner
  - cd docker
- - docker-compose up -d
  - docker exec -ti decide_web ./manage.py test
  - cd ..
 addons:
@@ -17,3 +16,7 @@ addons:
     organization: "pablotabares-github"
 notifications:
   email: false
+before_install:
+ - cd docker
+ - docker-compose up -d
+ - cd ..
