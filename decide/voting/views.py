@@ -16,7 +16,7 @@ from django.template import loader
 
 
 def home(request):
-    return render(request, 'masterpage.html', {'title': 'Voting module', 'content': 'home.html'})
+    return render(request, 'masterpage.html', {'title': 'Home', 'content': 'home.html'})
 
 
 def crear_referendum(request):
@@ -48,7 +48,8 @@ def crear_referendum(request):
     else:
         form = QuestionForm()
 
-    return render(request, 'masterpage.html', {'form': form, 'content': 'referendumform.html', 'title': 'Create a referendum'})
+    return render(request, 'masterpage.html', {'form': form, 'content': 'referendumform.html',
+                                               'title': 'Create a referendum'})
 
 
 def create_options(request):
