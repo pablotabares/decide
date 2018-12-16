@@ -1,14 +1,30 @@
-h1{
-  margin-left:100px;
+.text-home-lg{
+    font-size: 20pt;
 }
-table{
-  margin-top:50px;
+
+p{
+    margin-bottom: 0.5rem;
 }
-td{
-  text-align:center;
-  width:30%;
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
 }
-button{
-  height:50px;
-  width:200px;
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 200px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 100px;
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
 }

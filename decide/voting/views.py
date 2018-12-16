@@ -14,8 +14,9 @@ from base.models import Auth
 from voting.forms import QuestionForm, QuestionOptionsForm, someQuestionsOptions, VotingForm2
 from django.template import loader
 
+
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'masterpage.html', {'title': 'Voting module', 'content': 'home.html'})
 
 
 def crear_referendum(request):
@@ -47,7 +48,7 @@ def crear_referendum(request):
     else:
         form = QuestionForm()
 
-    return render(request, 'referendumform.html', {'form': form})
+    return render(request, 'masterpage.html', {'form': form, 'content': 'referendumform.html', 'title': 'Create a referendum'})
 
 
 def create_options(request):
@@ -56,8 +57,7 @@ def create_options(request):
     else:
         form = someQuestionsOptions()
 
-
-    return render(request, 'questionForm.html', {'form': form})
+    return render(request, 'masterpage.html', {'form': form, 'content': 'questionForm.html', 'title': 'Create options'})
 
 
 def create_voting(request):
@@ -86,7 +86,7 @@ def create_voting(request):
     else:
         form = VotingForm2()
 
-    return render(request, 'votingForm.html', {'form' : form})
+    return render(request, 'masterpage.html', {'form': form, 'content': 'votingForm.html', 'title': 'Create a voting'})
 
 
 class VotingView(generics.ListCreateAPIView):

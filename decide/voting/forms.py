@@ -80,6 +80,7 @@ class VotingForm(forms.ModelForm):
             'end date' : forms.DateInput()
         }
 
+
 class someQuestionsOptions(forms.Form):
     description = forms.CharField()
     number = forms.CharField(widget=forms.HiddenInput)
