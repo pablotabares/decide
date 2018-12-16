@@ -55,5 +55,9 @@ STATIC_URL = '/static/'
 
 SECURE_SSL_REDIRECT = True
 
+os.environ['HTTPS'] = "on"
+
+os.environ['wsgi.url_scheme'] = 'https'
+
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
