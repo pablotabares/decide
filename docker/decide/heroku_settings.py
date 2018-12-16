@@ -53,5 +53,7 @@ STATIC_ROOT = os.path.dirname(os.path.abspath(__file__))+'/static'
 
 STATIC_URL = '/static/'
 
+SECURE_SSL_REDIRECT = True
+
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
