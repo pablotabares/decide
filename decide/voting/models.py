@@ -26,10 +26,14 @@ class Question(models.Model):
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
+    unlockquestion = models.ForeignKey(Question, related_name='unlockquestion', on_delete=models.CASCADE, null=True,
+                                       blank=True)
     number = models.PositiveIntegerField(blank=True, null=True)
     #Adding the weight of this option
     weight = models.IntegerField( blank=False, null=True)
     importance = models.FloatField(choices=IMPORTANCE_CHOICES, default=0)
+
+
 
     option = models.TextField()
 
