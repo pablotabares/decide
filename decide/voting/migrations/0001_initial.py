@@ -28,7 +28,6 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('number', models.PositiveIntegerField(blank=True, null=True)),
                 ('weight', models.IntegerField(null=True)),
-                ('importance', models.FloatField(choices=[(0, 'None'), (1, 'Not relevant'), (2, 'Review'), (3, 'May relevant'), (4, 'Relevant'), (5, 'Leading candidate')], default=0)),
                 ('option', models.TextField()),
                 ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='options', to='voting.Question')),
             ],
