@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
+import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -160,6 +161,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'authentication/styles')
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
@@ -170,6 +173,7 @@ except ImportError:
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
+
 
 #EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "authentication/sent_emails")
@@ -183,4 +187,7 @@ EMAIL_HOST_PASSWORD = 'testdecide'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
