@@ -70,6 +70,7 @@ MODULES = [
 
 BASEURL = 'http://localhost:8000'
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
