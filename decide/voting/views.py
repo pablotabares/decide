@@ -37,8 +37,11 @@ def crear_referendum(request):
             opt_yes.save()
             opt_no.save()
 
-            voting = Voting(name=name_voting, desc=desc_voting, question=question)
+            questions = [question]
+
+            voting = Voting(name=name_voting, desc=desc_voting)
             voting.save()
+            voting.questions.set(questions)
 
             auth = Auth(name=name_auth, url=url_auth, me=True)
             auth.save()
