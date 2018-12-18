@@ -175,9 +175,7 @@ except ImportError:
 INSTALLED_APPS = INSTALLED_APPS + MODULES
 
 
-#EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "authentication/sent_emails")
-
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '25'

@@ -1,7 +1,7 @@
-from django.test import TestCase
+from django.core import mail
+from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
-
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
@@ -93,3 +93,24 @@ class AuthTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(Token.objects.filter(user__username='voter1').count(), 0)
+
+
+def test_password_reset(self):
+    response = self.client.get(reverse('password_reset'))
+    self.assertEqual(response.status_code, 200)
+    self.assertEqual(response.template_name, 'authentication/password_reset_form.html')
+
+    response = self.client.post(reverse('password_reset'), {'email:antonioromerocaceres@hotmail.com'})
+    self.assertEqual(response.status_code, 302)
+    self.assertEqual(len(mail.outbox), 1)
+    self.assertEqual(mail.outbox[0].subject, 'Password reset on Decide')
+
+    token = response.context[0]['token']
+    uid = response.context[0]['uid']
+    response = self.client.get(reverse('password_reset_confirm', kwargs={'token': token, 'uidb64': uid}))
+    self.assertEqual(response.status_code, 200)
+    self.assertEqual(response.template_name, 'authentication/password_reset_confirm.html')
+
+    response = self.client.post(reverse('password_reset_confirm'), kwargs={'token': token, 'uidb36': uid}),\
+                {'new_password1': 'darkMENER12', 'new_password2': 'darkMENER12'}
+    self.assertEqual(response.status_code, 302)

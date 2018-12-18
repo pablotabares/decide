@@ -5,11 +5,9 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from .serializers import UserSerializer, AuthCustomTokenSerializer
 from django.contrib.auth import views as auth_views
-from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 
-UserModel = get_user_model()
 
 
 class GetUserView(APIView):
@@ -44,7 +42,7 @@ class PasswordResetView(auth_views.PasswordResetView):
     form_class = PasswordResetForm
     template_name = 'registration/password_reset_form.html',
     email_template_name = 'registration/password_reset_email.html',
-    subject_template_name = 'registration/password_reset_subject.txt',
+    subject_template_name = 'registration/password_reset_subject.txt'
     success_url = 'done'
     token_generator = default_token_generator
 
