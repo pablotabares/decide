@@ -18,7 +18,6 @@ IMPORTANCE_CHOICES = (
 
 class Question(models.Model):
     desc = models.TextField()
-    referendum = models.BooleanField(default=False)
 
     def __str__(self):
         return self.desc
@@ -26,14 +25,11 @@ class Question(models.Model):
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
-    unlockquestion = models.ManyToManyField(Question, related_name='unlockquestion', null=True,
-                                       blank=True)
+    unlockquestion = models.ManyToManyField(Question, related_name='unlockquestion', null=True, blank=True)
     number = models.PositiveIntegerField(blank=True, null=True)
     #Adding the weight of this option
     weight = models.IntegerField( blank=False, null=True)
     importance = models.FloatField(choices=IMPORTANCE_CHOICES, default=0)
-
-
 
     option = models.TextField()
 
