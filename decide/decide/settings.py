@@ -68,7 +68,7 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'https://stormy-gorge-70727.herokuapp.com'
+BASEURL = 'https://decide-ortosia-postproc.herokuapp.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
