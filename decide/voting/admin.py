@@ -29,12 +29,12 @@ def tally(ModelAdmin, request, queryset):
 
 class QuestionOptionInline(admin.TabularInline):
     model = QuestionOption
-
-
+    fk_name = "question"
 
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [QuestionOptionInline]
+
 
 
 class VotingAdmin(admin.ModelAdmin):
@@ -43,9 +43,9 @@ class VotingAdmin(admin.ModelAdmin):
                        'tally', 'postproc')
     date_hierarchy = 'start_date'
     list_filter = (StartedFilter,)
-    search_fields = ('name', )
+    search_fields = ('name',)
 
-    actions = [ start, stop, tally ]
+    actions = [start, stop, tally]
 
 
 admin.site.register(Voting, VotingAdmin)
