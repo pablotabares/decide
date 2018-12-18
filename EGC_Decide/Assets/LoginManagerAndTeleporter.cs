@@ -4,6 +4,7 @@ using UnityEngine;
 using CI.HttpClient;
 using System.Net;
 using Newtonsoft.Json;
+using System;
 
 public class LoginManagerAndTeleporter : MonoBehaviour {
 
@@ -24,6 +25,8 @@ public class LoginManagerAndTeleporter : MonoBehaviour {
 		
 	}
 
+    public List<Voting> votaciones;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
@@ -41,6 +44,8 @@ public class LoginManagerAndTeleporter : MonoBehaviour {
             var values = JsonUtility.FromJson<DecideResponse>(response.ReadAsString());
             Debug.Log(values.token);
             this.token = values.token;
+            if (token == "" || token == null)
+                indicateError("Estas credenciales no son válidas");
             Debug.Log(values.non_field_errors.Count>0?values.non_field_errors[0]:"nada de nada");
         }
         catch (System.ArgumentNullException)
@@ -78,7 +83,13 @@ public class LoginManagerAndTeleporter : MonoBehaviour {
     public void makeLogin(string username, string password)
     {
         Debug.Log("henlo " + username + " " + password);
-        client.Post(new System.Uri("http://127.0.0.1:8000/authentication/login/"), new StringContent("{\"username\":\""+username+"\", \"password\":\""+password+"\"}",System.Text.UTF8Encoding.UTF8, "application/json"), HttpCompletionOption.AllResponseContent, receiveLogin);
+        client.Post(new System.Uri("http://127.0.0.1:8000/authentication/login/"), new StringContent("{\"username\":\""+username+"\", \"password\":\""+password+"\"}", System.Text.Encoding.UTF8, "application/json"), HttpCompletionOption.AllResponseContent, receiveLogin);
+    }
+
+    public void makeLogout()
+    {
+        client.Post(new System.Uri("http://127.0.0.1:8000/authentication/logout/"), new StringContent("", System.Text.Encoding.UTF8, "application/json"), HttpCompletionOption.AllResponseContent, null);
+        token = null;
     }
 
     private void commenceProcess(GameObject player)
@@ -93,4 +104,22 @@ public class DecideResponse
 {
     public string token;
     public List<string> non_field_errors;
+}
+
+[System.Serializable]
+public class Voting
+{
+    public int id;
+    public string name;
+    public string desc;
+    public List<Question> preguntas;
+    public DateTime start_date;
+    public DateTime end_date;
+}
+
+[System.Serializable]
+public class Question
+{
+    public string desc;
+    public List<string> options;
 }
