@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8cb6e759-c52a-4c7e-ba56-a4397ed2f2d2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/decide/authentication/styles/password_reset_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/decide/authentication/styles/password_reset_form.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_complete.html" beforeDir="false" afterPath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_complete.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_confirm.html" beforeDir="false" afterPath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_confirm.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_done.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_email.html" beforeDir="false" afterPath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/authentication/templates/registration/password_reset_subject.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/decide/authentication/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/decide/authentication/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/authentication/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/decide/authentication/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/decide/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/decide/decide/settings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/decide/authentication/tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="114" column="16" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="16" />
+            <state relative-caret-position="434">
+              <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -273,7 +264,7 @@
       <workItem from="1545057996478" duration="2589000" />
       <workItem from="1545061266225" duration="620000" />
       <workItem from="1545062186611" duration="18249000" />
-      <workItem from="1545140294437" duration="2176000" />
+      <workItem from="1545140294437" duration="2448000" />
     </task>
     <servers />
   </component>
@@ -283,7 +274,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53460000" />
+    <option name="totallyTimeSpent" value="53732000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="950" extended-state="6" />
@@ -451,8 +442,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/decide/authentication/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="114" column="16" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="16" />
+        <state relative-caret-position="434">
+          <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
