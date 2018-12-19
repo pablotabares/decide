@@ -17,6 +17,8 @@ before_script:
 - psql -c "create database decide owner decide"
 - psql -c "alter user decide createdb"
 - python manage.py migrate
+- python manage.py makemigrations
+- python manage.py migrate
 script:
 - python manage.py test
 addons:
