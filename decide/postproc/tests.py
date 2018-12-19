@@ -828,3 +828,243 @@ class PostProcTestCase(APITestCase):
 
         values = response.json()
         self.assertEqual(values, expected_result)
+
+    def test_droop_1(self):
+        data = {
+            "type": "DROOP",
+            "seats": 21,
+            "options": [{
+                "votes": 391000,
+                "option": "Option 1",
+                "number": 1
+            }, {
+                "votes": 311000,
+                "option": "Option 2",
+                "number": 2
+            }, {
+                "votes": 184000,
+                "option": "Option 3",
+                "number": 3
+            }, {
+                "votes": 73000,
+                "option": "Option 4",
+                "number": 4
+            }, {
+                "votes": 27000,
+                "option": "Option 5",
+                "number": 5
+            }, {
+                "votes": 12000,
+                "option": "Option 6",
+                "number": 6
+            }, {
+                "votes": 2000,
+                "option": "Option 7",
+                "number": 7
+            }]
+        }
+
+        expected_result = [
+            {
+                "votes": 391000,
+                "option": "Option 1",
+                "number": 1,
+                "postproc": 8
+            }, {
+                "votes": 311000,
+                "option": "Option 2",
+                "number": 2,
+                "postproc": 7
+            }, {
+                "votes": 184000,
+                "option": "Option 3",
+                "number": 3,
+                "postproc": 4
+            }, {
+                "votes": 73000,
+                "option": "Option 4",
+                "number": 4,
+                "postproc": 2
+            }, {
+                "votes": 27000,
+                "option": "Option 5",
+                "number": 5,
+                "postproc": 0
+            }, {
+                "votes": 12000,
+                "option": "Option 6",
+                "number": 6,
+                "postproc": 0
+            }, {
+                "votes": 2000,
+                "option": "Option 7",
+                "number": 7,
+                "postproc": 0
+            }
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+    def test_droop_2(self):
+        data = {
+            "type": "DROOP",
+            "seats": 21,
+            "options": [{
+                "votes": 0,
+                "option": "Option 1",
+                "number": 1
+            }, {
+                "votes": 0,
+                "option": "Option 2",
+                "number": 2
+            }, {
+                "votes": 0,
+                "option": "Option 3",
+                "number": 3
+            }, {
+                "votes": 0,
+                "option": "Option 4",
+                "number": 4
+            }, {
+                "votes": 0,
+                "option": "Option 5",
+                "number": 5
+            }, {
+                "votes": 0,
+                "option": "Option 6",
+                "number": 6
+            }, {
+                "votes": 0,
+                "option": "Option 7",
+                "number": 7
+            }]
+        }
+
+        expected_result = [
+            {
+                "votes": 0,
+                "option": "Option 1",
+                "number": 1,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Option 2",
+                "number": 2,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Option 3",
+                "number": 3,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Option 4",
+                "number": 4,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Option 5",
+                "number": 5,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Option 6",
+                "number": 6,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Option 7",
+                "number": 7,
+                "postproc": 0
+            }
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+    def test_droop_3(self):
+        data = {
+            "type": "DROOP",
+            "seats": 0,
+            "options": [{
+                "votes": 391000,
+                "option": "Option 1",
+                "number": 1
+            }, {
+                "votes": 311000,
+                "option": "Option 2",
+                "number": 2
+            }, {
+                "votes": 184000,
+                "option": "Option 3",
+                "number": 3
+            }, {
+                "votes": 73000,
+                "option": "Option 4",
+                "number": 4
+            }, {
+                "votes": 27000,
+                "option": "Option 5",
+                "number": 5
+            }, {
+                "votes": 12000,
+                "option": "Option 6",
+                "number": 6
+            }, {
+                "votes": 2000,
+                "option": "Option 7",
+                "number": 7
+            }]
+        }
+
+        expected_result = [
+            {
+                "votes": 391000,
+                "option": "Option 1",
+                "number": 1,
+                "postproc": 0
+            }, {
+                "votes": 311000,
+                "option": "Option 2",
+                "number": 2,
+                "postproc": 0
+            }, {
+                "votes": 184000,
+                "option": "Option 3",
+                "number": 3,
+                "postproc": 0
+            }, {
+                "votes": 73000,
+                "option": "Option 4",
+                "number": 4,
+                "postproc": 0
+            }, {
+                "votes": 27000,
+                "option": "Option 5",
+                "number": 5,
+                "postproc": 0
+            }, {
+                "votes": 12000,
+                "option": "Option 6",
+                "number": 6,
+                "postproc": 0
+            }, {
+                "votes": 2000,
+                "option": "Option 7",
+                "number": 7,
+                "postproc": 0
+            }
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)

@@ -191,6 +191,44 @@ class PostProcView(APIView):
             # If the most voted option is a woman
             return Response(self.add_first(female_list, male_list))
 
+    def droop_quota(self, options, seats):
+        out = []
+        n_votes = sum(x["votes"] for x in options)
+
+        if n_votes == 0:
+            for opt in options:
+                out.append({
+                    **opt,
+                    'postproc': 0
+                })
+            return Response(out)
+
+        cociente = n_votes/(seats+1) + 1
+        cociente = int(cociente)+1 if cociente - int(cociente) >= 0.5 else int(cociente)
+
+        asignados = {}
+        n_asignados = 0
+        temp = {}
+        for o in options:
+            asignados[o["option"]] = int(o["votes"]/cociente)
+            n_asignados += int(o["votes"]/cociente)
+            temp[o["option"]] = o["votes"]%cociente
+
+        k = seats - n_asignados
+        while k > 0:
+            asignados[max(temp, key=temp.get)] += 1
+            temp.pop(max(temp, key=temp.get))
+            k -= 1
+
+        for o in options:
+            out.append({
+                **o,
+                'postproc': asignados[o["option"]]
+            })
+
+        return Response(out)
+
+
     def post(self, request):
         """
          * type: IDENTITY | EQUALITY | WEIGHT | BORDA
@@ -223,5 +261,8 @@ class PostProcView(APIView):
             return self.multiquestion(questions)
         elif t == 'GENDER-BALANCED':
             return self.genderBalanced(opts)
+        elif t == 'DROOP':
+            seats = request.data.get('seats', 1)
+            return self.droop_quota(opts, seats)
 
         return Response({})
