@@ -10,7 +10,8 @@ RUN pip install ipython
 
 WORKDIR /app
 
-ADD . .
+
+RUN git clone --single-branch -b ortosia-prepro https://github.com/pablotabares/decide.git .
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
@@ -19,5 +20,3 @@ WORKDIR /app/decide
 ADD ./docker/docker-settings.py local_settings.py
 
 RUN ./manage.py collectstatic
-
-#CMD ["gunicorn", "-w 5", "decide.wsgi", "--timeout=500", "-b 0.0.0.0:5000"]
