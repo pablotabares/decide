@@ -6,30 +6,53 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from django.shortcuts import render, redirect
 
+from django.http.response import HttpResponse
 from .models import Question, QuestionOption, Voting
 from .serializers import VotingSerializer
 from base.perms import UserIsStaff
 from base.models import Auth
-from voting.forms import QuestionForm, QuestionOptionsForm, someQuestionsOptions
+from voting.forms import QuestionForm, QuestionOptionsForm, someQuestionsOptions, VotingForm2
+from django.template import loader
+
+
+def home(request):
+    return render(request, 'masterpage.html', {'title': 'Home', 'content': 'home.html'})
 
 
 def crear_referendum(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
+        if form.is_valid():
+            name_voting = form.cleaned_data['name_voting']
+            desc_voting = form.cleaned_data['desc_voting']
+            name_auth = form.cleaned_data['name_auth']
+            url_auth = form.cleaned_data['url_auth']
+            desc_question = form.cleaned_data['desc_question']
 
-        question = form.save()
-        question.referendum = True
-        question.save()
+            question = Question(desc=desc_question)
+            question.save()
 
-        opt_yes = QuestionOption(question=question, option="Yes", number=1)
-        opt_no = QuestionOption(question=question, option="No", number=2)
-        opt_yes.save()
-        opt_no.save()
-        return render(request, 'referendumcreated.html')
+            opt_yes = QuestionOption(question=question, option="Yes", number=1)
+            opt_no = QuestionOption(question=question, option="No", number=2)
+            opt_yes.save()
+            opt_no.save()
+
+            questions = [question]
+
+            voting = Voting(name=name_voting, desc=desc_voting)
+            voting.save()
+            voting.questions.set(questions)
+
+            auth = Auth(name=name_auth, url=url_auth, me=True)
+            auth.save()
+            voting.auths.add(auth)
+
+            return render(request, 'referendumcreated.html')
     else:
         form = QuestionForm()
 
-    return render(request, 'referendumform.html', {'form': form})
+    return render(request, 'masterpage.html', {'form': form, 'content': 'referendumform.html',
+                                               'title': 'Create a referendum'})
 
 
 def create_options(request):
@@ -38,8 +61,36 @@ def create_options(request):
     else:
         form = someQuestionsOptions()
 
+    return render(request, 'masterpage.html', {'form': form, 'content': 'questionForm.html', 'title': 'Create options'})
 
-    return render(request, 'questionForm.html', {'form': form})
+
+def create_voting(request):
+
+    if request.method == "POST":
+        form = VotingForm2(request.POST)
+        if form.is_valid():
+            name_voting = form.cleaned_data['name_voting']
+            desc_voting = form.cleaned_data['desc_voting']
+            is_weighted = form.cleaned_data['is_weighted']
+
+            name_auth = form.cleaned_data['name_auth']
+            url_auth = form.cleaned_data['url_auth']
+
+            question_ = form.cleaned_data['questions_']
+            voting = Voting(name=name_voting, desc=desc_voting, isWeighted=is_weighted)
+
+            voting.save()
+            voting.questions.set(question_)
+
+            auth = Auth(name=name_auth, url=url_auth, me=True)
+            auth.save()
+            voting.auths.add(auth)
+
+            return render(request, 'votingCreated.html')
+    else:
+        form = VotingForm2()
+
+    return render(request, 'masterpage.html', {'form': form, 'content': 'votingForm.html', 'title': 'Create a voting'})
 
 
 class VotingView(generics.ListCreateAPIView):

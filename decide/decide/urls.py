@@ -17,16 +17,12 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_swagger.views import get_swagger_view
-from voting.views import crear_referendum, create_options
 
 schema_view = get_swagger_view(title='Decide API')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('doc/', schema_view),
-    path('admin/referendum', crear_referendum),
-    path('admin/options', create_options)
-
 ]
 
 for module in settings.MODULES:
