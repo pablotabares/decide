@@ -10,12 +10,13 @@ RUN pip install ipython
 
 WORKDIR /app
 
-RUN git clone --single-branch -b ortosia-visualizacion https://github.com/pablotabares/decide.git .
+
+RUN git clone --single-branch -b ortosia-prepro https://github.com/pablotabares/decide.git .
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
 
 # local settings.py
-ADD docker-settings.py /app/decide/local_settings.py
+ADD ./docker/docker-settings.py local_settings.py
 
 RUN ./manage.py collectstatic
