@@ -72,7 +72,7 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'https://ortosia-auth.herokuapp.com/'
+BASEURL = 'http://localhost:8000'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
