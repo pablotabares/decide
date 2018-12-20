@@ -70,7 +70,7 @@ MODULES = [
 ]
 
 #BASEURL = 'http://localhost:8000'
-BASEURL = 'https://decide-ortosia-visualizacion.herokuapp.com'
+BASEURL = 'https://ortosia-visualizacion.herokuapp.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
