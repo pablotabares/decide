@@ -1,11 +1,11 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import VotingsScreen from '../screens/VotingsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -25,12 +25,12 @@ HomeStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const VotingsStack = createStackNavigator({
+  Votings: VotingsScreen,
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+VotingsStack.navigationOptions = {
+  tabBarLabel: 'Votings',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -39,12 +39,12 @@ LinksStack.navigationOptions = {
   ),
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const ProfileStack = createStackNavigator({
+  Profile: ProfileScreen,
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+ProfileStack.navigationOptions = {
+  tabBarLabel: 'Profile',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -54,7 +54,7 @@ SettingsStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
+  VotingsStack,
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  ProfileStack,
 });
