@@ -76,23 +76,23 @@ class Voting(models.Model):
         auths = [{"name": a.name, "url": a.url} for a in self.auths.all()]
 
         # first, we do the shuffle
-        #data = { "msgs": votes }
-        #response = mods.post('mixnet', entry_point=shuffle_url, baseurl=auth.url, json=data,
-        #        response=True)
-        #if response.status_code != 200:
+        data = { "msgs": votes }
+        response = mods.post('mixnet', entry_point=shuffle_url, baseurl=auth.url, json=data,
+                response=True)
+        if response.status_code != 200:
             # TODO: manage error
-        #    pass
+            pass
 
         # then, we can decrypt that
-        #data = {"msgs": response.json()}
-        #response = mods.post('mixnet', entry_point=decrypt_url, baseurl=auth.url, json=data,
-        #        response=True)
+        data = {"msgs": response.json()}
+        response = mods.post('mixnet', entry_point=decrypt_url, baseurl=auth.url, json=data,
+                response=True)
 
-        #if response.status_code != 200:
+        if response.status_code != 200:
             # TODO: manage error
-        #    pass
+            pass
 
-        self.tally = votes
+        self.tally = response.json()
         self.save()
 
         self.do_postproc()
