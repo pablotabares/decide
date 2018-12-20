@@ -55,6 +55,7 @@ class VotingTestCase(BaseTestCase):
 
         # Addition of the questions created to the voting
         v.questions.add(q)
+        v.questions.add(q2)
 
         a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
                                           defaults={'me': True, 'name': 'test auth'})
