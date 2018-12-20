@@ -3,7 +3,8 @@ import time
 import re
 from slackclient import SlackClient
 import requests
-
+import psycopg2
+import json
 
 # instantiate Slack client
 slack_client = SlackClient('xoxb-496361367125-496064509811-40frIeS25WwFuujQwFLgCpA1')
@@ -26,8 +27,8 @@ def parse_bot_commands(slack_events):
         if event["type"] == "message" and not "subtype" in event:
             user_id, message = parse_direct_mention(event["text"])
             if user_id == starterbot_id:
-                return message, event["channel"]
-    return None, None
+                return message, event
+    return None ,None
 
 def parse_direct_mention(message_text):
     """
@@ -38,25 +39,54 @@ def parse_direct_mention(message_text):
     # the first group contains the username, the second group contains the remaining message
     return (matches.group(1), matches.group(2).strip()) if matches else (None, None)
 
-def login(usurname,password):
+
+
+def login(usurname,password,event):
     # Sends the response back to the channel
     slack_client.api_call(
         "chat.postMessage",
-        channel=channel,
+        channel=event['channel'],
         text='logueando'
     )
     credentials = {}
     credentials["username"] = usurname
     credentials["password"] = password
+    time.sleep(3)
+
     r = requests.post("https://decide-ortosia.herokuapp.com/authentication/login/", credentials)
+
+    #BD possgress
+    conn = psycopg2.connect(dbname='d3i8n8a3vv0nst',
+            user='qzxvwbjdcmhnsy',
+            password='39cb3668dfac02f210f27e0d813167519ccf63309560bca7f93d2d79be46f308',
+            host='ec2-54-246-85-234.eu-west-1.compute.amazonaws.com',
+            port=5432
+            )
+    c = conn.cursor()
+
+    # Create table
+    c.execute('''CREATE TABLE IF NOT EXISTS userSlack (username text PRIMARY KEY, token text);''')
+
+    # DELETE previus data a row of data
+    c.execute('DELETE FROM userSlack WHERE username=(%s)', [str(event['user'])])
+    # Insert a row of data
+    c.execute("INSERT INTO userSlack VALUES ("+"'"+str(event['user'])+"'"+", "+"'"+json.loads(r.text)["token"]+"'"+")")
+
+    # Save (commit) the changes
+    conn.commit()
+
+    # We can also close the connection if we are done with it.
+    # Just be sure any changes have been committed or they will be lost.
+    conn.close()
+    c.close()
 
     slack_client.api_call(
         "chat.postMessage",
-        channel=channel,
+        channel=event['channel'],
         text=r
     )
 
-def handle_command(command, channel):
+def handle_command(command,event):
     """
         Executes bot command if the command is known
     """
@@ -66,22 +96,40 @@ def handle_command(command, channel):
     # Finds and executes the given command, filling in response
     response = None
     # This is where you start to implement more commands!
+    if command.startswith('quien soy?'):
+        response='tu id de usuario es '+str(event['user'])
+    if  command.startswith('estoy logueado?'):
+        conn = psycopg2.connect(dbname='d3i8n8a3vv0nst',
+            user='qzxvwbjdcmhnsy',
+            password='39cb3668dfac02f210f27e0d813167519ccf63309560bca7f93d2d79be46f308',
+            host='ec2-54-246-85-234.eu-west-1.compute.amazonaws.com',
+            port=5432
+            )
+        c = conn.cursor()
+        c.execute('SELECT token FROM userSlack WHERE username=(%s)', [str(event['user'])])
+        response=str(c.fetchall()[0][0])
+        if(len(response)<5):
+            response='No estas logueado aun, utiliza "@ortosia logueame [usurname] [password]" para loguearte en decide' 
+        else:
+            response='Estas logueado correctamente, tu token de sesión es: '+response
+        conn.close()
+        c.close()
 
     if command.startswith('send'):
         if command.endswith('pls'):
-            response = "Enviando ayuda! \n \n Listado de comandos: \n @ortosia send help pls, envia el mensaje de ayuda \n @ortosia logueame! [nombre de usuario] [contraseña], inicia sesión la plataforma decide\n mas cosas"
+            response = "Enviando ayuda! \n \n Listado de comandos: \n @ortosia send help pls, envia el mensaje de ayuda \n @ortosia logueame! [nombre de usuario] [contraseña], inicia sesión la plataforma decide\n \n Comandos avanzados(desarrollo): \n @ortosia quien soy?: devuelve el id de usuario \n @ortosia estoy logueado? devuelve el token de autorización de decide en caso estar logueado"
         else:
             response = "Es necesario pedir las cosas educadamente a @Ortosia, añada un 'pls' al final de su peticion, gracias"
     elif command.startswith('logueame'):
         splited=command.split(" ")
-        login(splited[len(splited)-2],splited[len(splited)-1])
+        login(splited[len(splited)-2],splited[len(splited)-1],event)
         responder=False
 
     if (responder==True):
         # Sends the response back to the channel
         slack_client.api_call(
             "chat.postMessage",
-            channel=channel,
+            channel=event['channel'],
             text=response or default_response
         )
 
@@ -91,9 +139,9 @@ if __name__ == "__main__":
         # Read bot's user ID by calling Web API method `auth.test`
         starterbot_id = slack_client.api_call("auth.test")["user_id"]
         while True:
-            command, channel = parse_bot_commands(slack_client.rtm_read())
+            command,event = parse_bot_commands(slack_client.rtm_read())
             if command:
-                handle_command(command, channel)
+                handle_command(command,event)
             time.sleep(RTM_READ_DELAY)
     else:
         print("Connection failed. Exception traceback printed above.")
