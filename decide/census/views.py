@@ -1,7 +1,10 @@
 from django.db.utils import IntegrityError
+from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework.response import Response
+from django.views.generic.list import ListView
 from rest_framework.status import (
         HTTP_201_CREATED as ST_201,
         HTTP_204_NO_CONTENT as ST_204,
@@ -12,6 +15,38 @@ from rest_framework.status import (
 
 from base.perms import UserIsStaff
 from .models import Census
+from voting.models import Voting
+
+class CensuslListView(ListView):
+    model = Census
+    template_name = "list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_list'] = Census.objects.all()
+        return context
+
+class CensuslByVotingListView(ListView):
+    model = Census
+    template_name = "list.html"
+    votingId = 0
+    voting = None
+    
+    def get(self, request, *args, **kwargs):
+        self.votingId = kwargs.get('voting_id')
+        try:
+            self.voting = Voting.objects.get(pk=self.votingId)
+        except ObjectDoesNotExist as n:
+            return redirect('census_list')
+        return ListView.get(self, request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ids = Census.objects.filter(voting_id=self.votingId).values('voter_id')
+        context['object_list'] = User.objects.all().filter(pk__in=ids)
+        context['voting'] = self.voting
+        print(kwargs)
+        return context
 
 
 class CensusCreate(generics.ListCreateAPIView):
