@@ -4,27 +4,23 @@ import { Container, Header, Content, Form, Item, Input, Button, Text } from 'nat
 
 export default class InfoScreen extends React.Component {
   static navigationOptions = {
-    title: 'Info',
+    title: 'Acerca de',
   };
 
   render() {
     return (
-        <Container>
-            <Header />
+
             <Content>
-                <Form>
-                    <Item>
-                        <Input placeholder="Nombre de usuario" />
-                    </Item>
-                    <Item last>
-                        <Input placeholder="Contraseña" />
-                    </Item>
-                  <Button full success>
-                      <Text>Logon</Text>
-                  </Button>
-                </Form>
+            <Text>{`
+Esto es una plataforma de voto electrónico seguro que cumple una serie de garantías básicas, como la anonimicidad y el secreto del voto.
+
+Los desarrolladores del proyecto son los miembros del grupo Wadobo.
+
+Esta aplicación ha sido desarrollada por Pablo Tabares García, César García Pascual y Alfredo Campos Durán.
+`}</Text>
+
+
             </Content>
-        </Container>
     );
   }
 }
