@@ -5,6 +5,7 @@
 \usepackage{blindtext}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{float}
 \graphicspath{{images/}}
 \usepackage{parskip}
 \usepackage{fancyhdr}
@@ -77,6 +78,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \tableofcontents
+\listoffigures
+\listoftables
 \pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -196,7 +199,24 @@ Una vez registrados en Travis CI, procedemos a sincronizado el repositorio de Gi
 
 \subsection{Gestión de liberaciones, despliegue y entregas}
 
+Para desplegar el proyecto se va a usar Heroku. Heroku es una plataforma como servicio que permite desplegar y operar aplicaciones en la nube sin ningun problema de forma gratuita.
+Además se puede configurar con Travis CI para que el proceso de despliegue se realice de forma automatica cuando exista algun cambio en la rama correspondiente. De esta forma nosotros vamos a desplegar nuestro subsistema de forma aislada desde nuestra rama base ortosia-auth
+Mientras que para el sistema completo con todos los subsistemas se va a usar la rama master.
+
+\begin{table}[H]
+\begin{tabular}{lllll}
+\cline{1-4}
+\multicolumn{1}{|l|}{Sistema} & \multicolumn{1}{l|}{URL} & \multicolumn{1}{l|}{Usuario} & \multicolumn{1}{l|}{Contraseña} &  \\ \cline{1-4}
+\multicolumn{1}{|l|}{Autenticación} & \multicolumn{1}{l|}{https://ortosia-auth.herokuapp.com} & \multicolumn{1}{l|}{administrator} & \multicolumn{1}{l|}{Admin2018.} &  \\ \cline{1-4}
+\multicolumn{1}{|l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} &  \\ \cline{1-4}
+                       &                       &                       &                       & 
+\end{tabular}
+\caption{Sistemas desplegados en Heroku}
+\end{table}
+
 \section{Mapa de herramientas}
+
+
 \section{Ejercicio de propuesta de cambio}
 \section{Conclusiones y trabajo futuro}
 
@@ -225,6 +245,8 @@ Bialba, 21 Septiembre 2016.
 \bibitem{auth-issue} 
 \textit{https://github.com/pablotabares/decide/issues/5}
 
+\bibitem{heroku} 
+\textit{https://www.heroku.com/}
 
 \bibitem{commit-structure}
 Miguel Angel Bueno Ferrer, 23 Abril 2017. 
