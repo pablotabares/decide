@@ -67,7 +67,7 @@ MODULES = [
 ]
 
 # BASEURL = 'http://localhost:8000'
-BASEURL = 'http://decide-agepere.herokuapp.com'
+BASEURL = 'https://agepere-ortosia-votacion.herokuapp.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
