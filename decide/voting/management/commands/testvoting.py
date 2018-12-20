@@ -4,6 +4,7 @@ import itertools
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
+from django.contrib.auth import login
 from django.utils import timezone
 
 from base import mods
@@ -12,7 +13,6 @@ from census.models import Census
 from mixnet.mixcrypt import MixCrypt
 from mixnet.mixcrypt import ElGamal
 from voting.models import Voting, Question, QuestionOption
-
 
 
 class Command(BaseCommand):
@@ -29,7 +29,7 @@ class Command(BaseCommand):
         q = Question(desc='test question')
         q.save()
         for i in range(5):
-            opt = QuestionOption(question=q, option='option {}'.format(i+1))
+            opt = QuestionOption(question=q, option='option {}'.format(i + 1))
             opt.save()
         v = Voting(name='test voting', question=q)
         v.save()
@@ -40,6 +40,13 @@ class Command(BaseCommand):
         v.auths.add(a)
 
         return v
+
+    def get_or_create_user(self, pk):
+        user, _ = User.objects.get_or_create(pk=pk)
+        user.username = 'user{}'.format(pk)
+        user.set_password('qwerty')
+        user.save()
+        return user
 
     def create_voters(self, v):
         for i in range(100):
@@ -53,18 +60,22 @@ class Command(BaseCommand):
         voters = list(Census.objects.filter(voting_id=v.id))
         voter = voters.pop()
         clear = {}
-        for opt in v.question.options.all():
-            clear[opt.number] = 0
-            for i in range(random.randint(0, 5)):
-                a, b = self.encrypt_msg(opt.number, v)
-                data = {
-                    'voting': v.id,
-                    'voter': voter.voter_id,
-                    'vote': { 'a': a, 'b': b },
-                }
-                clear[opt.number] += 1
-                voter = voters.pop()
-                mods.post('store', json=data)
+        for q in v.questions.all():
+            for opt in q.options.all():
+                clear[opt.number] = 0
+                for i in range(random.randint(0, 5)):
+                    a, b = self.encrypt_msg(opt.number, v)
+                    data = {
+                        'voting': v.id,
+                        'voter': voter.voter_id,
+                        'vote': {'a': a, 'b': b},
+                    }
+                    clear[opt.number] += 1
+                    user = self.get_or_create_user(voter.voter_id)
+                    self.login(user=user.username)
+                    voter = voters.pop()
+                    mods.post('store', json=data)
+
         return clear
 
     def handle(self, *args, **options):
@@ -87,8 +98,9 @@ class Command(BaseCommand):
         tally = {k: len(list(x)) for k, x in itertools.groupby(tally)}
 
         print("Result:")
-        for q in v.question.options.all():
-            print(" * {}: {} tally votes / {} emitted votes".format(q, tally.get(q.number, 0), clear.get(q.number, 0)))
+        for question in v.questions.all():
+            for q in QuestionOption.objects.all.filter(question=question.id):
+                print(" * {}: {} tally votes / {} emitted votes".format(q, tally.get(q.number, 0), clear.get(q.number, 0)))
 
         print("")
         print("Postproc Result:")
