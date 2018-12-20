@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block content %}
+<h2 class="card-title">Lista de votaciones y votantes</h2>
+
+{% if voting %}
+    <h4 class="card-title">{{voting.name}}</h4>
+{% endif %}
+
+<ul class="list-group">{{object}}
+  {% for object in object_list %}
+    <li class="list-group-item">
+        {% if not voting %}
+            <p>Voting id: {{object.voting_id}}, voter id: {{object.voter_id}}</p>
+        {% endif %}
+        {% if voting %}
+            <p>Nombre: {{object.first_name}} {{object.last_name}}</p>
+        {% endif %}
+    
+    </li>
+  {% endfor %}
+</ul>
+
+
+
+{% endblock content %}
