@@ -1,23 +1,26 @@
 language: python
-python: 
- - "3.6.6"
+python:
+- 3.6.6
 install:
- - pip install -r requirements.txt
+- pip install -r requirements.txt
 sudo: required
 services:
- - docker
+- docker
 script:
- - sonar-scanner
- - cd docker
- - docker exec -ti decide_web ./manage.py test
- - cd ..
+- sonar-scanner
+- cd docker
+- docker exec -ti decide_web ./manage.py test
+- cd ..
 addons:
   sonarcloud:
-    organization: "pablotabares-github"
+    organization: pablotabares-github
 notifications:
   email: false
 before_install:
- - cd docker
- - docker-compose up -d
- - cd ..
-
+- cd docker
+- docker-compose up -d
+- cd ..
+deploy:
+  provider: heroku
+  api_key:
+    secure: nn83EDm0F9Dy7WQhLEKiIrezePBjuDxpx4po9GsyBTqGVMcQ7JM/RgjaNmSoPRNBckmZ00PMnYH+46PI4Rqy/OfcgmNZV7qJKV0idYLEO+AAqtVX3nZVfDuhOUq9gY29Ncuf+zSCoNIK/OVIRy4nkz0TDmg9ZM77QZog2CUiVug/Ywh0bDBlaL0XF901iYFaZl2p9w6BcrwP7whmChMHuPh+WHGiZaZ/xTB/30VnLPQVk3AlUxlHMRf2LH7i+2Q9XvWafltYrpT8dWltgy/CGG7fCRDKmIQjX+UT2fiGku8ZyPMdLeVOurrKtLojH5WGJZm+lMTHvN79vISuhKAFldU3RQ4lXJ3ScflVvs0MTip34FK3j+9waWDJ4NGQJJrO4W7Ohbu90LO1mZ9VZE+UbugCEQRIzZtAuj5eEhZej6BXkAJqcC4sFsPpqek6H9S4h2+oXOszaFTLyJs1NuRYYGVZxXeb0k7idjQI/P4cHvlj8x7uNfFwyl8A+b9vB01/rHKCarHCU9BBzyenE9wYDEBa1oY2wTv5uDqIIrEtzFh8NHLCTG0IjvsbC5v9qswdDxfzkNt3Asy3XSnlfzXSkXp0ZYL+9IrqZ9JG4cFd0oj9ho1+nwfsvJOdOYgboT8pvOUdfp4uikEN89G1R7V+2vedngzHJ/fadCy0sQKeIZs=
