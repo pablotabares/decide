@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Button, Text } from 'native-base';
 
-export default class LinksScreen extends React.Component {
+export default class InfoScreen extends React.Component {
   static navigationOptions = {
-    title: 'Links',
+    title: 'Info',
   };
 
   render() {
