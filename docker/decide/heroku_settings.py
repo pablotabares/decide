@@ -1,7 +1,6 @@
 import psycopg2
 import urllib.parse as urlparse
 import os
-#import django_heroku
 
 url = urlparse.urlparse(os.environ['DATABASE_URL'])
 dbname = url.path[1:]
@@ -44,14 +43,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': dbname,
         'USER': user,
-	'PASSWORD': password,
+	    'PASSWORD': password,
         'HOST': host,
         'PORT': port,
     }
 }
 
+STATIC_ROOT = os.path.dirname(os.path.abspath(__file__))+'/static'
+
+STATIC_URL = '/static/'
+
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
-
-# Activate Django-Heroku.
-#django_heroku.settings(locals())

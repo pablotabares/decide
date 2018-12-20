@@ -1,3 +1,5 @@
+import os
+
 ALLOWED_HOSTS = ["*"]
 
 # Modules in use, commented modules that you won't use
@@ -36,6 +38,8 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+STATIC_ROOT = os.path.dirname(os.path.abspath(__file__))+'/static'
 
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
