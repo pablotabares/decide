@@ -4,12 +4,20 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from base import mods
-from base.models import Auth, Key
+from base.models import Key, Auth
+
+IMPORTANCE_CHOICES = (
+    (0, ("None")),
+    (1, ("Not relevant")),
+    (2, ("Review")),
+    (3, ("May relevant")),
+    (4, ("Relevant")),
+    (5, ("Leading candidate"))
+)
 
 
 class Question(models.Model):
     desc = models.TextField()
-    referendum = models.BooleanField(default=False)
 
     def __str__(self):
         return self.desc
@@ -17,9 +25,11 @@ class Question(models.Model):
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
+    unlockquestion = models.ManyToManyField(Question, related_name='unlockquestion', null=True, blank=True)
     number = models.PositiveIntegerField(blank=True, null=True)
     #Adding the weight of this option
-    weight = models.FloatField(blank=False, null=True)
+    weight = models.IntegerField( blank=False, null=True)
+    importance = models.FloatField(choices=IMPORTANCE_CHOICES, default=0)
 
     option = models.TextField()
 
@@ -36,7 +46,7 @@ class Voting(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True)
     isWeighted = models.BooleanField(default=False)
-    question = models.ForeignKey(Question, related_name='voting', on_delete=models.CASCADE)
+    questions = models.ManyToManyField(Question, related_name='voting')
 
     start_date = models.DateTimeField(blank=True, null=True)
     end_date = models.DateTimeField(blank=True, null=True)

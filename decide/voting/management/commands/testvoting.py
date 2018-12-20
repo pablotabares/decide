@@ -26,13 +26,30 @@ class Command(BaseCommand):
         return k.encrypt(msg)
 
     def create_voting(self):
+        # Creation of questions test for the voting
         q = Question(desc='test question')
+        q2 = Question(desc='test question 2')
+
+        # Saving the questions before adding them to the voting
         q.save()
+        q2.save()
+
+        # Creation of question options per each question previouly created
         for i in range(5):
             opt = QuestionOption(question=q, option='option {}'.format(i+1))
             opt.save()
-        v = Voting(name='test voting', question=q)
+
+        for n in range(5):
+            opt2 = QuestionOption(question=q2, option='option {}'.format(n + 1))
+            opt2.save()
+
+        # Creation and storage of voting
+        v = Voting(name='test voting', desc='testeo de voting')
         v.save()
+
+        # Addition of the questions created to the voting
+        v.questions.add(q)
+        v.questions.add(q2)
 
         a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
                                           defaults={'me': True, 'name': 'test auth'})
@@ -53,18 +70,21 @@ class Command(BaseCommand):
         voters = list(Census.objects.filter(voting_id=v.id))
         voter = voters.pop()
         clear = {}
-        for opt in v.question.options.all():
-            clear[opt.number] = 0
-            for i in range(random.randint(0, 5)):
-                a, b = self.encrypt_msg(opt.number, v)
-                data = {
-                    'voting': v.id,
-                    'voter': voter.voter_id,
-                    'vote': { 'a': a, 'b': b },
-                }
-                clear[opt.number] += 1
-                voter = voters.pop()
-                mods.post('store', json=data)
+        for q in v.questions.all():
+            for opt in QuestionOption.objects.filter(question=q.id):
+                clear[opt.number] = 0
+                for i in range(random.randint(0, 5)):
+                    a, b = self.encrypt_msg(opt.number, v)
+                    data = {
+                        'voting': v.id,
+                        'voter': voter.voter_id,
+                        'vote': {'a': a, 'b': b},
+                    }
+                    clear[opt.number] += 1
+                    user = self.get_or_create_user(voter.voter_id)
+                    self.login(user=user.username)
+                    voter = voters.pop()
+                    mods.post('store', json=data)
         return clear
 
     def handle(self, *args, **options):
@@ -73,7 +93,7 @@ class Command(BaseCommand):
         self.create_voters(v)
 
         print("Creating pubkey")
-        v.create_pubkey()
+        #v.create_pubkey()
         v.start_date = timezone.now()
         v.save()
 
@@ -87,8 +107,9 @@ class Command(BaseCommand):
         tally = {k: len(list(x)) for k, x in itertools.groupby(tally)}
 
         print("Result:")
-        for q in v.question.options.all():
-            print(" * {}: {} tally votes / {} emitted votes".format(q, tally.get(q.number, 0), clear.get(q.number, 0)))
+        for question in v.questions.all():
+            for q in QuestionOption.objects.all.filter(question=question.id):
+                print(" * {}: {} tally votes / {} emitted votes".format(q, tally.get(q.number, 0), clear.get(q.number, 0)))
 
         print("")
         print("Postproc Result:")

@@ -32,13 +32,30 @@ class VotingTestCase(BaseTestCase):
         return k.encrypt(msg)
 
     def create_voting(self):
+        # Creation of questions test for the voting
         q = Question(desc='test question')
+        q2 = Question(desc='test question 2')
+
+        # Saving the questions before adding them to the voting
         q.save()
+        q2.save()
+
+        # Creation of question options per each question previouly created
         for i in range(5):
             opt = QuestionOption(question=q, option='option {}'.format(i+1))
             opt.save()
-        v = Voting(name='test voting', question=q)
+
+        for n in range(5):
+            opt2 = QuestionOption(question=q2, option='option {}'.format(n + 1))
+            opt2.save()
+
+        # Creation and storage of voting
+        v = Voting(name='test voting', desc='testeo de voting')
         v.save()
+
+        # Addition of the questions created to the voting
+        v.questions.add(q)
+        v.questions.add(q2)
 
         a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
                                           defaults={'me': True, 'name': 'test auth'})
