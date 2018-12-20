@@ -114,30 +114,31 @@ class Voting(models.Model):
 
     def do_postproc(self):
         tally = self.tally
-        options = self.question.options.all()
+        for q in self.questions.all():
+            options = q.options.all()
 
-        opts = []
-        for opt in options:
-            if isinstance(tally, list):
-                votes = tally.count(opt.number)
+            opts = []
+            for opt in options:
+                if isinstance(tally, list):
+                    votes = tally.count(opt.number)
+                else:
+                    votes = 0
+                opts.append({
+                    'option': opt.option,
+                    'number': opt.number,
+                    'votes': votes
+                })
+
+            # we have two types of tally the wheighted one or the traditional
+            if not self.isWeighted:
+                data = {'type': 'IDENTITY', 'options': opts}
             else:
-                votes = 0
-            opts.append({
-                'option': opt.option,
-                'number': opt.number,
-                'votes': votes
-            })
+                data = {'type': 'WEIGHT', 'options': opts}
 
-        # we have two types of tally the wheighted one or the traditional
-        if not self.isWeighted:
-            data = {'type': 'IDENTITY', 'options': opts}
-        else:
-            data = {'type': 'WEIGHT', 'options': opts}
+            postp = mods.post('postproc', json=data)
 
-        postp = mods.post('postproc', json=data)
-
-        self.postproc = postp
-        self.save()
+            self.postproc = postp
+            self.save()
 
     def __str__(self):
         return self.name
