@@ -115,9 +115,10 @@ class VotingView(generics.ListCreateAPIView):
         for idx, q_opt in enumerate(request.data.get('question_opt')):
             opt = QuestionOption(question=question, option=q_opt, number=idx)
             opt.save()
-        voting = Voting(name=request.data.get('name'), desc=request.data.get('desc'),
-                        question=question)
+        voting = Voting(name=request.data.get('name'), desc=request.data.get('desc'))
         voting.save()
+        voting.questions.add(question)
+
 
         auth, _ = Auth.objects.get_or_create(url=settings.BASEURL,
                                              defaults={'me': True, 'name': 'test auth'})
