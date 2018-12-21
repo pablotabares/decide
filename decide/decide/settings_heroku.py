@@ -68,7 +68,9 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'http://localhost:8000'
+# BASEURL = 'http://localhost:8000'
+BASEURL = 'https://decide-ortosia-votacion.herokuapp.com'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -130,7 +132,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -153,7 +154,9 @@ STATIC_URL = '/static/'
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
-APIS= {}
+
+APIS = {}
+
 
 try:
     from local_settings import *
@@ -164,3 +167,4 @@ INSTALLED_APPS = INSTALLED_APPS + MODULES
 
 import django_heroku
 django_heroku.settings(locals())
+
