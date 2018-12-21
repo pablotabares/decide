@@ -21,16 +21,25 @@ from mixnet.mixcrypt import MixCrypt
 from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption
 from store.models import Vote
+from rest_framework.authtoken.models import Token
 
-class VisualizerTestCase(APITestCase):
+class VisualizerTestCase(BaseTestCase):
 
     #Method copy from voting/test.py
-     def encrypt_msg(self, msg, v, bits=settings.KEYBITS):
+    def encrypt_msg(self, msg, v, bits=settings.KEYBITS):
         pk = v.pub_key
         p, g, y = (pk.p, pk.g, pk.y)
         k = MixCrypt(bits=bits)
         k.k = ElGamal.construct((p, g, y))
         return k.encrypt(msg)
+
+    #Method copy from voting/test.py
+    def get_or_create_user(self, pk):
+        user, _ = User.objects.get_or_create(pk=pk)
+        user.username = 'user{}'.format(pk)
+        user.set_password('qwerty')
+        user.save()
+        return user
 
 
     def test(self):
@@ -78,10 +87,11 @@ class VisualizerTestCase(APITestCase):
         #Create and add votes
         voters = list(Census.objects.filter(voting_id=v.id))
         voter = voters.pop()
+        print(voter)
         clear = {}
         for opt in v.question.options.all():
             clear[opt.number] = 0
-            for i in range(random.randint(0, 2)):
+            for i in range(2):
                 a, b = self.encrypt_msg(opt.number, v)
                 data = {
                     'voting': v.id,
@@ -91,14 +101,20 @@ class VisualizerTestCase(APITestCase):
                 clear[opt.number] += 1
                 user = self.get_or_create_user(voter.voter_id)
                 self.login(user=user.username)
-                voter = voters.pop()
+                print(voters)
+                #voter = voters.pop()
                 mods.post('store', json=data)
 
-        #Lineas de código a revisar
-        tk = Token.objects.filter(user_id=admin_id)[0].key
-        self.login(tk)
-        v.tally_votes(tk)
 
+        #Login with admin
+        self.login()
+
+        #Tally Done
+        v.tally_votes()
+
+        #...
+        #Votation ended
+        #...
         
 
 
