@@ -25,19 +25,18 @@ class StoreTextCase(BaseTestCase):
         self.question.save()
         self.voting = Voting(pk=5001,
                              name='voting example',
+                             question=self.question,
                              start_date=timezone.now(),
         )
         self.voting.save()
-        self.voting.questions.add(self.question)
 
     def tearDown(self):
         super().tearDown()
 
     def gen_voting(self, pk):
-        voting = Voting(pk=pk, name='v1', start_date=timezone.now(),
+        voting = Voting(pk=pk, name='v1', question=self.question, start_date=timezone.now(),
                 end_date=timezone.now() + datetime.timedelta(days=1))
         voting.save()
-        voting.questions.add(self.question)
 
     def get_or_create_user(self, pk):
         user, _ = User.objects.get_or_create(pk=pk)
