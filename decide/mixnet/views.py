@@ -153,38 +153,38 @@ class Decrypt(APIView):
         position = request.data.get("position", 0)
         mn = get_object_or_404(Mixnet, voting_id=voting_id, auth_position=position)
 
-	# Retrieves the encrypted votes and public key info
+	    # Retrieves the encrypted votes and public key info
         msgs = request.data.get("msgs", [])
         pk = request.data.get("pk", None)
 
- 	# If the public key was not specified, retrieves it from the database
+ 	    # If the public key was not specified, retrieves it from the database
         if pk:
             p, g, y = pk["p"], pk["g"], pk["y"]
         else:
             p, g, y = mn.key.p, mn.key.g, mn.key.y
 
-	# Retrieves the next authority in the chain
+	    # Retrieves the next authority in the chain
         next_auths = mn.next_auths()
-	# Checks whether or not this is the last authority TODO I think
+	    # Checks whether or not this is the last authority TODO I think
         last = next_auths.count() == 0
 
         # useful for tests only, to override the last value
         last = request.data.get("force-last", last)
 
-	# Decrypts the votes
+	    # Decrypts the votes
         msgs = mn.decrypt(msgs, (p, g, y), last=last)
 
-	# Prepares the partially disencrypted votes
+	    # Prepares the partially disencrypted votes
         data = {
             "msgs": msgs,
             "pk": { "p": p, "g": g, "y": y },
         }
 
         # chained call to the next auth to gen the key
-	# Calls the next authority to finish the decryption
+	    # Calls the next authority to finish the decryption
         resp = mn.chain_call("/decrypt/{}/".format(voting_id), data)
 
-	# If this is the last authority, the message is decrypted; otherwise, get the result from the next authority
+	    # If this is the last authority, the message is decrypted; otherwise, get the result from the next authority
         if resp:
             msgs = resp
 
