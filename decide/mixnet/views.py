@@ -37,8 +37,7 @@ class MixnetViewSet(viewsets.ModelViewSet):
         # Information for creating a public key
         key = request.data.get("key", {"p": 0, "g": 0})
 
-        # TODO Find out about the "position" argument
-        # Most likely means the position of the "self" authority in the chain
+        # Position of the "self" authority in the chain
         position = request.data.get("position", 0)
 
         # Extracts key data from request
@@ -79,11 +78,11 @@ class MixnetViewSet(viewsets.ModelViewSet):
         else:
             y = mn.key.y
 
-        # Creates and saves the key object
+        # Creates and saves the public key object
         pubkey = Key(p=mn.key.p, g=mn.key.g, y=y)
         pubkey.save()
 
-        # Associates the key with this mixnet
+        # Associates the public key with this mixnet
         mn.pubkey = pubkey
         mn.save()
 
