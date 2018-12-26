@@ -150,6 +150,33 @@ class VotingTestCase(BaseTestCase):
         response = self.client.post('/voting/', data, format='json')
         self.assertEqual(response.status_code, 201)
 
+    def test_api_functionality(self):
+
+        # login with user admin
+        self.login()
+
+
+        data = {
+            'name': 'New voting',
+            'desc': 'This is a new Voting',
+            'isWeighted' : 'false',
+            'question': '¿This voting work? ',
+            'start_date': '',
+            'end_date': '',
+            'question_opt': ['yes', 'no', 'maybe'],
+            "pub_key": {
+                "p": '',
+                "g": '',
+                "y": ''
+            },
+            "auths": [],
+            "tally": '',
+            "postproc": ''
+        }
+
+        response = self.client.post('/voting/', data, format='json')
+        self.assertEqual(response.status_code, 201)
+
     def test_update_voting(self):
         voting = self.create_voting()
 
