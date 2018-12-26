@@ -4,6 +4,7 @@ import itertools
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
+from django.contrib.auth import login
 from django.utils import timezone
 
 from base import mods
@@ -12,7 +13,6 @@ from census.models import Census
 from mixnet.mixcrypt import MixCrypt
 from mixnet.mixcrypt import ElGamal
 from voting.models import Voting, Question, QuestionOption
-
 
 
 class Command(BaseCommand):
@@ -36,7 +36,7 @@ class Command(BaseCommand):
 
         # Creation of question options per each question previouly created
         for i in range(5):
-            opt = QuestionOption(question=q, option='option {}'.format(i+1))
+            opt = QuestionOption(question=q, option='option {}'.format(i + 1))
             opt.save()
 
         for n in range(5):
@@ -58,6 +58,13 @@ class Command(BaseCommand):
 
         return v
 
+    def get_or_create_user(self, pk):
+        user, _ = User.objects.get_or_create(pk=pk)
+        user.username = 'user{}'.format(pk)
+        user.set_password('qwerty')
+        user.save()
+        return user
+
     def create_voters(self, v):
         for i in range(100):
             u, _ = User.objects.get_or_create(username='testvoter{}'.format(i))
@@ -71,7 +78,7 @@ class Command(BaseCommand):
         voter = voters.pop()
         clear = {}
         for q in v.questions.all():
-            for opt in QuestionOption.objects.filter(question=q.id):
+            for opt in q.options.all():
                 clear[opt.number] = 0
                 for i in range(random.randint(0, 5)):
                     a, b = self.encrypt_msg(opt.number, v)
@@ -85,6 +92,7 @@ class Command(BaseCommand):
                     self.login(user=user.username)
                     voter = voters.pop()
                     mods.post('store', json=data)
+
         return clear
 
     def handle(self, *args, **options):
@@ -93,7 +101,7 @@ class Command(BaseCommand):
         self.create_voters(v)
 
         print("Creating pubkey")
-        #v.create_pubkey()
+        v.create_pubkey()
         v.start_date = timezone.now()
         v.save()
 
@@ -107,9 +115,9 @@ class Command(BaseCommand):
         tally = {k: len(list(x)) for k, x in itertools.groupby(tally)}
 
         print("Result:")
-        for question in v.questions.all():
-            for q in QuestionOption.objects.all.filter(question=question.id):
-                print(" * {}: {} tally votes / {} emitted votes".format(q, tally.get(q.number, 0), clear.get(q.number, 0)))
+        for q in v.question.options.all():
+            print(" * {}: {} tally votes / {} emitted votes".format(q, tally.get(q.number, 0),
+                                                                    clear.get(q.number, 0)))
 
         print("")
         print("Postproc Result:")
