@@ -72,12 +72,7 @@ MODULES = [
     'voting',
 ]
 
-<<<<<<< HEAD
 BASEURL = 'https://cabina-ortosia.herokuapp.com'
-=======
-# BASEURL = 'http://localhost:8000'
-BASEURL = 'https://ortosia-cabina.herokuapp.com'
->>>>>>> 1a14c693ba89eec3b93ea073607d234c61012528
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -114,7 +109,7 @@ WSGI_APPLICATION = 'decide.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, default='postgres://nedihfebwhblva:402b46ae4c000a1f31fc22337a1b302cfb48108710393a07206ca2e906c0a8f5@ec2-46-137-99-175.eu-west-1.compute.amazonaws.com:5432/de911cmggf924t')
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, default='postgres://vlzlzfeungqocd:0bfc02c0f36ef837dc178f198ad422fe15a450bd210e808833e47ca64d015180@ec2-46-137-99-175.eu-west-1.compute.amazonaws.com:5432/d1ab0i5tqccghk')
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
