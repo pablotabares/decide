@@ -11,11 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-<<<<<<< HEAD
 import django_heroku
 import dj_database_url
-=======
->>>>>>> 1a14c693ba89eec3b93ea073607d234c61012528
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -72,12 +69,8 @@ MODULES = [
     'voting',
 ]
 
-<<<<<<< HEAD
+
 BASEURL = 'https://cabina-ortosia.herokuapp.com'
-=======
-# BASEURL = 'http://localhost:8000'
-BASEURL = 'https://ortosia-cabina.herokuapp.com'
->>>>>>> 1a14c693ba89eec3b93ea073607d234c61012528
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -157,11 +150,7 @@ STATIC_URL = '/static/'
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
-<<<<<<< HEAD
-# APIS = {}
-=======
 APIS = {}
->>>>>>> 1a14c693ba89eec3b93ea073607d234c61012528
 
 try:
     from local_settings import *
@@ -171,9 +160,4 @@ except ImportError:
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
 
-<<<<<<< HEAD
 django_heroku.settings(locals())
-=======
-import django_heroku
-django_heroku.settings(locals())
->>>>>>> 1a14c693ba89eec3b93ea073607d234c61012528

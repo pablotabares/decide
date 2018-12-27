@@ -45,8 +45,9 @@ class QuestionOption(models.Model):
 class Voting(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True)
-    questions = models.ManyToManyField(Question,related_name='votings')
     isWeighted = models.BooleanField(default=False)
+    questions = models.ManyToManyField(Question, related_name='voting')
+
     start_date = models.DateTimeField(blank=True, null=True)
     end_date = models.DateTimeField(blank=True, null=True)
 
@@ -128,16 +129,16 @@ class Voting(models.Model):
                     'votes': votes
                 })
 
-        # we have two types of tally the wheighted one or the traditional
-        if not self.isWeighted:
-            data = {'type': 'IDENTITY', 'options': opts}
-        else:
-            data = {'type': 'WEIGHT', 'options': opts}
+            # we have two types of tally the wheighted one or the traditional
+            if not self.isWeighted:
+                data = {'type': 'IDENTITY', 'options': opts}
+            else:
+                data = {'type': 'WEIGHT', 'options': opts}
 
-        postp = mods.post('postproc', json=data)
+            postp = mods.post('postproc', json=data)
 
-        self.postproc = postp
-        self.save()
+            self.postproc = postp
+            self.save()
 
     def __str__(self):
         return self.name

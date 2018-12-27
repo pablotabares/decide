@@ -78,7 +78,7 @@ class Command(BaseCommand):
         voter = voters.pop()
         clear = {}
         for q in v.questions.all():
-            for opt in QuestionOption.objects.filter(question=q.id):
+            for opt in q.options.all():
                 clear[opt.number] = 0
                 for i in range(random.randint(0, 5)):
                     a, b = self.encrypt_msg(opt.number, v)
@@ -92,6 +92,7 @@ class Command(BaseCommand):
                     self.login(user=user.username)
                     voter = voters.pop()
                     mods.post('store', json=data)
+
         return clear
 
     def handle(self, *args, **options):
@@ -114,9 +115,9 @@ class Command(BaseCommand):
         tally = {k: len(list(x)) for k, x in itertools.groupby(tally)}
 
         print("Result:")
-        for question in v.questions.all():
-            for q in QuestionOption.objects.all.filter(question=question.id):
-                print(" * {}: {} tally votes / {} emitted votes".format(q, tally.get(q.number, 0), clear.get(q.number, 0)))
+        for q in v.question.options.all():
+            print(" * {}: {} tally votes / {} emitted votes".format(q, tally.get(q.number, 0),
+                                                                    clear.get(q.number, 0)))
 
         print("")
         print("Postproc Result:")
