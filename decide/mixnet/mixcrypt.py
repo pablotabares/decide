@@ -41,14 +41,13 @@ from Crypto.Random import random
 from Crypto import Random
 from Crypto.Util.number import GCD
 
-
 def rand(p):
     while True:
         k = random.StrongRandom().randint(1, int(p) - 1)
         if GCD(k, int(p) - 1) == 1: break
     return k
 
-
+#Generates the joint public key from multiple keys
 def gen_multiple_key(*crypts):
     k1 = crypts[0]
     k = MixCrypt(k=k1.k, bits=k1.bits)
@@ -65,7 +64,7 @@ def multiple_decrypt(c, *crypts):
         b = k.decrypt((a, b))
     return b
 
-
+#Decrypts the messages and shuffles the result
 def multiple_decrypt_shuffle(ciphers, *crypts):
     b = ciphers
     for i, k in enumerate(crypts):
@@ -104,23 +103,26 @@ def multiple_decrypt_shuffle2(ciphers, *crypts, pubkey=None):
 
 
 class MixCrypt:
+
     def __init__(self, k=None, bits=256):
         self.bits = bits
         if k:
             self.k = self.getk(k.p, k.g)
         else:
             self.k = self.genk()
-
+    #Generates a random key
     def genk(self):
         self.k = ElGamal.generate(self.bits, Random.new().read)
         return self.k
 
+    #Generates a key from parameters p and g
     def getk(self, p, g):
         x = rand(p)
         y = pow(g, x, p)
         self.k = ElGamal.construct((p, g, y, x))
         return self.k
 
+    #Constructs a key from a given parameters
     def setk(self, p, g, y, x):
         self.k = ElGamal.construct((p, g, y, x))
         return self.k
@@ -147,6 +149,7 @@ class MixCrypt:
             msgs2.append(msg)
         return msgs2
 
+    #Decrypts messages in random order
     def shuffle_decrypt(self, msgs, last=True):
         msgs2 = msgs.copy()
         msgs3 = []
@@ -161,7 +164,8 @@ class MixCrypt:
             msgs3.append(msg)
 
         return msgs3
-
+    
+    #Encrypts the encrypted message
     def reencrypt(self, cipher, pubkey=None):
         '''
         >>> B = 256
@@ -189,7 +193,8 @@ class MixCrypt:
 
         return ((a * a1) % p, (b * b1) % p)
 
-    def gen_perm(self, l):
+    #Generates a permutation in the order of the message
+    def gen_perm(self, l): 
         x = list(range(l))
         for i in range(l):
             d = random.StrongRandom().randint(0, i)
