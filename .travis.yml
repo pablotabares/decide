@@ -19,12 +19,12 @@ script:
   - sonar-scanner
   - python manage.py test
   - cd ../docker
-  - docker build -t camreyaro/decide .
-  - docker tag camreyaro/decide registry.heroku.com/$HEROKU_APP_NAME/web
+  - docker build -t ortosiacabina/decide .
+  - docker tag ortosiacabina/decide registry.heroku.com/$HEROKU_APP_NAME/web
 deploy:
   provider: script
   script: 
-    docker push camreyaro/decide;
+    docker push ortosiacabina/decide;
     docker push registry.heroku.com/$HEROKU_APP_NAME/web;
     heroku container:release web --app $HEROKU_APP_NAME;
     heroku config:set WEB_CONCURRENCY=3;
