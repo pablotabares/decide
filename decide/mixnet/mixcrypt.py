@@ -64,7 +64,7 @@ def multiple_decrypt(c, *crypts):
         b = k.decrypt((a, b))
     return b
 
-#Decrypts the messages and shuffles the result
+#For each key the messages are decrypted in random order
 def multiple_decrypt_shuffle(ciphers, *crypts):
     b = ciphers
     for i, k in enumerate(crypts):
