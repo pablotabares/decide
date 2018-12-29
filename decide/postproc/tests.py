@@ -376,6 +376,55 @@ class PostProcTestCase(APITestCase):
         values = response.json()
         self.assertEqual(values, expected_result)
 
+    def test_borda_without_votings(self):
+        data = {
+            "type": "BORDA",
+            "options": [{
+                "option": "Futbol",
+                "positions": []
+            }, {
+                "option": "Baloncesto",
+                "positions": []
+            }, {
+                "option": "Tenis",
+                "positions": []
+            }, {
+                "option": "Natacion",
+                "positions": []
+            }, {
+                "option": "Correr",
+                "positions": []
+            }]
+        }
+
+        expected_result = {
+            "Futbol": 5,
+            "Baloncesto": 4,
+            "Tenis": 3,
+            "Natacion": 2,
+            "Correr": 1
+        }
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+    def test_borda_without_options(self):
+        data = {
+            "type": "BORDA",
+            "options": []
+        }
+
+        expected_result = {}
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
     def test_gender_balanced_1(self):
         data = {
             "type": "GENDER-BALANCED",
