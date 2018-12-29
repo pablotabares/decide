@@ -190,6 +190,44 @@ class VotingTestCase(BaseTestCase):
         self.assertEqual(response_get.status_code, 200)
 
 
+    def test_api_referendum(self):
+
+        # login with user admin
+        self.login()
+
+
+        data = {
+            'name': 'New referendum',
+            'desc': 'This is a new referendum',
+            'isWeighted': 'false',
+            'question': '¿This voting work? ',
+            'question_opt': ['yes', 'no', 'maybe'],
+            'start_date': '',
+            'end_date': '',
+            "pub_key": {
+                "p": '',
+                "g": '',
+                "y": ''
+            },
+            "auths": [],
+            "tally": '',
+            "postproc": ''
+        }
+
+        self.client.post('/voting/api/referendum', data, format='json')
+        response = self.client.get('/voting/?id=1')
+
+        print('-------------------------------')
+        print(response.status_code)
+        print('-----------------------------')
+        print(response)
+        print('-------------------------------------')
+        #self.assertEqual(response.status_code, 201)
+
+        print(data)
+
+
+
     def test_update_voting(self):
         voting = self.create_voting()
 
