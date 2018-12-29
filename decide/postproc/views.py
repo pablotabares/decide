@@ -238,6 +238,30 @@ class PostProcView(APIView):
 
         return Response(out)
 
+    def sainte_lague(self, options, seats):
+        out = {}
+        nOptions = len(options)
+        calculos = []        
+
+        for opt in options:
+            opcion = opt['option']
+            out[opcion] = 0
+
+            calculos.append(opt['votes'])
+
+        cociente = 1
+        escano = 1 
+        while escano <= seats:
+            maximo = max(calculos)
+            indice_maximo = calculos.index(maximo)
+            out[options[indice_maximo]['option']] += 1
+            calculos[indice_maximo] = maximo / cociente
+
+            cociente += 2
+            escano += 1
+        
+        return Response(out)
+
 
     def post(self, request):
         """
@@ -274,5 +298,8 @@ class PostProcView(APIView):
         elif t == 'DROOP':
             seats = request.data.get('seats', 1)
             return self.droop_quota(opts, seats)
+        elif t == 'SAINTE-LAGUE':
+            seats = request.data.get('seats', 1)
+            return self.sainte_lague(opts, seats)
 
         return Response({})

@@ -1117,3 +1117,37 @@ class PostProcTestCase(APITestCase):
 
         values = response.json()
         self.assertEqual(values, expected_result)
+
+    def test_sainte_lague(self):
+        data = {
+            "type": "SAINTE-LAGUE",
+            "seats": 7,
+            "options": [{
+                "option": "Option A",
+                "votes": 340000
+            }, {
+                "option": "Option B",
+                "votes": 280000
+            }, {
+                "option": "Option C",
+                "votes": 160000
+            }, {
+                "option": "Option D",
+                "votes": 60000
+            }]
+        }
+
+        expected_result = [
+            {
+                'Option A': 3,
+                'Option B': 2,
+                'Option C': 1,
+                'Option D': 1
+            }
+        ]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
