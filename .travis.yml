@@ -34,11 +34,6 @@ sudo: required
 services:
   - docker
   - postgresql
-script:
- - sonar-scanner
- - cd docker
- - docker exec -ti decide_web ./manage.py test
- - cd ..
 addons:
   postgresql: "9.6"
   sonarcloud:
@@ -47,8 +42,5 @@ global:
   - PGPORT=5432
 notifications:
   email: false
-before_install:
- - cd docker
- - docker-compose up -d
- - cd ..
+
 

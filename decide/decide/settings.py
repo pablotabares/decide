@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import django_heroku
-import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,7 +25,7 @@ SECRET_KEY = '^##ydkswfu0+=ofw0l#$kv^8n)0$i(qd&d&ol#p9!b$8*5%j1+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -39,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'corsheaders',
     'django_filters',
     'rest_framework',
@@ -69,7 +68,8 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'https://cabina-ortosia.herokuapp.com'
+# BASEURL = 'http://localhost:8000'
+BASEURL = 'https://ortosia-cabina.herokuapp.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -105,8 +105,13 @@ WSGI_APPLICATION = 'decide.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, default='postgres://vlzlzfeungqocd:0bfc02c0f36ef837dc178f198ad422fe15a450bd210e808833e47ca64d015180@ec2-46-137-99-175.eu-west-1.compute.amazonaws.com:5432/d1ab0i5tqccghk')
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -149,7 +154,7 @@ STATIC_URL = '/static/'
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
-# APIS = {}
+APIS = {}
 
 try:
     from local_settings import *
@@ -159,4 +164,5 @@ except ImportError:
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
 
+import django_heroku
 django_heroku.settings(locals())
