@@ -242,23 +242,23 @@ class PostProcView(APIView):
         out = {}
         nOptions = len(options)
         calculos = []        
+        if nOptions != 0: # if we don't get any options, do nothing
+            for opt in options: # Get all options and initilize 0. Get all votes
+                opcion = opt['option']
+                out[opcion] = 0
 
-        for opt in options:
-            opcion = opt['option']
-            out[opcion] = 0
+                calculos.append(opt['votes'])
 
-            calculos.append(opt['votes'])
+            cociente = 1
+            escano = 1 
+            while escano <= seats: # Distribute all the seats
+                maximo = max(calculos) 
+                indice_maximo = calculos.index(maximo) # Get index of maximo
+                out[options[indice_maximo]['option']] += 1 # Add 1 this option
+                calculos[indice_maximo] = maximo / cociente 
 
-        cociente = 1
-        escano = 1 
-        while escano <= seats:
-            maximo = max(calculos)
-            indice_maximo = calculos.index(maximo)
-            out[options[indice_maximo]['option']] += 1
-            calculos[indice_maximo] = maximo / cociente
-
-            cociente += 2
-            escano += 1
+                cociente += 2
+                escano += 1
         
         return Response(out)
 
