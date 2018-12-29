@@ -178,9 +178,9 @@ INSTALLED_APPS = INSTALLED_APPS + MODULES
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "authentication/sent_emails")
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '25'
-EMAIL_HOST_USER = 'testdecideauth@gmail.com'
-EMAIL_HOST_PASSWORD = 'testdecide'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'noreplay.decide@gmail.com'
+EMAIL_HOST_PASSWORD = 'pruebadecide'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
