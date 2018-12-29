@@ -40,7 +40,7 @@ from Crypto.PublicKey import ElGamal
 from Crypto.Random import random
 from Crypto import Random
 from Crypto.Util.number import GCD
-
+from Crypto.Math.Numbers import Integer
 
 def rand(p):
     while True:
@@ -52,7 +52,7 @@ def rand(p):
 def gen_multiple_key(*crypts):
     k1 = crypts[0]
     k = MixCrypt(k=k1.k, bits=k1.bits)
-    k.k.y = 1
+    k.k.y = Integer(1)
     for kx in crypts:
         k.k.y *= kx.k.y
     k.k.y = k.k.y % k.k.p
