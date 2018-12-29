@@ -12,3 +12,4 @@ datetime
 slackclient>=1.1.0
 django-heroku
 gunicorn
+coveralls

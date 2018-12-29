@@ -17,7 +17,8 @@ before_script:
   - python manage.py migrate
 script:
   # - sonar-scanner
-  - python manage.py test
+  - coverage run --source=python manage.py test
+  - coveralls
   - cd ../docker
   - docker build -t ortosiacabina/decide .
   - docker tag ortosiacabina/decide registry.heroku.com/$HEROKU_APP_NAME/web
