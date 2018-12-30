@@ -23,7 +23,10 @@ class CensuslListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_list'] = Census.objects.all()
+        ids = Census.objects.values('voting_id').distinct()
+        userIds = Census.objects.values('voter_id').distinct()
+        context['userList'] = User.objects.all().filter(pk__in=userIds)
+        context['votingList'] = Voting.objects.all().filter(pk__in=ids)
         return context
 
 class CensuslByVotingListView(ListView):
