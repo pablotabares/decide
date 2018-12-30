@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import HttpResponseBadRequest
 
 from .serializers import MixnetSerializer
 from .models import Auth, Mixnet, Key
@@ -25,7 +26,7 @@ class MixnetViewSet(viewsets.ModelViewSet):
          * position: int / nullable
          * key: { "p": int, "g": int } / nullable
         """
-
+        
         auths = request.data.get("auths")
         voting = request.data.get("voting")
         key = request.data.get("key", {"p": 0, "g": 0})
@@ -77,6 +78,11 @@ class Shuffle(APIView):
         position = request.data.get("position", 0)
         mn = get_object_or_404(Mixnet, voting_id=voting_id, auth_position=position)
 
+        if(mn.local_shuffle_count >= mn.local_authority_count):
+            return HttpResponseBadRequest("This mixnet has already shuffled once")
+        mn.local_shuffle_count = mn.local_shuffle_count + 1
+        mn.save()
+
         msgs = request.data.get("msgs", [])
         pk = request.data.get("pk", None)
         if pk:
@@ -110,6 +116,11 @@ class Decrypt(APIView):
 
         position = request.data.get("position", 0)
         mn = get_object_or_404(Mixnet, voting_id=voting_id, auth_position=position)
+
+        if(mn.local_decrypt_count >= mn.local_authority_count):
+            return HttpResponseBadRequest("This mixnet has already decrypted once")
+        mn.local_decrypt_count = mn.local_decrypt_count + 1
+        mn.save()
 
         msgs = request.data.get("msgs", [])
         pk = request.data.get("pk", None)
