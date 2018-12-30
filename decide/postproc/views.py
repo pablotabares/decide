@@ -241,28 +241,34 @@ class PostProcView(APIView):
     def sainte_lague(self, options, seats):
         out = {}
         nOptions = len(options)
-        calculos = []        
-        if nOptions != 0: # if we don't get any options, do nothing
-            for opt in options: # Get all options and initilize 0. Get all votes
+        votes = []
+        if nOptions != 0:
+            matriz = []
+            for opt in options:
                 opcion = opt['option']
                 out[opcion] = 0
 
-                calculos.append(opt['votes'])
+                v = opt['votes']
+                votes.append(v)
+                matriz.append([])
 
-            cociente = 1
-            escano = 1 
-            while escano <= seats: # Distribute all the seats
-                maximo = max(calculos) 
-                indice_maximo = calculos.index(maximo) # Get index of maximo
-                out[options[indice_maximo]['option']] += 1 # Add 1 this option
-                calculos[indice_maximo] = maximo / cociente 
+            for seat in range(seats):
+                for opcion in range(nOptions):
+                    calculo = int(votes[opcion] / ((2 * seat) + 1))
+                    matriz[opcion].append(calculo)
 
-                cociente += 2
-                escano += 1
-        
+            for seat in range(seats):
+                maximos = []
+                for fila in matriz:
+                    maximos.append(max(fila))
+                maximo = max(maximos)
+                indice_del_maximo = maximos.index(maximo)
+                matriz[indice_del_maximo].remove(maximo)    
+
+                out[options[indice_del_maximo]['option']] += 1
+
         return Response(out)
-
-
+        
     def post(self, request):
         """
          * type: IDENTITY | EQUALITY | WEIGHT | BORDA
