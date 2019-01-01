@@ -26,4 +26,4 @@ deploy:
   app: decide-ortosia-censo
   on:
     repo: pablotabares/decide
-    branch: ortosia-censo-manheravi
+    branch: ortosia-censo
