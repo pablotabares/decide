@@ -30,9 +30,9 @@ before_script:
 notifications:
   email: false
 before_install:
- - cd docker
- - docker-compose up -d
- - cd ..
+# - cd docker
+# - docker-compose up -d
+# - cd ..
 before_deploy:
  - cp requirements.txt decide/requirements.txt
  - cd decide
