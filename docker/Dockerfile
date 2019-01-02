@@ -19,4 +19,4 @@ WORKDIR /app/decide
 # local settings.py
 ADD ./docker/docker-settings.py local_settings.py
 
-RUN python3 manage.py collectstatic
+RUN python3 manage.py collectstatic --no-input

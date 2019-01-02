@@ -1,3 +1,5 @@
+import os
+
 DEBUG = True
 
 DATABASES = {
@@ -10,7 +12,7 @@ DATABASES = {
     }
 }
 
-STATIC_ROOT = '/app/static/'
+#STATIC_ROOT = '/app/static/'
 MEDIA_ROOT = '/app/static/media/'
 ALLOWED_HOSTS = ['*']
 
@@ -40,3 +42,5 @@ APIS = {
     'visualizer': 'http://10.5.0.1:8000',
     'voting': 'http://10.5.0.1:8000',
 }
+
+STATIC_ROOT = os.path.dirname(os.path.abspath(__file__))+'/static'

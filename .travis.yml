@@ -18,6 +18,7 @@ script:
  - sonar-scanner
  - cd docker
  - docker exec -ti decide_web ./manage.py test
+ - cd ..
 before_script:
  - cd decide
  - cp local_settings.example.py local_settings.py
@@ -25,13 +26,13 @@ before_script:
  - psql -c "create database decide owner decide"
  - python ./manage.py migrate
  - python3 manage.py collectstatic --no-input
- - ls
  - cd ..
 notifications:
   email: false
 before_install:
  - cd docker
  - docker-compose up -d
+ - cd ..
 before_deploy:
  - cp requirements.txt decide/requirements.txt
  - cd decide
