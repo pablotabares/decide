@@ -10,10 +10,10 @@ addons:
   sonarcloud:
     organization: "pablotabares-github"
 install:
- - pip install -r requirements.txt
+- pip install -r requirements.txt
 sudo: required
 services:
- - docker
+- docker
 script:
  - sonar-scanner
  - cd docker
