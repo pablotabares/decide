@@ -1,5 +1,5 @@
 language: python
-python: 
+python:
  - "3.6.6"
 env:
  - DJANGO=2.0 DB=postgres
@@ -16,7 +16,8 @@ services:
  - docker
 script:
  - sonar-scanner
- - docker exec -ti --privileged decide_web python ./manage.py test
+ - cd docker
+ - docker exec -ti decide_web ./manage.py test
 before_script:
  - cd decide
  - cp local_settings.example.py local_settings.py
