@@ -171,8 +171,12 @@ class VotingUpdate(generics.RetrieveUpdateDestroyAPIView):
                 msg = 'Voting already tallied'
                 st = status.HTTP_400_BAD_REQUEST
             else:
-                voting.tally_votes(request.auth.key)
-                msg = 'Voting tallied'
+                res = voting.tally_votes(request.auth.key)
+                if res != 'Voting tallied':
+                    msg = res
+                    st = status.HTTP_400_BAD_REQUEST
+                else:
+                    msg = 'Voting tallied'
         else:
             msg = 'Action not found, try with start, stop or tally'
             st = status.HTTP_400_BAD_REQUEST

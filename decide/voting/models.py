@@ -5,6 +5,7 @@ from django.dispatch import receiver
 
 from base import mods
 from base.models import Key, Auth
+from django.http import JsonResponse
 
 IMPORTANCE_CHOICES = (
     (0, ("None")),
@@ -83,6 +84,7 @@ class Voting(models.Model):
         The tally is a shuffle and then a decrypt
         '''
 
+        print("Entra al tally")
         votes = self.get_votes(token)
 
         auth = self.auths.first()
@@ -92,10 +94,14 @@ class Voting(models.Model):
 
         # first, we do the shuffle
         data = {"msgs": votes}
+        print("hola")
         response = mods.post('mixnet', entry_point=shuffle_url, baseurl=auth.url, json=data,
                              response=True)
+        print("status code: " + str(response.status_code))
         if response.status_code != 200:
             # TODO: manage error
+            error_response = "error: Shuffle fails"
+            return error_response
             pass
 
         # then, we can decrypt that
@@ -105,12 +111,15 @@ class Voting(models.Model):
 
         if response.status_code != 200:
             # TODO: manage error
+            error_response = "error: Decrypt fails"
+            return error_response
             pass
 
         self.tally = response.json()
         self.save()
-
         self.do_postproc()
+        return 'Voting tallied'
+
 
     def do_postproc(self):
         tally = self.tally
