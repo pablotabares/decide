@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2d6935f6-d916-4882-8af5-2c647afa2f9e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/decide/decide/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/decide/decide/settings.py" afterDir="false" />
-    </list>
+    <list default="true" id="2d6935f6-d916-4882-8af5-2c647afa2f9e" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/decide/decide/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="739">
-              <caret line="165" column="41" selection-start-line="165" selection-start-column="41" selection-end-line="165" selection-end-column="41" />
+            <state relative-caret-position="649">
+              <caret line="159" column="4" lean-forward="true" selection-start-line="159" selection-start-column="4" selection-end-line="159" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -108,12 +106,12 @@
       <option name="presentableId" value="Default" />
       <updated>1544123181013</updated>
       <workItem from="1544123189689" duration="292000" />
-      <workItem from="1546459478963" duration="1691000" />
+      <workItem from="1546459478963" duration="2087000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1983000" />
+    <option name="totallyTimeSpent" value="2379000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1987" y="25" width="1853" height="1055" extended-state="6" />
@@ -165,8 +163,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/decide/decide/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="739">
-          <caret line="165" column="41" selection-start-line="165" selection-start-column="41" selection-end-line="165" selection-end-column="41" />
+        <state relative-caret-position="649">
+          <caret line="159" column="4" lean-forward="true" selection-start-line="159" selection-start-column="4" selection-end-line="159" selection-end-column="4" />
         </state>
       </provider>
     </entry>
