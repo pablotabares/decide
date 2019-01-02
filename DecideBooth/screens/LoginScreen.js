@@ -32,7 +32,6 @@ export default class LoginScreen extends React.Component {
             })
         })
             .then(response => {
-                console.log(response);
                 if(response.status === 400){
                     let errors = JSON.parse(response._bodyText).non_field_errors
                     if(typeof errors !== 'undefined'){
@@ -46,8 +45,23 @@ export default class LoginScreen extends React.Component {
                         )
                     }
                 }else{
-                    AsyncStorage.setItem('userToken', JSON.parse(response._bodyText).token);
-                    this.props.navigation.navigate('App');
+                    let userToken = JSON.parse(response._bodyText).token;
+                    AsyncStorage.setItem('userToken', userToken);
+                    fetch('http://decide-ortosia.herokuapp.com/authentication/getuser/',{
+                        method: 'POST',
+                        headers: {
+                            'Accept' : 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            token: userToken
+                        })
+                    })
+                    .then(response => {
+                            AsyncStorage.setItem('userId', JSON.parse(response._bodyText).id.toString());
+                            this.props.navigation.navigate('App');
+                    })
+                    .catch(error => console.error(error));
                 }
             })
             .catch(error => console.error(error));

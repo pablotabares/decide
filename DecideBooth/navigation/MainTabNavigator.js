@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import VotingsScreen from '../screens/VotingsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import VoteScreen from '../screens/VoteScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -27,6 +28,11 @@ HomeStack.navigationOptions = {
 
 const VotingsStack = createStackNavigator({
   Votings: VotingsScreen,
+  Vote: VoteScreen,
+},{
+  initialRouteName : 'Votings',
+  mode: 'modal',
+  headerMode: 'none'
 });
 
 VotingsStack.navigationOptions = {
@@ -61,4 +67,6 @@ export default createBottomTabNavigator({
   VotingsStack,
   HomeStack,
   ProfileStack,
+},{
+  initialRouteName : "HomeStack"
 });
