@@ -33,7 +33,6 @@ export default class LoginScreen extends React.Component {
         })
             .then(response => {
                 console.log(response);
-                console.log(JSON.parse(response._bodyText).non_field_errors);
                 if(response.status === 400){
                     let errors = JSON.parse(response._bodyText).non_field_errors
                     if(typeof errors !== 'undefined'){
@@ -47,9 +46,7 @@ export default class LoginScreen extends React.Component {
                         )
                     }
                 }else{
-                    // let token = JSON.parse(response._bodyText).token;
-                    // navigate('Home',{token: token});
-                    AsyncStorage.setItem('userToken', 'abc');
+                    AsyncStorage.setItem('userToken', JSON.parse(response._bodyText).token);
                     this.props.navigation.navigate('App');
                 }
             })
