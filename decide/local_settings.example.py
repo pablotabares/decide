@@ -41,5 +41,9 @@ DATABASES = {
 
 STATIC_ROOT = os.path.dirname(os.path.abspath(__file__))+'/static'
 
+STATICFILES_DIRS = [
+    os.path.dirname(os.path.abspath(__file__))+'/census/static'
+]
+
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
