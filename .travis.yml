@@ -16,9 +16,9 @@ services:
 - docker
 script:
 # - sonar-scanner
-# - cd docker
+ - cd docker
 # - docker exec -ti decide_web ./manage.py test
-# - cd ..
+ - cd ..
 before_script:
  - cd decide
  - cp local_settings.example.py local_settings.py
