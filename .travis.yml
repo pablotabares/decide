@@ -16,7 +16,7 @@ before_script:
   - psql -c "create database decide owner decide"
   - python manage.py migrate
 script:
-  # - sonar-scanner
+  - sonar-scanner
   - coverage run --source=. manage.py test
   - coverage report
   - coveralls
