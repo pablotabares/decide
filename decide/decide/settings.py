@@ -166,6 +166,5 @@ except ImportError:
 INSTALLED_APPS = INSTALLED_APPS + MODULES
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    '/census/static/',
+    os.path.join(BASE_DIR, "static")
 ]
