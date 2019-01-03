@@ -1,11 +1,20 @@
-from django.urls import include, path
-from rest_framework.authtoken.views import obtain_auth_token
-
-from .views import GetUserView, LogoutView
-
+from django.urls import path
+from .views import GetUserView, LogoutView, LoginView
+from django.contrib.auth import views
+from django .contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    path('login/', obtain_auth_token),
+
+    path('login/', LoginView.as_view()),
     path('logout/', LogoutView.as_view()),
     path('getuser/', GetUserView.as_view()),
-]
+
+
+    path('password_reset/', views.PasswordResetView.as_view(), name='password_reset'),
+    path('password_reset/done/', views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', views.PasswordResetCompleteView.as_view(), name='password_reset_complete')
+] + staticfiles_urlpatterns()
+
+
+
