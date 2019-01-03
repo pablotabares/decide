@@ -8,6 +8,8 @@ from .serializers import MixnetSerializer
 from .models import Auth, Mixnet, Key
 from base.serializers import KeySerializer, AuthSerializer
 
+from django.views.generic import TemplateView
+
 """
 This class defines a series of related views, with each view specified by a function.
 """
@@ -189,3 +191,14 @@ class Decrypt(APIView):
             msgs = resp
 
         return  Response(msgs)
+
+# Class that defines the workings of the control panel
+class ControlPanel(TemplateView):
+    # HTML template to be used
+    template_name = 'mixnet_control_panel.html'
+    
+    # Data necessary for the webpage to display
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
