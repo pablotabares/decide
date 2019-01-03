@@ -196,12 +196,35 @@ Cuando la rama base de nuestro equipo (ortosia-auth) sea estable y no tenga  fal
 El proyecto que estamos realizando va ser desplegado en un servidor remoto. Para la integración continua usaremos Travis CI.
 Travis CI es un servicio de integración continua distribuido y alojado que se utiliza para crear y probar proyectos de software alojados en GitHub. Travis CI recoge el código de nuestra aplicación, lo compila y realiza una serie de test con el fin de probar que funciona correctamente.
 Una vez registrados en Travis CI, procedemos a sincronizado el repositorio de GitHub que vamos a utilizar, creamos un archivo llamado .travis.yml en la raíz de nuestro proyecto. Éste archivo contiene una serie de comandos para hacer que los test funcionen y así poder comprobar el buen funcionamiento de nuestro proyecto.
+Travis CI detecta los cambios automaticamente, pasa los tests y construye el proyecto con los cambios realizados en el repositorio.
+
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=1\textwidth]{travis.png}
+\caption{Ejemplo de construcción con Travis CI}
+\end{figure}
+
 
 \subsection{Gestión de liberaciones, despliegue y entregas}
 
 Para desplegar el proyecto se va a usar Heroku. Heroku es una plataforma como servicio que permite desplegar y operar aplicaciones en la nube sin ningun problema de forma gratuita.
 Además se puede configurar con Travis CI para que el proceso de despliegue se realice de forma automatica cuando exista algun cambio en la rama correspondiente. De esta forma nosotros vamos a desplegar nuestro subsistema de forma aislada desde nuestra rama base ortosia-auth
 Mientras que para el sistema completo con todos los subsistemas se va a usar la rama master.
+
+Para crear una aplicación de Heroku tenemos que crearnos una cuenta en su pagina principal \url{https://www.heroku.com}. Luego hacemos click en "Crear una nueva App" definimos un nombre para la nueva app y en la siguiente ventana nos explicará como desplegar el proyecto en esta nueva app a través de Heroku CLI. Sin embargo nosotros usamos Travis CLI (para un despliegue automatico), debemos crear un fichero Procfile que determina que acción/es debe realizar Heroku cuando se suba el proyecto y tambien debemos modificar el travis.yml con una sección de despliegue como en el siguiente ejemplo:
+
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=1\textwidth]{travisyml.png}
+\caption{Resultado de travis.yml tras añadir la sección de despliegue}
+\end{figure}
+
+Se puede apreciar en la sección deploy que el cliente que vamos a usar es Heroku. El nombre de la aplicación debe coincidir con el que hemos creado previamente (ortosia-auth) y podemos indicar sobre que rama queremos que tome los cambios gracias al atributo 'on'. 
+Podemos ver en la imagen que hay una clave de seguridad, esta clave se puede obtener edsde nuestro perfil de Heroku en la sección API Key, pero debemos encriptar dicha API Key con el comando
+
+\verb|travis encrypt $(heroku auth:token)--add deploy.api_key|
+\cite{heroku-deployement}
+
 
 \begin{table}[H]
 \begin{tabular}{lllll}
@@ -216,8 +239,18 @@ Mientras que para el sistema completo con todos los subsistemas se va a usar la 
 
 \section{Mapa de herramientas}
 
+Para el desarrollo hemos realizado el proyecto con django y postgressql. Dicho proyecto se sube a un repositorio (decide) en comun con el resto de equipos. Los subsistemas estaban aislados ya que cada uno tiene su rama propia. Cada vez que hay algun cambio en Github se pasa a la integración continua gracias a Travis CI, este lanza los test de calidad con SonarQube y se construye el proyecto con Docker. En caso de error se notifica al equipo de desarrollo para que solucionen el problema. Si no hay errores y la construcción del proyecto se ha realizado de forma satisfactoria Travis despliega el proyecto en Heroku donde se puede acceder desde cualquier dispositivo.
+
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=1\textwidth]{Desarrollo.png}
+\caption{Mapa de herramientas}
+\end{figure}
+
 
 \section{Ejercicio de propuesta de cambio}
+
+
 \section{Conclusiones y trabajo futuro}
 
 \newpage	
@@ -252,6 +285,8 @@ Bialba, 21 Septiembre 2016.
 Miguel Angel Bueno Ferrer, 23 Abril 2017. 
 \textit{https://blog.kirei.io/}
 
+\bibitem{heroku-deployement}
+\textit{https://docs.travis-ci.com/user/deployment/heroku/}
 
 
 
