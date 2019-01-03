@@ -10,7 +10,7 @@ RUN pip install ipython
 
 WORKDIR /app
 
-ADD . .
+RUN git clone --single-branch -b ortosia-auth https://github.com/pablotabares/decide.git .
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide

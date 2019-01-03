@@ -1,23 +1,29 @@
 language: python
-python: 
- - "3.6.6"
+python:
+- 3.6.6
 install:
- - pip install -r requirements.txt
+- pip install -r requirements.txt
 sudo: required
 services:
- - docker
+- docker
 script:
- - sonar-scanner
- - cd docker
- - docker exec -ti decide_web ./manage.py test
- - cd ..
+- sonar-scanner
+- cd docker
+- docker exec -ti decide_web ./manage.py test
+- cd ..
 addons:
   sonarcloud:
-    organization: "pablotabares-github"
+    organization: pablotabares-github
 notifications:
   email: false
 before_install:
- - cd docker
- - docker-compose up -d
- - cd ..
-
+- cd docker
+- docker-compose up -d
+- cd ..
+deploy:
+  provider: heroku
+  api_key:
+    secure: oj35IzRs6f0qLoNwgQxM+rmFx3xu0KuARQdoTbWRL5Cxk8MHQRje+K+xydEGRR+Qb3QOu7rd8hDi0i9UlcYd0P2F93XARNXwJrKGkiznrTY6YeiT+9Fvy00wFCsFFqIlfUeBvsvnnyVNmWLtBdZSmuG9/SyQxqEYvVMrX1BsbCS9/0XmD70qmjko5iKU82agYKBy4sjbV68lEK6A+MFgN+bHVYjJ7bi8UBCo5tpYSTFZI7cmNkc9Di/jjVH95cqxDiD2uK+EYdio8JRMenU3vdCmmpCghI7MwkmR1FUtsnZtsalmn1Ay9a020O6YalPqiV7OFMyE7z4pLfHKXbxBCu1LzFNZ/qkwwgMbWO//JZZWhjZ1RTCSaZUDPJpjcDaxLvzD3pTmcTPFnoeu7fZDO/sghvngcEHfq3iB6Lc95nkHUkMFvv0293N+BkGWS04dntj2DVvcQJfNqyCiifl+asRvz9VgeicTmPIlpxv6FMjni0WFf6ZeCIIXenmRmDpuUjNzJjU1idGKt3eN5bULqtdkoxZCkMQeYSpIKEfH2HOvByp4Uc65kYePJjBJ7XewJ2NLf0XIjVMJNFG6HjC9cFa2XCOMSpygTGihwGukcZ/tj/Oy0Apwv8HjsPQmAuyp2U/P9+xPqTPKfiFHZfijFacNuLDR/1tX+7CjkEWWc8U=
+  app: ortosia-auth
+  on: ortosia-auth
+  skip_cleanup: true
