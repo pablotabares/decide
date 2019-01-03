@@ -30,9 +30,10 @@ BASEURL = 'https://ortosia-auth.herokuapp.com/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
+        'NAME': 'decide',
+        'USER': 'decide',
+        'PASSWORD': 'decide',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }

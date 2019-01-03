@@ -7,7 +7,7 @@ from .serializers import UserSerializer, AuthCustomTokenSerializer
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
-
+from django.contrib.auth.models import User
 
 
 class GetUserView(APIView):
@@ -16,6 +16,18 @@ class GetUserView(APIView):
         tk = get_object_or_404(Token, key=key)
         return Response(UserSerializer(tk.user, many=False).data)
 
+
+class GetUserByUsernameView(APIView):
+    def post(self, request):
+        username = request.data.get('username', '')
+        try:
+            uid = User.objects.get(username=username)
+            return Response(UserSerializer(uid, many=False).data)
+
+        except User.DoesNotExist:
+            message = 'The user does not exists'
+            return Response({'message':message}, status=404)
+        
 
 class LogoutView(APIView):
     def post(self, request):
