@@ -9,4 +9,4 @@ class TokenGenerate(PasswordResetTokenGenerator):
         )
 
 
-activation_token=TokenGenerate()
+activation_token = TokenGenerate()
