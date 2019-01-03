@@ -1,6 +1,7 @@
 import React from 'react';
 import {AsyncStorage, StyleSheet} from 'react-native';
-import { Container, Header, Content, List, ListItem, Text, Body, Right, Button} from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, Body, Right, Icon} from 'native-base';
+import moment from "moment";
 
 export default class VotingsScreen extends React.Component {
   static navigationOptions = {
@@ -64,11 +65,32 @@ export default class VotingsScreen extends React.Component {
                                   <Text>{item.name}</Text>
                                   <Text note>{item.desc}</Text>
                               </Body>
-                              <Right>
-                                  <Button onPress={() => this._goVote(item.id)}>
-                                      <Text>Vote</Text>
-                                  </Button>
-                              </Right>
+                                  {
+                                      item.start_date === null || moment() < moment(item.start_date,'YYYY-MM-DDTHH:mm:ss.SSSSSSZ')
+                                          ?
+                                          <Right>
+                                            <Text note>{
+                                                item.start_date === null ?
+                                                    'No Date'
+                                                    :
+                                                moment(item.start_date,'YYYY-MM-DDTHH:mm:ss.SSSSSSZ').format('DD/MM/YY')
+                                            }</Text>
+                                          </Right>
+                                              :
+                                          (
+                                              item.end_date === null || moment() < moment(item.end_date,'YYYY-MM-DDTHH:mm:ss.SSSSSSZ')
+                                                  ?
+                                                  <Right style={{flex: 1, flexDirection: 'row',justifyContent: 'flex-end'}}>
+                                                    <Text>Vote</Text>
+                                                    <Icon name="arrow-forward" style={{marginLeft: 5, color: 'blue'}}
+                                                          onPress={() => this._goVote(item.id)}/>
+                                                  </Right>
+                                                      :
+                                                  <Right>
+                                                      <Icon name="close" type="MaterialIcons"/>
+                                                  </Right>
+                                          )
+                                  }
                           </ListItem>
                       }>
                 </List>
