@@ -52,7 +52,7 @@ coverage.xml
 
 # Django stuff:
 *.log
-#local_settings.py
+local_settings.py
 
 # Flask stuff:
 instance/
@@ -100,10 +100,18 @@ ENV/
 # mypy
 .mypy_cache/
 
-# idea
-.*idea/
-.*idea/*
+#idea
+.idea/
+DecideBooth/.idea/
 
-# idea
-**/migrations
+#React Native
+DecideBooth/node_modules/**/*
+DecideBooth/.expo/*
+DecideBooth/npm-debug.*
+*.jks
+*.p12
+*.key
+*.mobileprovision
+DecideBooth/metro-cache/**/*
+DecideBooth/.idea/**/*
 
