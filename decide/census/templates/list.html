@@ -95,7 +95,7 @@
                         </select></br></br>
                         
 						
-                        <button type="button">Importar</button>
+                        <button type="button">Listar</button>
                         
 					 </div>
 				</div>
@@ -112,7 +112,7 @@
 							<span>Para obtener una lista de las votaciones donde participa un usuario seleccionelo de la siguiente lista</span>
 						</div>
 
-                        <label for="selectVotation">Censo de origen</label>
+                        <label for="selectVotation">Votación</label>
                         <select name="selectVotation" id="selectVotation">
                             {% for votation in votingList %}
                                 <option value = "{{votation.id}}">{{votation.name}}</option>
@@ -120,7 +120,7 @@
                         </select></br></br>
                         
 						
-                        <button type="button">Importar</button>
+                        <button type="button">Listar</button>
                         
 					 </div>
 				</div>	
