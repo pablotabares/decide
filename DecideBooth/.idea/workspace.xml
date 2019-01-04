@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29ad5d55-cb51-43ab-8e12-91852a1e7358" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js/bigint.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/js/elgamal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/js/jsbn.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/js/jsbn2.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/js/sjcl.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/js/test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/VoteScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/VoteScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/VotingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/VotingsScreen.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -218,8 +210,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/VoteScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="106" column="31" lean-forward="true" selection-start-line="106" selection-start-column="31" selection-end-line="106" selection-end-column="31" />
+            <state relative-caret-position="-2698">
+              <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -230,7 +222,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/LoginScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
+            <state relative-caret-position="690">
               <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
@@ -242,8 +234,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/screens/VotingsScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="88" column="57" lean-forward="true" selection-start-line="88" selection-start-column="57" selection-end-line="88" selection-end-column="57" />
+            <state relative-caret-position="483">
+              <caret line="66" column="84" lean-forward="true" selection-start-line="66" selection-start-column="84" selection-end-line="66" selection-end-column="84" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -285,6 +277,7 @@
     <replaceStrings>
       <replace>:</replace>
       <replace>export function</replace>
+      <replace>this.props.item</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/js</dir>
@@ -331,6 +324,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -352,7 +346,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -392,7 +385,8 @@
       <workItem from="1544123475861" duration="3790000" />
       <workItem from="1544960059880" duration="4490000" />
       <workItem from="1546448425842" duration="14649000" />
-      <workItem from="1546538720511" duration="12374000" />
+      <workItem from="1546538720511" duration="13177000" />
+      <workItem from="1546629295489" duration="5154000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'ortosia-cabina2' of https://github.com/pablotabares/decide into remotes/origin/ortosia-cabina2&#10;&#10;# Conflicts:&#10;#&#9;DecideBooth/navigation/MainTabNavigator.js&#10;#&#9;DecideBooth/screens/LoginScreen.js">
       <created>1545334493456</created>
@@ -415,14 +409,22 @@
       <option name="project" value="LOCAL" />
       <updated>1545335019214</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add: Voting Functionality&#10;&#10;FIX #88: There is now a votings list available for the votings in which the user is censed. Only opened votings will be available to click on. Others will display Opening date or closed symbol.&#10;&#10;FIX #89: There is now a view for the voting booth. The user may select an option and vote.">
+      <created>1546555852054</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1546555852054</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38050000" />
+    <option name="totallyTimeSpent" value="44007000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1987" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19453552" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -449,7 +451,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merge branch 'ortosia-cabina2' of https://github.com/pablotabares/decide into remotes/origin/ortosia-cabina2&#10;&#10;# Conflicts:&#10;#&#9;DecideBooth/navigation/MainTabNavigator.js&#10;#&#9;DecideBooth/screens/LoginScreen.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'ortosia-cabina2' of https://github.com/pablotabares/decide into remotes/origin/ortosia-cabina2&#10;&#10;# Conflicts:&#10;#&#9;DecideBooth/navigation/MainTabNavigator.js&#10;#&#9;DecideBooth/screens/LoginScreen.js" />
+    <MESSAGE value="Add: Voting Functionality&#10;&#10;FIX #88: There is now a votings list available for the votings in which the user is censed. Only opened votings will be available to click on. Others will display Opening date or closed symbol.&#10;&#10;FIX #89: There is now a view for the voting booth. The user may select an option and vote." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add: Voting Functionality&#10;&#10;FIX #88: There is now a votings list available for the votings in which the user is censed. Only opened votings will be available to click on. Others will display Opening date or closed symbol.&#10;&#10;FIX #89: There is now a view for the voting booth. The user may select an option and vote." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/constants/Colors.js">
@@ -523,13 +526,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="49" column="96" selection-start-line="49" selection-start-column="89" selection-end-line="49" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/js/test.js" />
     <entry file="file://$PROJECT_DIR$/js/sjcl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1127">
@@ -557,20 +554,10 @@
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/screens/ProfileScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-421">
-          <caret line="56" column="4" selection-start-line="56" selection-start-column="4" selection-end-line="58" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/screens/VoteScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="106" column="31" lean-forward="true" selection-start-line="106" selection-start-column="31" selection-end-line="106" selection-end-column="31" />
+        <state relative-caret-position="-2698">
+          <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -579,8 +566,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/screens/LoginScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
+        <state relative-caret-position="690">
           <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/screens/ProfileScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="56" column="4" selection-start-line="56" selection-start-column="4" selection-end-line="58" selection-end-column="5" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -589,8 +586,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/screens/VotingsScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="88" column="57" lean-forward="true" selection-start-line="88" selection-start-column="57" selection-end-line="88" selection-end-column="57" />
+        <state relative-caret-position="483">
+          <caret line="66" column="84" lean-forward="true" selection-start-line="66" selection-start-column="84" selection-end-line="66" selection-end-column="84" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
