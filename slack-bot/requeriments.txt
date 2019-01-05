@@ -1,2 +1,0 @@
-Necesario para que funcione el bot:
-pip install slackclient
