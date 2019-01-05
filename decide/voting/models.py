@@ -49,7 +49,7 @@ class Voting(models.Model):
         auth = self.auths.first()
         data = {
             "voting": self.id,
-            "auths": [ {"name": a.name, "url": a.url} for a in self.auths.all() ],
+            "auths": [{"name": a.name, "url": a.url} for a in self.auths.all()],
             "token": token,
         }
         key = mods.post('mixnet', baseurl=auth.url, json=data)
@@ -77,17 +77,17 @@ class Voting(models.Model):
         auths = [{"name": a.name, "url": a.url} for a in self.auths.all()]
 
         # first, we do the shuffle
-        data = { "msgs": votes }
+        data = {"msgs": votes, "token": token}
         response = mods.post('mixnet', entry_point=shuffle_url, baseurl=auth.url, json=data,
-                response=True)
+                             response=True)
         if response.status_code != 200:
             # TODO: manage error
             pass
 
         # then, we can decrypt that
-        data = {"msgs": response.json()}
+        data = {"msgs": response.json(), "token": token}
         response = mods.post('mixnet', entry_point=decrypt_url, baseurl=auth.url, json=data,
-                response=True)
+                             response=True)
 
         if response.status_code != 200:
             # TODO: manage error
@@ -114,7 +114,7 @@ class Voting(models.Model):
                 'votes': votes
             })
 
-        data = { 'type': 'IDENTITY', 'options': opts }
+        data = {'type': 'IDENTITY', 'options': opts}
         postp = mods.post('postproc', json=data)
 
         self.postproc = postp
