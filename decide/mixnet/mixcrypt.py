@@ -20,9 +20,10 @@ True
 >>> k2.setk(167,156,53,161) #doctest: +ELLIPSIS
 <Crypto.PublicKey.ElGamal.ElGamalobj object at 0x...>
 >>> k3 = MixCrypt(bits=B)
->>> k3.k = ElGamal.construct((167, 156, 4717))
+>>> #k3.k = ElGamal.construct((167, 156, 4717))
+>>> k3.k = ElGamal.construct((167, 83, 130))
 >>> k3.k.p, k3.k.g, k3.k.y
-(167, 156, 4717)
+(167, 83, 130)
 >>> N = 4
 >>> clears = [2,3,6,4]
 >>> cipher = [(161, 109), (17, 101), (148, 163), (71, 37)]
@@ -40,7 +41,7 @@ from Crypto.PublicKey import ElGamal
 from Crypto.Random import random
 from Crypto import Random
 from Crypto.Util.number import GCD
-
+from Crypto.Math.Numbers import Integer
 
 def rand(p):
     while True:
@@ -52,7 +53,7 @@ def rand(p):
 def gen_multiple_key(*crypts):
     k1 = crypts[0]
     k = MixCrypt(k=k1.k, bits=k1.bits)
-    k.k.y = 1
+    k.k.y = Integer(1)
     for kx in crypts:
         k.k.y *= kx.k.y
     k.k.y = k.k.y % k.k.p
@@ -211,6 +212,9 @@ class MixCrypt:
             msgs2[i] = nm
 
         return msgs2
+
+
+
 
 
 if __name__ == "__main__":
