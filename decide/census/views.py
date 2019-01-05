@@ -26,6 +26,28 @@ class CensuslListView(ListView):
         context['object_list'] = Census.objects.all()
         return context
 
+class CensusByVoterListView(ListView):
+    model = Census
+    template_name = "list.html"
+    voterId = 0
+    voter = None
+
+    def get(self, request, *args, **kwargs):
+        self.voterId = kwargs.get('voter_id')
+        try:
+            self.voter = Voter.objects.get(pk=self.voterId)
+        except ObjectDoesNotExist as n:
+            return redirect('census_list')
+        return ListView.get(self, request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ids = Census.objects.filter(voter_id=self.voterId).values('voting_id')
+        context['object_list'] = User.objects.all().filter(pk__in=ids)
+        context['voter'] = self.voter
+        print(kwargs)
+        return context
+
 class CensuslByVotingListView(ListView):
     model = Census
     template_name = "list.html"
