@@ -8,6 +8,8 @@ from .serializers import MixnetSerializer
 from .models import Auth, Mixnet, Key
 from base.serializers import KeySerializer, AuthSerializer
 
+from mixnet.control_panel_utils import pingAuths
+
 from django.views.generic import TemplateView
 
 """
@@ -200,5 +202,10 @@ class ControlPanel(TemplateView):
     # Data necessary for the webpage to display
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # Retrieve the list of authorities and their ping
+        auths = pingAuths()
+
+        context['auths'] = auths
 
         return context

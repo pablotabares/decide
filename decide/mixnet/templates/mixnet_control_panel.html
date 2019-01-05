@@ -2,6 +2,15 @@
 {% load i18n static %}
 
 {% block content %}
+<h1>Decide! Authority control panel</h1>
+<ul>
+{% for auth, ping in auths.items %}
+
+<li>{{ auth }} : {{ ping }}</li>
+
+{% endfor %}
+</ul>
+
 {% endblock %}
 
 {% block extrabody %}
