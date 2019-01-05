@@ -17,9 +17,38 @@ from base.perms import UserIsStaff
 from .models import Census
 from voting.models import Voting
 
+class VotingListView(ListView):
+    model = Voting
+    template_name = "voting_list.html"
+    voter_id = 0
+
+    def get(self, request, *args, **kwargs):
+        self.voter_id = kwargs.get('voter_id')
+        return ListView.get(self, request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ids = Census.objects.filter(voter_id=self.voter_id).values('voting_id')
+        object_list = Voting.objects.filter(pk__in=ids)
+        return super().get_context_data(object_list=object_list, **kwargs)
+
+class UserListView(ListView):
+    model = User
+    template_name = "user_list.html"
+    voting_id = 0
+
+    def get(self, request, *args, **kwargs):
+        self.voting_id = kwargs.get('voting_id')
+        return ListView.get(self, request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ids = Census.objects.filter(voting_id=self.voting_id).values('voter_id')
+        object_list = User.objects.filter(pk__in=ids)
+        return super().get_context_data(object_list=object_list, **kwargs)
+
+
 class CensuslListView(ListView):
     model = Census
-    template_name = "list.html"
+    template_name = "dashboard.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,7 +60,7 @@ class CensuslListView(ListView):
 
 class CensuslByVotingListView(ListView):
     model = Census
-    template_name = "list.html"
+    template_name = "dashboard.html"
     votingId = 0
     voting = None
     
