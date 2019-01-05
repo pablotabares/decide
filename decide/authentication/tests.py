@@ -15,7 +15,6 @@ class AuthTestCase(APITestCase):
         mods.mock_query(self.client)
         u = User(username='voter1')
         u.set_password('123')
-        u.email = 'test@gmail.com'
         u.save()
 
     def tearDown(self):
@@ -29,21 +28,8 @@ class AuthTestCase(APITestCase):
         token = response.json()
         self.assertTrue(token.get('token'))
 
-    def test_login_email(self):
-        data = {'username': 'test@gmail.com', 'password': '123'}
-        response = self.client.post('/authentication/login/', data, format='json')
-        self.assertEqual(response.status_code, 200)
-
-        token = response.json()
-        self.assertTrue(token.get('token'))
-
     def test_login_fail(self):
         data = {'username': 'voter1', 'password': '321'}
-        response = self.client.post('/authentication/login/', data, format='json')
-        self.assertEqual(response.status_code, 400)
-
-    def test_login_email_fail(self):
-        data = {'username': 'test@gmail.com', 'password': '321'}
         response = self.client.post('/authentication/login/', data, format='json')
         self.assertEqual(response.status_code, 400)
 

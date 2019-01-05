@@ -53,7 +53,6 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'base.backends.EmailBackend',
     'base.backends.AuthBackend',
 ]
 

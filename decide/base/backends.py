@@ -27,11 +27,3 @@ class AuthBackend(ModelBackend):
             request.session['auth-token'] = token['token']
 
         return u
-
-class EmailBackend(ModelBackend):
-
-    def authenticate(self, request, username=None, password=None, **kwargs):
-        u = super().authenticate(request, username=username,
-                                 password=password, **kwargs)
-
-        return u
