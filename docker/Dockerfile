@@ -11,7 +11,7 @@ RUN pip install ipython
 WORKDIR /app
 
 
-RUN git clone --single-branch -b ortosia-prepro https://github.com/pablotabares/decide.git .
+RUN git clone --single-branch -b ortosia-censo-manheravi https://github.com/pablotabares/decide.git .
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
