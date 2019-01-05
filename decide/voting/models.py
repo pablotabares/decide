@@ -42,7 +42,7 @@ class Voting(models.Model):
     tally = JSONField(blank=True, null=True)
     postproc = JSONField(blank=True, null=True)
 
-    def create_pubkey(self):
+    def create_pubkey(self, token=''):
         if self.pub_key or not self.auths.count():
             return
 
@@ -50,6 +50,7 @@ class Voting(models.Model):
         data = {
             "voting": self.id,
             "auths": [ {"name": a.name, "url": a.url} for a in self.auths.all() ],
+            "token": token,
         }
         key = mods.post('mixnet', baseurl=auth.url, json=data)
         pk = Key(p=key["p"], g=key["g"], y=key["y"])
