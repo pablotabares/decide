@@ -103,19 +103,29 @@ class PostProcView(APIView):
     def borda(self, options):
         option_positions = {} # {'A': [1,1,2], 'B':[2,2,1]}
         out = {} # {'A':'5', 'B':'4'}
-        for opt in options:
-            opcion = opt['option']
-            posiciones = opt['positions']
-            option_positions[opcion] = posiciones
+        if len(options) != 0:
+            if len(options[0]['positions']) != 0:
+                for opt in options:
+                    opcion = opt['option']
+                    posiciones = opt['positions']
+                    option_positions[opcion] = posiciones
 
-        # We add 1, we have 2 options, I want to do 2+1 - posicion. Fist position 3-1=2 points
-        noptions = len(options) + 1
-        for opt_p in option_positions:
-            suma = 0
-            for p in option_positions.get(opt_p): #We caugth positions [1,1,2]
-                suma += noptions - p #We add points
-                
-            out[opt_p] = suma 
+                # We add 1; we have 2 options, so value of vote position 1 is 2 and vote 
+                # position 2 is 1. I want to do 2+1 - position. First position 3-1=2 points
+                noptions = len(options) + 1
+                for opt_p in option_positions:
+                    suma = 0
+                    for p in option_positions.get(opt_p): #We caugth positions [1,1,2]
+                        suma += noptions - p #We add points
+                        
+                    out[opt_p] = suma 
+            else: #If we haven't got any votes win the first option
+                valor = len(options)
+                for opt in options:
+                    opcion = opt['option']
+                    out[opcion] = valor
+                    valor = valor - 1
+
         return Response(out)
 
     def multiquestion(self, questions):
@@ -191,6 +201,44 @@ class PostProcView(APIView):
             # If the most voted option is a woman
             return Response(self.add_first(female_list, male_list))
 
+    def droop_quota(self, options, seats):
+        out = []
+        n_votes = sum(x["votes"] for x in options)
+
+        if n_votes == 0:
+            for opt in options:
+                out.append({
+                    **opt,
+                    'postproc': 0
+                })
+            return Response(out)
+
+        cociente = n_votes/(seats+1) + 1
+        cociente = int(cociente)+1 if cociente - int(cociente) >= 0.5 else int(cociente)
+
+        asignados = {}
+        n_asignados = 0
+        temp = {}
+        for o in options:
+            asignados[o["option"]] = int(o["votes"]/cociente)
+            n_asignados += int(o["votes"]/cociente)
+            temp[o["option"]] = o["votes"]%cociente
+
+        k = seats - n_asignados
+        while k > 0:
+            asignados[max(temp, key=temp.get)] += 1
+            temp.pop(max(temp, key=temp.get))
+            k -= 1
+
+        for o in options:
+            out.append({
+                **o,
+                'postproc': asignados[o["option"]]
+            })
+
+        return Response(out)
+
+
     def post(self, request):
         """
          * type: IDENTITY | EQUALITY | WEIGHT | BORDA
@@ -223,5 +271,8 @@ class PostProcView(APIView):
             return self.multiquestion(questions)
         elif t == 'GENDER-BALANCED':
             return self.genderBalanced(opts)
+        elif t == 'DROOP':
+            seats = request.data.get('seats', 1)
+            return self.droop_quota(opts, seats)
 
         return Response({})
