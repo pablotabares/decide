@@ -7,6 +7,19 @@
 
 {% block content %} 
 
+<script type="text/javascript">
+    function listarUsers(){
+        id = document.getElementById("selectUsuario").value;
+        window.location.replace(window.location.href+"user/"+id+"/");
+    }
+
+    function listarVotations(){
+        id = document.getElementById("selectVotation").value;
+        window.location.replace(window.location.href+"voting/"+id+"/");
+    }
+
+</script>
+
 <div class="box">
     <div class="container">
 <header>
@@ -95,7 +108,7 @@
                         </select></br></br>
                         
 						
-                        <button type="button">Listar</button>
+                        <button type="button" onclick="listarUsers()">Listar</button>
                         
 					 </div>
 				</div>
@@ -109,7 +122,7 @@
 						</div>
                         
 						<div class="text">
-							<span>Para obtener una lista de las votaciones donde participa un usuario seleccionelo de la siguiente lista</span>
+							<span>Para obtener una lista de los usuarios que participan en la votación seleccionela de la siguiente lista</span>
 						</div>
 
                         <label for="selectVotation">Votación</label>
@@ -120,7 +133,7 @@
                         </select></br></br>
                         
 						
-                        <button type="button">Listar</button>
+                        <button type="button" onclick="listarVotations()">Listar</button>
                         
 					 </div>
 				</div>	
@@ -128,28 +141,6 @@
 		</div>		
     </div>
 </div>
-
-
-{% comment %} <h2 class="card-title">Lista de votaciones y votantes</h2>
-
-{% if voting %}
-    <h4 class="card-title">{{voting.name}}</h4>
-{% endif %}
-
-<ul class="list-group">{{object}}
-  {% for object in object_list %}
-    <li class="list-group-item">
-        {% if not voting %}
-            <p>Voting id: {{object.voting_id}}, voter id: {{object.voter_id}}</p>
-        {% endif %}
-        {% if voting %}
-            <p>Nombre: {{object.first_name}} {{object.last_name}}</p>
-        {% endif %}
-    
-    </li>
-  {% endfor %}
-</ul> {% endcomment %}
-
 
 
 {% endblock content %}
