@@ -38,7 +38,7 @@ class VotingByDateListView(ListView):
         self.startDate = kwargs.get('startDate')
         self.endDate = kwargs.get('endDate')
         try:
-            self.voting = Voting.objects.get(start_date=>self.startDate).filter(end_date=<self.endDate)
+            self.voting = Voting.objects.filter(start_date__gte=self.startDate).filter(end_date__lte=self.endDate)
         except ObjectDoesNotExist as n:
             return redirect('census_list')
         return ListView.get(self, request, *args,**kwargs)
@@ -46,7 +46,7 @@ class VotingByDateListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         for vote in voting:
-            ids = ids.append(Census.objects.filter(voting_id=vote.get('id').values('voter_id'))
+            ids = ids.append(Census.objects.filter(voting_id=vote.get('id').values('voter_id')))
         context['object_list'] = User.objects.all().filter(pk__in=ids)
         context['voting'] = self.voting
         print(kwargs)
