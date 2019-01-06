@@ -26,28 +26,32 @@ class CensuslListView(ListView):
         context['object_list'] = Census.objects.all()
         return context
 
-class CensusByVoterListView(ListView):
+class VotingByDateListView(ListView):
     model = Census
     template_name = "list.html"
-    voterId = 0
-    voter = None
+    startDate = None
+    endDate = None
+    voting = None
+    ids = None
 
-    def get(self, request, *args, **kwargs):
-        self.voterId = kwargs.get('voter_id')
+    def get(self, request, *args, **kwargs): #We took the url's parameters
+        self.startDate = kwargs.get('startDate')
+        self.endDate = kwargs.get('endDate')
         try:
-            self.voter = Voter.objects.get(pk=self.voterId)
+            self.voting = Voting.objects.get(start_date=>self.startDate).filter(end_date=<self.endDate)
         except ObjectDoesNotExist as n:
             return redirect('census_list')
-        return ListView.get(self, request, *args, **kwargs)
+        return ListView.get(self, request, *args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        ids = Census.objects.filter(voter_id=self.voterId).values('voting_id')
+        for vote in voting:
+            ids = ids.append(Census.objects.filter(voting_id=vote.get('id').values('voter_id'))
         context['object_list'] = User.objects.all().filter(pk__in=ids)
-        context['voter'] = self.voter
+        context['voting'] = self.voting
         print(kwargs)
         return context
-
+        
 class CensuslByVotingListView(ListView):
     model = Census
     template_name = "list.html"
