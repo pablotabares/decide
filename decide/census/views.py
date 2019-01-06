@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework.response import Response
 from django.views.generic.list import ListView
+from rest_framework.renderers import JSONRenderer
 from rest_framework.status import (
         HTTP_201_CREATED as ST_201,
         HTTP_204_NO_CONTENT as ST_204,
@@ -16,6 +17,7 @@ from rest_framework.status import (
 from base.perms import UserIsStaff
 from .models import Census
 from voting.models import Voting
+from voting.serializers import VotingSerializer
 
 class CensuslListView(ListView):
     model = Census
@@ -23,7 +25,10 @@ class CensuslListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_list'] = Census.objects.all()
+        ids = Census.objects.values('voting_id').distinct()
+        userIds = Census.objects.values('voter_id').distinct()
+        context['userList'] = User.objects.all().filter(pk__in=userIds)
+        context['votingList'] = Voting.objects.all().filter(pk__in=ids)
         return context
 
 class VotingByDateListView(ListView):
@@ -110,3 +115,12 @@ class CensusDetail(generics.RetrieveDestroyAPIView):
         except ObjectDoesNotExist:
             return Response('Invalid voter', status=ST_401)
         return Response('Valid voter')
+
+class CensusList(generics.ListAPIView):
+    serializer_class = VotingSerializer
+    model = serializer_class.Meta.model
+    
+    def get_queryset(self):
+        voter_id = self.kwargs['voter_id']
+        queryset = self.model.objects.filter(pk__in=Census.objects.filter(voter_id=voter_id).values('voting_id'))
+        return queryset
