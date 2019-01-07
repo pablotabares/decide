@@ -28,15 +28,15 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 #AUTH WITH GOOGLE AND GITHUB
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY='1041130853428-fs63ddg5ljn67inests1i5es6j2kqa2s.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'QtoEfa7GxAu943dIBRAtbvBm'
-
-SOCIAL_AUTH_GITHUB_KEY = '4fca6de92631f347ecde'
-
-SOCIAL_AUTH_GITHUB_SECRET = '4543d7249a4ecec4f1179e9e65752242dda2299a'
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'home'
+#
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY='1041130853428-fs63ddg5ljn67inests1i5es6j2kqa2s.apps.googleusercontent.com'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'QtoEfa7GxAu943dIBRAtbvBm'
+#
+# SOCIAL_AUTH_GITHUB_KEY = '4fca6de92631f347ecde'
+#
+# SOCIAL_AUTH_GITHUB_SECRET = '4543d7249a4ecec4f1179e9e65752242dda2299a'
 
 
 # Application definition
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'social_django',
+    # 'social_django',
 
     'corsheaders',
     'django_filters',
@@ -67,13 +67,13 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = [
     'base.backends.EmailBackend',
     'base.backends.AuthBackend',
-    'social_core.backends.open_id.OpenIdAuth',
-    'social_core.backends.open_id.GoogleOpenId',
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
-
-    'django.contrib.auth.backends.ModelBackend',
+    # 'social_core.backends.open_id.OpenIdAuth',
+    # 'social_core.backends.open_id.GoogleOpenId',
+    # 'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.github.GithubOAuth2',
+    # 'social_core.backends.facebook.FacebookOAuth2',
+    #
+    # 'django.contrib.auth.backends.ModelBackend',
 
 ]
 
@@ -115,8 +115,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-             	'social_django.context_processors.backends',
-		'social_django.context_processors.login_redirect',
+                # 'social_django.context_processors.backends',
+                # 'social_django.context_processors.login_redirect',
             ],
         },
     },
