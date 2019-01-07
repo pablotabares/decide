@@ -10,14 +10,13 @@ RUN pip install ipython
 
 WORKDIR /app
 
-RUN git clone https://github.com/wadobo/decide.git .
+RUN git clone --single-branch -b ortosia-cabina2 https://github.com/pablotabares/decide.git .
+
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
 
 # local settings.py
-ADD docker-settings.py /app/decide/local_settings.py
+ADD ./docker/docker-settings.py local_settings.py
 
-RUN ./manage.py collectstatic
-
-#CMD ["gunicorn", "-w 5", "decide.wsgi", "--timeout=500", "-b 0.0.0.0:5000"]
+RUN python3 manage.py collectstatic

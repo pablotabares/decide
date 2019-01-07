@@ -1,0 +1,1 @@
+npm install && npm install native-base --save && npm install @expo/vector-icons --save && expo start
