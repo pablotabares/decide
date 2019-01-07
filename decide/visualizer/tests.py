@@ -22,6 +22,7 @@ from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption
 from store.models import Vote
 from rest_framework.authtoken.models import Token
+from voting.views import VisualizerView
 
 class VisualizerTestCase(BaseTestCase):
 
@@ -115,6 +116,8 @@ class VisualizerTestCase(BaseTestCase):
         #...
         #Votation ended
         #...
+
+
         
 
 

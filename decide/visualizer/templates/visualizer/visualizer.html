@@ -58,12 +58,26 @@
 
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Voting Doughnut-Chart</a>
+                </h4>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse in">
+                <div style="width: 500px; height:300px; margin:0 auto;">
+                    <canvas id="my4Chart" style="border:1px solid #000000;"></canvas> 
+                    <button id="changeChart">Change Doughnut Chart Type</button>
+                </div>
+                
+            </div>
+        </div> 
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">
               <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Voting Bar-Chart</a>
             </h4>
           </div>
-          <div id="collapse1" class="panel-collapse collapse in">
+          <div id="collapse1" class="panel-collapse collapse">
             <div style="width: 500px; height:300px; margin:0 auto;">
                 <canvas id="myChart" style="border:1px solid #000000;"></canvas> 
             </div>
@@ -100,6 +114,7 @@
     var myChart = document.getElementById('myChart').getContext('2d');
     var my2Chart = document.getElementById('my2Chart').getContext('2d');
     var my3Chart = document.getElementById('my3Chart').getContext('2d');
+    var my4Chart = document.getElementById('my4Chart').getContext('2d');
     var allDivTd = document.getElementById("maindiv").getElementsByTagName("TD");
     var title = document.getElementById("name").innerHTML;
     var census = parseInt(document.getElementById("censusVoters").innerHTML);
@@ -150,7 +165,7 @@ for(var i = 0; i < allDivTd.length; i++){
             }]
         },
         legend:{display:false}
-    }
+        }
     });
 
     var thirdChart = new Chart(my3Chart,{
@@ -176,6 +191,43 @@ for(var i = 0; i < allDivTd.length; i++){
         },
         options: {responsive:true, maintainAspectRatio: true}
     });
+
+    var fourthChart = new Chart(my4Chart,{
+        type:'doughnut', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
+        data:{
+            labels,
+            datasets:[{
+            label,
+            data , 
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
+            }]
+        },
+        options: {responsive:true, maintainAspectRatio: true}
+    });
+
+
+    document.getElementById('changeChart').addEventListener('click', function() {
+			if (window.fourthChart.options.circumference === Math.PI) {
+				window.fourthChart.options.circumference = 2 * Math.PI;
+				window.fourthChart.options.rotation = -Math.PI / 2;
+			} else {
+				window.fourthChart.options.circumference = Math.PI;
+				window.fourthChart.options.rotation = -Math.PI;
+			}
+
+			window.fourthChart.update();
+		});
 </script>
 
 <script>
