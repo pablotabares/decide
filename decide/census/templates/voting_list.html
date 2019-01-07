@@ -19,7 +19,8 @@
 </div>
 
 <div class="container">
-    <form action="{%url 'census:voting_by_date_list'%}" method="post">
+    <form action="{%url 'voting_by_date_list'%}" method="post">
+        {% csrf_token %}
         <label for="dateFilter">Start date: </label>
         <input id="startDate" type="datetime-local" name="startDate">
         <label for="dateFilter">End date: </label>

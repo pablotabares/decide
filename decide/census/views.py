@@ -68,15 +68,16 @@ class VotingByDateListView(ListView):
     voting = None
     ids = None
 
-    def post(self, request, *args, **kwargs): #We took the url's parameters
-        self.startDate = kwargs.get('startDate')
-        self.endDate = kwargs.get('endDate')
-        try:
-            self.voting = Voting.objects.filter(start_date__gte=self.startDate).filter(end_date__lte=self.endDate)
-        except ObjectDoesNotExist as n:
-            return redirect('census_list')
+    def post(self, request, *args, **kwargs): #We took the data of the form
+        form = self.get_form()
+        if form.is_valid():
+            datos = form.cleaned_data
+            try:
+                self.voting = Voting.objects.filter(start_date__gte=datos['startDate']).filter(end_date__lte=datos['endDate'])
+            except ObjectDoesNotExist as n:
+                return redirect('census_list')       
         return ListView.get(self, request, *args,**kwargs)
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         for vote in self.voting:
