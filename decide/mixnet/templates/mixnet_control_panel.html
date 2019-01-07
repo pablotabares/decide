@@ -1,15 +1,79 @@
-{% extends "base.html" %}
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <style>
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            width:100%;
+            font-family: Arial;
+        }
+
+        li {
+        float: left;
+        }
+
+        .center {
+        margin: auto;
+        width: 50%;
+        }
+        li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        }
+
+        li a:hover {
+        background-color: rgb(128, 159, 241);
+        }
+
+        #active {
+        background-color: saddlebrown;
+        }
+
+        h2 {
+            font-family: Arial;
+            color:#264670;
+            text-align: center;
+        }
+    </style>
+</head>
 {% load i18n static %}
 
 {% block content %}
-<h1>Decide! Authority control panel</h1>
+<div class="center">
 <ul>
-{% for auth, ping in auths.items %}
+        <li><a href="/admin">Admin</a></li>
+        <li><a href="/mixnet">Mixnet</a></li>
+        <li><a href="/mixnet/panel" id="active">Control panel</a></li>
 
-<li>{{ auth }} : {{ ping }}</li>
-
-{% endfor %}
 </ul>
+</div>
+<h2>Decide! Authority control panel</h2>
+<br/>
+<div class="center">
+<table class="table">
+    <tr><th>Name</th><th>Auth</th><th>Status</th></tr>
+    {% for auth, ping in auths.items %}
+    
+    <tr><td>{{ auth.name }}</td>
+    <td>{{ auth }}</td> 
+        <td>{{ ping }} {% if ping == "OFFLINE" %}
+            <img width="24" height="24" src="https://i.imgur.com/cKnrL1t.png"/>
+            {% else %}
+            <img width="24" height="24" src="https://i.imgur.com/BQym8rF.png"/>
+            {% endif %}
+        </td>
+    </tr>
+    
+    {% endfor %}
+</table>
+</div>
 
 {% endblock %}
 
