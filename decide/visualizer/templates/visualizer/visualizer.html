@@ -14,7 +14,8 @@
         {% elif not voting.end_date %}
             <h2 class="text-warning">{% trans ' Voting is opened' %}</h2>
         {% else %}
-
+            <h2> The voting has finished! You can see the final results below:</h2>
+            <hr>
             <h2 class="text-left bg-secondary">{% trans ' Voting data: ' %}</h2>
             </br>
 
@@ -27,7 +28,7 @@
                 <h4><strong>{% trans 'People registered in the Census: ' %}</strong><div id="censusVoters">{{census.voters|length}}</div></h4>
             </br>
             </ul>
-
+            <hr>
             <h2 class="text-left bg-secondary">{% trans ' Results table: ' %}</h2>
 
             <div data-spy="scroll">
@@ -51,6 +52,7 @@
                 </ul>
             </div>
         {% endif %}
+        <hr>
         <h2 class="text-left bg-secondary">{% trans ' Graph results: ' %}</h2>
     
 
