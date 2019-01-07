@@ -115,3 +115,5 @@ DecideBooth/npm-debug.*
 DecideBooth/metro-cache/**/*
 DecideBooth/.idea/**/*
 
+DecideBooth/package-lock.json
+DecideBooth/package.json
