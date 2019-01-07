@@ -80,7 +80,7 @@ class Mixnet(models.Model):
         })
 
         if next_auths:
-            auth = next_auths.first().url
+            auth = list(next_auths)[0].url
             r = mods.post('mixnet', entry_point=path,
                            baseurl=auth, json=data)
             return r

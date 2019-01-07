@@ -3,8 +3,11 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
-
-from .serializers import UserSerializer
+from .serializers import UserSerializer, AuthCustomTokenSerializer
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.models import User
 
 
 class GetUserView(APIView):
@@ -13,6 +16,18 @@ class GetUserView(APIView):
         tk = get_object_or_404(Token, key=key)
         return Response(UserSerializer(tk.user, many=False).data)
 
+
+class GetUserByUsernameView(APIView):
+    def post(self, request):
+        username = request.data.get('username', '')
+        try:
+            uid = User.objects.get(username=username)
+            return Response(UserSerializer(uid, many=False).data)
+
+        except User.DoesNotExist:
+            message = 'The user does not exists'
+            return Response({'message':message}, status=404)
+        
 
 class LogoutView(APIView):
     def post(self, request):
@@ -24,3 +39,35 @@ class LogoutView(APIView):
             pass
 
         return Response({})
+
+
+class LoginView(APIView):
+    def post(self, request):
+        serializer = AuthCustomTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key})
+
+
+class PasswordResetView(auth_views.PasswordResetView):
+    form_class = PasswordResetForm
+    template_name = 'registration/password_reset_form.html',
+    email_template_name = 'registration/password_reset_email.html',
+    subject_template_name = 'registration/password_reset_subject.txt'
+    success_url = 'done'
+    token_generator = default_token_generator
+
+
+class PasswordResetDoneView(auth_views.PasswordResetDoneView):
+    template_name = 'registration/password_reset_done.html'
+
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'registration/password_reset_confirm.html'
+    token_generator = default_token_generator
+
+
+class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = 'registration/password_reset_complete.html'
+    form_class = SetPasswordForm

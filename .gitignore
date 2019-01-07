@@ -99,3 +99,4 @@ ENV/
 
 # mypy
 .mypy_cache/
+decide/local_settings.py
