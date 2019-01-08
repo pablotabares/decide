@@ -10,4 +10,7 @@ class UserIsStaff(permissions.BasePermission):
             return False
         response = mods.post('authentication/getuser', json={'token': request.auth.key},
                 response=True)
+        print(response)
+        print(response.json())
+        print(response.json().get('is_staff', False))
         return response.json().get('is_staff', False)

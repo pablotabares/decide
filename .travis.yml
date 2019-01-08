@@ -42,6 +42,6 @@ deploy:
   provider: heroku
   api_key:
     secure: "mj/9m6cPuqgaSXLwvWoDKghkR2yzEE9/Sr3APww8tZegIAN23qdiam5Wc2JTouIxQORQAxaCDCCXztJPNcc9KX3ayzfkcbX3KDne9zptcXxsCLnLHCVC7328oU4mJat37VLWaikGzx5n+oWBF5Ehglf4xlxt0j4LiboCu4q8/rJoAVO6CkUT514LYnoqUslPmgMzLHeyx672neMwvZgF7jIUhEIiCwk0ooWhbgn4G0YEkAClAW44LTNhT/VS98psf/ed19brjC1QcLOjCGSus+afMJK924u5L9eTHuBaAh51O1G8m2Ofxj7YXWjWfzoeWr+CEbQT6SdYAJ+2DRklrmXv+jby3L3+gZilNj920RyfEphdDxzxtXK0z87VR+w49l2tT0EdRuVEALe7kQJhOEXac7JK2bAbRqwOwWFG/bI4G/oW0jk2nAMQaLTOexIM58zWLbZWMaV6zBTQ70C/W8Kp9XrhdFlmY0IZc8R/lOa+9/z4Sume5vO9OowQ2vsz9EVT+TrcZvJERxrzgeNd9rtQyYyJIrJrLX7N4Ov0x3kyEqrzEDOvGd0B+FVJ7Bcu7xJvAz0DROYRJZknTzRUcl5FlAkTLnDOg3Ry15KP0XIN0JjzHW1WZ3g1DpV1A3fhdCTlg9GuaqKDdmCtBbuaqJTmvUwuNfCsr2F6Xpf4wSY="
-  app: decide-ortosia
-  on: ortosia-cabina2
+  app: decide-testing
+  on: ortosia-cabina2-testing
   skip_cleanup: true

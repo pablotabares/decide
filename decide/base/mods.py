@@ -52,6 +52,9 @@ def query(modname, entry_point='/', method='get', baseurl=None, **kwargs):
         json_data = kwargs.get('json', {})
         response = q(url, json=json_data, headers=headers)
 
+    print(kwargs.get('response', False))
+    print(response)
+    print(response.json())
     if kwargs.get('response', False):
         return response
     else:
