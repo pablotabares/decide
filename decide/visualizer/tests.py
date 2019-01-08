@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
+import json
 
 from base import mods
 from base.tests import BaseTestCase
@@ -22,7 +23,6 @@ from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption
 from store.models import Vote
 from rest_framework.authtoken.models import Token
-from voting.views import VisualizerView
 
 class VisualizerTestCase(BaseTestCase):
 
@@ -88,7 +88,6 @@ class VisualizerTestCase(BaseTestCase):
         #Create and add votes
         voters = list(Census.objects.filter(voting_id=v.id))
         voter = voters.pop()
-        print(voter)
         clear = {}
         for opt in v.question.options.all():
             clear[opt.number] = 0
@@ -102,7 +101,6 @@ class VisualizerTestCase(BaseTestCase):
                 clear[opt.number] += 1
                 user = self.get_or_create_user(voter.voter_id)
                 self.login(user=user.username)
-                print(voters)
                 #voter = voters.pop()
                 mods.post('store', json=data)
 
@@ -112,10 +110,35 @@ class VisualizerTestCase(BaseTestCase):
 
         #Tally Done
         v.tally_votes()
-
+        
         #...
         #Votation ended
         #...
+        
+        #Method for test views's method
+        response = self.client.get('/visualizer/{}/'.format(v.pk))
+        self.assertEqual(response.status_code, 200)
+
+        #Check 1
+        self.assertEqual(response.context['voting_id'], v.pk)
+
+        #Check 2
+        self.assertEqual('Votation1' in response.context['voting'].values() , True)
+
+        #Check 3
+        varTemp = response.context['voting']
+        self.assertEqual('Question1' in varTemp['question'].values() , True)
+
+        #Test Finished OK
+        
+        
+        
+        
+
+       
+        
+
+        
 
 
         
