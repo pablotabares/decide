@@ -78,7 +78,7 @@ export default class VoteScreen extends React.Component {
 
     _decideEncrypt() {
         let msg = this.state.itemsSelected;
-        let bigmsg = BigInt.fromJSONObject(msg);
+        let bigmsg = BigInt.fromJSONObject(JSON.stringify(msg));
         let cipher = ElGamal.encrypt(this.state.bigpk, bigmsg);
         return cipher;
     };
