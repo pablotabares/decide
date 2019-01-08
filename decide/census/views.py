@@ -18,46 +18,69 @@ from base.perms import UserIsStaff
 from .models import Census
 from voting.models import Voting
 from voting.serializers import VotingSerializer
+from django.core.paginator import Paginator
 
 class VotingListView(ListView):
     model = Voting
     template_name = "voting_list.html"
     voter_id = 0
+    objects = None
 
     def get(self, request, *args, **kwargs):
         self.voter_id = kwargs.get('voter_id')
+        ids = Census.objects.filter(voter_id=self.voter_id).values('voting_id')
+        object_list = Voting.objects.filter(pk__in=ids)
+        paginator = Paginator(object_list, 1)
+        page = request.GET.get('page')
+        self.objects = paginator.get_page(page)
         return ListView.get(self, request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        ids = Census.objects.filter(voter_id=self.voter_id).values('voting_id')
-        object_list = Voting.objects.filter(pk__in=ids)
-        return super().get_context_data(object_list=object_list, **kwargs)
+        return super().get_context_data(object_list=self.objects, **kwargs)
 
 class VotingByDateListView(ListView):
     model = Voting
     template_name = "voting_list.html"
     ids = None
+    object_list = None
 
     def post(self, request, *args, **kwargs): #We took the inputs of the form
         datos = request.POST
         try:
-            votingIds = Voting.objects.filter(start_date__gte=datos['startDate']).filter(end_date__lte=datos['endDate']).values('voting_id')
-            censusVoting = Census.objects.all().values('voting_id')
-            ids = votingIds.union(censusVoting)   
+            votingIds = Voting.objects.filter(start_date__gte=datos['startDate']).filter(end_date__lte=datos['endDate']).values('id')
+            self.ids = Census.objects.filter(voting_id__in=votingIds).values('voting_id')
         except ObjectDoesNotExist as n:
-            return redirect('census_list')       
+            return redirect('census_list')  
+        self.object_list = Voting.objects.filter(pk__in=self.ids)
+        paginator = Paginator(self.object_list,1)
+        page = request.POST.get('page')
+        self.object_list = paginator.get_page(page)
         return ListView.get(self, request, *args, **kwargs)
     
     def get_context_data(self, *, object_list=None, **kwargs):
-        #AIUDA
-        object_list = Voting.objects.filter(pk__in=ids)
         return super().get_context_data(object_list=object_list, **kwargs)
         
 class VotingByNameListView(ListView):
+    model = Voting
+    template_name = "voting_list.html"
+    ids = None
+    object_list = None
+
     def post(self, request, *args, **kwargs):
-        return None
-    def get_context_data(self, **kwargs):
-        return None
+        datos = request.POST
+        try:
+            votingIds = Voting.objects.filter(name=datos['votingName']).values('id')
+            self.ids = Census.objects.filter(voting_id__in=votingIds).values('voting_id')
+        except ObjectDoesNotExist as n:
+            return redirect('census_list')   
+        self.object_list = Voting.objects.filter(pk__in=self.ids)
+        paginator = Paginator(self.object_list,1)
+        page = request.GET.get('page')
+        self.object_list = paginator.get_page(page)
+        return ListView.get(self, request, *args, **kwargs)
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        return super().get_context_data(object_list=object_list, **kwargs)
 
 class UserListView(ListView):
     model = User
