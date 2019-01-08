@@ -85,6 +85,7 @@ class Voting(models.Model):
         '''
 
         tasks.tally.delay(self.id, token)
+        return True
         # votes = self.get_votes(token)
         #
         # auth = self.auths.first()

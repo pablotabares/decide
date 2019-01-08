@@ -1,2 +1,3 @@
 release: bash ./release-tasks.sh
 web: gunicorn decide.wsgi
+worker: celery worker --app=decide.voting.tasks.app
