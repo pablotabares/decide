@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Image,AsyncStorage, StyleSheet, Alert
+  Image,AsyncStorage, StyleSheet, Alert,Modal, TouchableHighlight, View,
 } from 'react-native';
 import {Container, Header, Content, Button,Card, CardItem, Icon, List, ListItem, Accordion,Body, Title,Text, Left, Right } from "native-base";
 import {NavigationActions} from "react-navigation";
@@ -11,7 +11,9 @@ const dataArray = [
 { title: "Popular votings", content: "Lorem ipsum dolor sit amet" }
 ];
 
-
+///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////SCREENS//////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -99,16 +101,46 @@ export default class HomeScreen extends React.Component {
 }
 
 
+///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////ITEMS//////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
 class VoteItem extends React.Component{
 
-  _showVoting(voting_id) {
-    Alert.alert('EEEEEE'+voting_id)
+  state = {
+    modalVisible: false,
+  };
+
+  setModalVisible(visible, voting_id) {
+    this.setState({modalVisible: visible});
   }
 
     render(){
         if(moment() > moment(this.props.item.end_date,'YYYY-MM-DDTHH:mm:ss.SSSSSSZ')){
           return(
-              <ListItem noIndent onPress={() =>this._showVoting(this.props.item.id)} style={{
+            <View style={{marginTop: 22}}>
+              <Modal
+                animationType="slide"
+                transparent={false}
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                  Alert.alert('Modal has been closed.');
+                }}>
+                <View style={{marginTop: 22}}>
+                  <View>
+                    <Text>Hello World!</Text>
+
+                    <TouchableHighlight
+                      onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible);
+                      }}>
+                      <Text>Hide Modal</Text>
+                    </TouchableHighlight>
+                  </View>
+                </View>
+              </Modal>
+              <ListItem noIndent onPress={() => {this.setModalVisible(true, this.props.item.id);}}
+                style={{
                   flex: 1,
                   flexDirection: 'row',
                   justifyContent: 'space-between',
@@ -117,10 +149,11 @@ class VoteItem extends React.Component{
                       <Icon name='check' type='MaterialIcons' style={{color: 'green'}}/>
                   </Left>
                   <Body>
-                  <Text>{this.props.item.name}</Text>
-                  <Text note>{this.props.item.desc}</Text>
+                    <Text>{this.props.item.name}</Text>
+                    <Text note>{this.props.item.desc}</Text>
                   </Body>
               </ListItem>
+            </View>
           )
         } else {return null}
     }
