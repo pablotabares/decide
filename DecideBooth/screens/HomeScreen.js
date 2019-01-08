@@ -67,24 +67,30 @@ export default class HomeScreen extends React.Component {
           <Content>
             <Card >
 
-                <CardItem>
-                    <Text style={{fontWeight: 'bold'}}>Welcome to Decide</Text>
-                </CardItem>
+              <CardItem/>
 
-                <CardItem header bordered >
-                  <Image
-                    style={{width: 322,height: 60}}
-                    source={require('../img/banner.jpeg')}
-                  />
-                </CardItem>
+              <CardItem header style={{flex: 1, flexDirection:'row',justifyContent: 'center', alignItems:'flex-start'}}>
+                  <Text style={{fontWeight: 'bold', fontSize:25}}>Welcome to Decide</Text>
+              </CardItem>
 
-                <CardItem>
-                  <List dataArray={this.state.votings}
-                        renderRow={(item) =>
-                            <VoteItem item={item} />
-                        }>
-                  </List>
-                </CardItem>
+              <CardItem  bordered style={{flex: 1, flexDirection:'row',justifyContent: 'center', alignItems:'flex-start'}} >
+                <Image
+                  style={{height:75,flex: 1, flexDirection:'row',alignSelf:'stretch'}}
+                  source={require('../img/banner.jpeg')}
+                />
+              </CardItem>
+
+              <CardItem style={{flex: 1, flexDirection:'row',justifyContent: 'flex-start', alignItems:'flex-start'}}>
+                  <Text style={{fontWeight: 'bold', fontSize:14}}>Completed votings</Text>
+              </CardItem>
+
+              <CardItem>
+                <List dataArray={this.state.votings}
+                      renderRow={(item) =>
+                          <VoteItem item={item} />
+                      }>
+                </List>
+              </CardItem>
             </Card>
           </Content>
         </Container>
