@@ -1,6 +1,6 @@
 import React from 'react';
 import {AsyncStorage, StyleSheet} from 'react-native';
-import { Container, Header, Content, List, ListItem, Text, Body, Right, Icon, Left} from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, Body, Right, Icon, Left, Button} from 'native-base';
 import moment from "moment";
 
 class VoteRightItem extends React.Component{
@@ -8,7 +8,7 @@ class VoteRightItem extends React.Component{
         switch(this.props.status) {
             case 0:
                 return (
-                    <Right>
+                    <Right style={{flex:1,flexGrow:1}}>
                         <Text note>
                             No Date
                         </Text>
@@ -16,7 +16,7 @@ class VoteRightItem extends React.Component{
                 );
             case 1:
                 return(
-                    <Right>
+                    <Right style={{flex:1,flexGrow:1}}>
                         <Text note>
                             {moment(this.props.item.start_date,'YYYY-MM-DDTHH:mm:ss.SSSSSSZ').format('DD/MM/YY')}
                         </Text>
@@ -24,7 +24,7 @@ class VoteRightItem extends React.Component{
                 );
             case 2:
                 return(
-                    <Right>
+                    <Right style={{flex:1,flexGrow:1}}>
                         <Text note>
                             Closed
                         </Text>
@@ -32,10 +32,11 @@ class VoteRightItem extends React.Component{
                 );
             default:
                 return(
-                    <Right style={{flex: 1, flexDirection: 'row',justifyContent: 'flex-end'}}>
-                        <Text>Vote</Text>
-                        <Icon name="arrow-forward" style={{marginLeft: 5, color: 'blue'}}
-                              onPress={() => this.props.onPress()}/>
+                    <Right style={{flex: 1, flexDirection: 'row',justifyContent: 'flex-end', flexGrow:1}}>
+                        <Button onPress={() => this.props.onPress()} transparent primary>
+                            <Text>Vote</Text>
+                            <Icon name="arrow-forward" style={{marginLeft: 5, color: 'blue'}}/>
+                        </Button>
                     </Right>
                 );
         }
@@ -50,7 +51,7 @@ class VoteItem extends React.Component{
         let icolor = 'green';
         if(this.props.item.start_date === null){
             status = 0;
-            icon = 'more_horiz';
+            icon = 'stop';
             icolor = 'grey';
         }else if(moment() < moment(this.props.item.start_date,'YYYY-MM-DDTHH:mm:ss.SSSSSSZ')){
             status = 1;
@@ -65,16 +66,15 @@ class VoteItem extends React.Component{
             <ListItem noIndent style={{
                 flex: 1,
                 flexDirection: 'row',
-                justifyContent: 'space-between',
             }}>
-                <Left>
+                <Left style={{flex:0,flexShrink:1}}>
                     <Icon name={icon} type='MaterialIcons' style={{color: icolor}}/>
                 </Left>
-                <Body>
-                <Text>{this.props.item.name}</Text>
-                <Text note>{this.props.item.desc}</Text>
+                <Body style={{flex:0,flexGrow:1}}>
+                <Text numberOfLines={1}>{this.props.item.name}</Text>
+                <Text note numberOfLines={1}>{this.props.item.desc}</Text>
                 </Body>
-                <VoteRightItem status={status} item={this.props.item} onPress={() => this.props.onPress()}/>
+                <VoteRightItem style={{flex:0,flexGrow:1}} status={status} item={this.props.item} onPress={() => this.props.onPress()}/>
             </ListItem>
         )
     }
@@ -110,10 +110,14 @@ export default class VotingsScreen extends React.Component {
                 }
             })
                 .then(response => {
-                    let votings = JSON.parse(response._bodyText);
-                    this.setState({
-                        votings: votings
-                    });
+                    if(response.status === 200) {
+                        let votings = JSON.parse(response._bodyText);
+                        this.setState({
+                            votings: votings
+                        });
+                    }else{
+                        console.error(response);
+                    }
                 })
                 .catch(error => console.error(error));
         }else{

@@ -1,8 +1,9 @@
 import React from 'react';
-import {AsyncStorage, StyleSheet} from 'react-native';
-import { Container, Header, Content, List, ListItem, Text, Left, Right, Button, Radio, Body, Title, Subtitle, Icon, Card, CardItem} from 'native-base';
+import {AsyncStorage} from 'react-native';
+import { Container, Header, Content, List, Text, Left, Right, Button, Body, Title, Subtitle, Icon, Card, CardItem, ActionSheet} from 'native-base';
 import BigInt from '../js/bigint';
 import ElGamal from '../js/elgamal';
+import ListItem from "react-native/local-cli/templates/HelloNavigation/components/ListItem";
 
 export default class VoteScreen extends React.Component {
     static navigationOptions = {
@@ -12,12 +13,11 @@ export default class VoteScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title : '',
-            desc : '',
-            question_title : '',
-            options : [],
-            bigpk : null,
-            itemSelected : null
+            title: '',
+            desc: '',
+            questions: [],
+            bigpk: null,
+            itemsSelected: {}
         }
     }
 
@@ -49,6 +49,7 @@ export default class VoteScreen extends React.Component {
                                 }
                             })
                                 .then(response => {
+                                    console.log(response);
                                     let voting = JSON.parse(response._bodyText)[0];
                                     let bigpk = {
                                         p: BigInt.fromJSONObject(voting.pub_key.p.toString()),
@@ -58,8 +59,7 @@ export default class VoteScreen extends React.Component {
                                     this.setState({
                                         title : voting.name,
                                         desc : voting.desc,
-                                        question_title : voting.question.desc,
-                                        options: voting.question.options,
+                                        questions: voting.questions,
                                         bigpk : bigpk
                                     })
                                 })
@@ -77,7 +77,7 @@ export default class VoteScreen extends React.Component {
     //   ElGamal.BITS = 256; //TODO: CHANGE FOR FETCH WITCH RETRIEVES KEYBITS FROM SETTINGS
 
     _decideEncrypt() {
-        let msg = this.state.itemSelected;
+        let msg = this.state.itemsSelected;
         let bigmsg = BigInt.fromJSONObject(msg);
         let cipher = ElGamal.encrypt(this.state.bigpk, bigmsg);
         return cipher;
@@ -94,7 +94,6 @@ export default class VoteScreen extends React.Component {
             voter: parseInt(id),
             token: token
         };
-        console.log(data);
         fetch("http://decide-ortosia.herokuapp.com/store/", {
             method : 'POST',
             headers : {
@@ -139,22 +138,71 @@ export default class VoteScreen extends React.Component {
                     <Right/>
                 </Header>
                 <Content padder>
-                    <CardItem header bordered>
-                        <Text>{this.state.question_title}</Text>
-                    </CardItem>
-                    <Card dataArray={this.state.options}
-                          renderRow={(item) =>
-                              <CardItem>
-                                  <Left>
-                                      <Text>{item.option}</Text>
-                                  </Left>
-                                  <Right>
-                                      <Radio onPress={() => this.setState({ itemSelected: item.number })}
-                                             selected={this.state.itemSelected === item.number}/>
-                                  </Right>
-                              </CardItem>
-                          }>
-                    </Card>
+                    {/*<List dataArray={this.state.questions}*/}
+                          {/*renderRow={(question) =>*/}
+                          <List>
+                              {this.state.questions.map((question,i) => {
+                                  return (
+                                      <Card key={question.desc} header bordered>
+                                          <CardItem header>
+                                              <Text>{question.desc}</Text>
+                                          </CardItem>
+                                          <Button full bordered onPress={() => {
+                                                let buttons = Array.from(question.options, x => x.option + '    (' + x.number + ')');
+                                                let len = buttons.push('Delete Selection');
+                                                ActionSheet.show(
+                                                    {
+                                                        options: buttons,
+                                                        destructiveButtonIndex: len - 1,
+                                                        title: question.desc
+                                                    },
+                                                    buttonIndex => {
+                                                        if(buttonIndex === len - 1){
+                                                            let newSelection = this.state.itemsSelected;
+                                                            delete newSelection[question.desc];
+                                                            this.setState({itemsSelected: newSelection});
+                                                        }else {
+                                                            let newSelection = this.state.itemsSelected;
+                                                            newSelection[question.desc] = /\(([0-9]+)\)/.exec(buttons[buttonIndex])[1];
+                                                            this.setState({itemsSelected: newSelection});
+                                                        }
+                                                    }
+                                                )
+                                          }}>
+                                              <Text>{typeof this.state.itemsSelected[question.desc] !== 'undefined'
+                                                  ?
+                                                  question.options.find((option) => {return this.state.itemsSelected[question.desc] === option.number.toString()}).option
+                                                  :
+                                                  '-- Select an option --'
+                                              }</Text>
+                                          </Button>
+                                          {/*<Card transparent dataArray={question.options}*/}
+                                                {/*renderRow={(option) =>*/}
+                                                    {/*<CardItem>*/}
+                                                        {/*<Left>*/}
+                                                            {/*<Text>{option.option}</Text>*/}
+                                                        {/*</Left>*/}
+                                                        {/*<Right>*/}
+                                                            {/*<Radio onPress={() => {*/}
+                                                                {/*console.log('---------------------------');*/}
+                                                                {/*console.log('q: '+question.desc);*/}
+                                                                {/*console.log('option: '+option.number);*/}
+                                                                {/*console.log(this.state.itemsSelected);*/}
+                                                                {/*console.log(this.state.itemsSelected[question.desc] === option.number);*/}
+                                                                {/*let itemsSelected = this.state.itemsSelected;*/}
+                                                                {/*itemsSelected[question.desc] = option.number;*/}
+                                                                {/*this.setState({itemsSelected: itemsSelected});*/}
+                                                                {/*console.log(this.state.itemsSelected);*/}
+                                                                {/*console.log(this.state.itemsSelected[question.desc] === option.number);*/}
+                                                            {/*}}*/}
+                                                                   {/*selected={this.state.itemsSelected[question.desc] === option.number}/>*/}
+                                                        {/*</Right>*/}
+                                                    {/*</CardItem>*/}
+                                                {/*}>*/}
+                                          {/*</Card>*/}
+                                      </Card>
+                                  )})}
+                    </List>
                     <Button full success onPress={this._decideSend.bind(this)}>
                         <Text>Save</Text>
                     </Button>

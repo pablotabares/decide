@@ -14,9 +14,6 @@ var j_lm = ((canary&0xffffff)==0xefcafe);
 
 // (public) Constructor
 function BigInteger(a,b,c) {
-  console.log('a: '+a);
-  console.log('b: '+b);
-  console.log('c: '+c);
   this.arr = new Array();
   if(a != null)
     if("number" == typeof a) this.fromNumber(a,b,c);
