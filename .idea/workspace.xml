@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d6935f6-d916-4882-8af5-2c647afa2f9e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/decide/voting/tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecideBooth/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/DecideBooth/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecideBooth/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/DecideBooth/screens/HomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecideBooth/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/DecideBooth/screens/LoginScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecideBooth/screens/ProfileScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/DecideBooth/screens/ProfileScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecideBooth/screens/VoteScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/DecideBooth/screens/VoteScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecideBooth/screens/VotingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/DecideBooth/screens/VotingsScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/decide/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/decide/decide/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decide/voting/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/decide/voting/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decide/heroku_settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/decide/heroku_settings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,11 +21,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
               <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/decide/heroku_settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="389">
+              <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -62,7 +63,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/decide/decide/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="344">
@@ -146,6 +147,7 @@
         <option value="$PROJECT_DIR$/decide/base/mods.py" />
         <option value="$PROJECT_DIR$/decide/voting/models.py" />
         <option value="$PROJECT_DIR$/decide/voting/tasks.py" />
+        <option value="$PROJECT_DIR$/decide/heroku_settings.py" />
       </list>
     </option>
   </component>
@@ -225,7 +227,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30526000" />
+    <option name="totallyTimeSpent" value="31152000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1987" y="25" width="1853" height="1055" extended-state="6" />
@@ -260,13 +262,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/local/lib/python3.6/dist-packages/rest_framework/authtoken/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/decide/base/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -584,13 +579,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/decide/decide/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="185" column="19" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/decide/voting/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="389">
@@ -640,6 +628,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/decide/heroku_settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/decide/decide/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="185" column="19" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
         </state>
       </provider>
     </entry>

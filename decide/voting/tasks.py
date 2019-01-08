@@ -1,9 +1,9 @@
 from celery import Celery
 from base import mods
-import os
+from django.conf import settings
 
-app = Celery('tasks', BROKER_URL=os.environ['REDIS_URL'],
-             CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
+app = Celery('tasks', BROKER_URL=settings.REDIS_URL,
+             CELERY_RESULT_BACKEND=settings.REDIS_URL)
 
 
 @app.task
