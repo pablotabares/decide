@@ -2,60 +2,63 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <style>
-        
-        ul {
-            list-style-type: none;
-            padding: 0;
-            overflow: hidden;
-            background-color: #333;
-            width:100%;
-            font-family: Arial;
-        }
-
-        li {
-        float: left;
-        }
 
         .center {
         margin: auto;
         width: 50%;
-        }
-        li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        }
-
-        li a:hover {
-        background-color: rgb(128, 159, 241);
-        }
-
-        #active {
-        background-color: saddlebrown;
         }
 
         h2 {
             font-family: Arial;
             color:#264670;
             text-align: center;
+            font-weight: bold;
+        }
+        h3 {
+            font-family: Arial;
+            color:#14253b;
+            text-align: center;
+            font-size: 20px;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 {% load i18n static %}
 
 {% block content %}
-<div class="center">
-<ul>
-        <li><a href="/admin">Admin</a></li>
-        <li><a href="/mixnet">Mixnet</a></li>
-        <li><a href="/mixnet/panel" id="active">Control panel</a></li>
 
-</ul>
-</div>
-<h2>Decide! Authority control panel</h2>
+<!-- Nav bar-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/admin">Admin</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mixnet">Mixnet</a>
+          </li>
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Control Panel
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#authorities">Authorities status</a>
+              <a class="dropdown-item" href="#mixnets">Mixnets status</a>
+            </div>
+          </li>
+    </ul>
+    </div>
+</nav>
+
+<!-- Title -->
 <br/>
+<h2>Decide! Authority control panel</h2>
+<br/><br/><br/>
+
+<!-- Authorities status-->
+<h3 id="authorities">Authorities status</h3>
 <div class="center">
 <table class="table">
     <tr><th>Name</th><th>Auth</th><th>Status</th></tr>
@@ -67,6 +70,28 @@
             <img width="24" height="24" src="https://i.imgur.com/cKnrL1t.png"/>
             {% else %}
             <img width="24" height="24" src="https://i.imgur.com/BQym8rF.png"/>
+            {% endif %}
+        </td>
+    </tr>
+    
+    {% endfor %}
+</table>
+</div>
+
+<br/><br/><br/>
+
+<!-- Mixnets status-->
+<h3 id="mixnets">Mixnets status</h3>
+<div class="center">
+<table class="table">
+    <tr><th>Voting Id</th><th>Mixnet Status</th></tr>
+    {% for voting, status in mixnets.items %}
+    
+    <tr><td>{{ voting }}</td>
+        <td>{{ status }} {% if status == "OFFLINE" %}
+            <img width="24" height="24" src="https://i.imgur.com/cKnrL1t.png"/> — Some of the authorities are offline
+            {% else %}
+            <img width="24" height="24" src="https://i.imgur.com/BQym8rF.png"/> — All the authorities are online
             {% endif %}
         </td>
     </tr>
