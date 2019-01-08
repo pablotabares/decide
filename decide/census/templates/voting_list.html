@@ -54,6 +54,20 @@
             {% endif %}
         </span>
     </div>
+    <form action="{%url 'ordering_by_name_list'%}" method="get">
+        {% csrf_token %}
+        <input type="submit" value="Ordering by name">
+    </form> 
+    <br>
+    <form action="{%url 'ordering_by_startDate_list'%}" method="get">
+        {% csrf_token %}
+        <input type="submit" value="Ordering by start date">
+    </form> 
+    <br>
+    <form action="{%url 'ordering_by_endDate_list'%}" method="get">
+        {% csrf_token %}
+        <input type="submit" value="Ordering by end date">
+    </form> 
     <br>
     <div class="row">
         <section class="content">
