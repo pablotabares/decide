@@ -33,6 +33,32 @@ class VotingListView(ListView):
         object_list = Voting.objects.filter(pk__in=ids)
         return super().get_context_data(object_list=object_list, **kwargs)
 
+class VotingByDateListView(ListView):
+    model = Voting
+    template_name = "voting_list.html"
+    ids = None
+
+    def post(self, request, *args, **kwargs): #We took the inputs of the form
+        datos = request.POST
+        try:
+            votingIds = Voting.objects.filter(start_date__gte=datos['startDate']).filter(end_date__lte=datos['endDate']).values('voting_id')
+            censusVoting = Census.objects.all().values('voting_id')
+            ids = votingIds.union(censusVoting)   
+        except ObjectDoesNotExist as n:
+            return redirect('census_list')       
+        return ListView.get(self, request, *args, **kwargs)
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        #AIUDA
+        object_list = Voting.objects.filter(pk__in=ids)
+        return super().get_context_data(object_list=object_list, **kwargs)
+        
+class VotingByNameListView(ListView):
+    def post(self, request, *args, **kwargs):
+        return None
+    def get_context_data(self, **kwargs):
+        return None
+
 class UserListView(ListView):
     model = User
     template_name = "user_list.html"
@@ -60,33 +86,6 @@ class CensuslListView(ListView):
         context['votingList'] = Voting.objects.all().filter(pk__in=ids)
         return context
 
-class VotingByDateListView(ListView):
-    model = Census
-    template_name = "list.html"
-    startDate = None
-    endDate = None
-    voting = None
-    ids = None
-
-    def post(self, request, *args, **kwargs): #We took the data of the form
-        form = self.get_form()
-        if form.is_valid():
-            datos = form.cleaned_data
-            try:
-                self.voting = Voting.objects.filter(start_date__gte=datos['startDate']).filter(end_date__lte=datos['endDate'])
-            except ObjectDoesNotExist as n:
-                return redirect('census_list')       
-        return ListView.get(self, request, *args,**kwargs)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        for vote in self.voting:
-            ids = ids.append(Census.objects.filter(voting_id=vote.get('id').values('voter_id')))
-        context['object_list'] = User.objects.all().filter(pk__in=ids)
-        context['voting'] = self.voting
-        print(kwargs)
-        return context
-        
 class CensuslByVotingListView(ListView):
     model = Census
     template_name = "dashboard.html"

@@ -19,6 +19,7 @@
 </div>
 
 <div class="container">
+    <label for="dateFilter">Filtering by date</label>
     <form action="{%url 'voting_by_date_list'%}" method="post">
         {% csrf_token %}
         <label for="dateFilter">Start date: </label>
@@ -26,9 +27,17 @@
         <label for="dateFilter">End date: </label>
         <input id="endDate" type="datetime-local" name="endDate">
         <input type="submit">
-    </form>        
+    </form> 
+    <br>
+    <label for="nameFilter">Filtering by name</label>
+    <form action="{%url 'voting_by_name_list'%}" method="post">
+            {% csrf_token %}
+            <label for="nameFilter">Name: </label>
+            <input id="votingName" type="text" name="votingName">
+            <input type="submit">
+    </form> 
+    <br>
     <div class="row">
-
         <section class="content">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
