@@ -14,18 +14,18 @@ MODULES = [
 ]
 
 APIS = {
-    'authentication': 'https://ortosia-auth.herokuapp.com/',
-    'base': 'https://ortosia-auth.herokuapp.com/',
-    'booth': 'https://ortosia-auth.herokuapp.com/',
-    'census': 'https://ortosia-auth.herokuapp.com/',
-    'mixnet': 'https://ortosia-auth.herokuapp.com/',
-    'postproc': 'https://ortosia-auth.herokuapp.com/',
-    'store': 'https://ortosia-auth.herokuapp.com/',
-    'visualizer': 'https://ortosia-auth.herokuapp.com/',
-    'voting': 'https://ortosia-auth.herokuapp.com/',
+    'authentication': 'http://localhost:8000',
+    'base': 'http://localhost:8000',
+    'booth': 'http://localhost:8000',
+    'census': 'http://localhost:8000',
+    'mixnet': 'http://localhost:8000',
+    'postproc': 'http://localhost:8000',
+    'store': 'http://localhost:8000',
+    'visualizer': 'http://localhost:8000',
+    'voting': 'http://localhost:8000',
 }
 
-BASEURL = 'https://ortosia-auth.herokuapp.com/'
+BASEURL = 'http://localhost:8000'
 
 DATABASES = {
     'default': {
