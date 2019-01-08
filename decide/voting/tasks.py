@@ -2,6 +2,8 @@ from celery import Celery
 from base import mods
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+import os
+
 
 app = Celery('tasks', BROKER_URL=settings.REDIS_URL,
              CELERY_RESULT_BACKEND=settings.REDIS_URL)
