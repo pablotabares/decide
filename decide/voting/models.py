@@ -84,7 +84,7 @@ class Voting(models.Model):
         The tally is a shuffle and then a decrypt
         '''
 
-        tasks.tally.delay(self, token);
+        tasks.tally.delay(self.id, token)
         # votes = self.get_votes(token)
         #
         # auth = self.auths.first()
