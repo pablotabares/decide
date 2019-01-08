@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="29ad5d55-cb51-43ab-8e12-91852a1e7358" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/ProfileScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ProfileScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/VoteScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/VoteScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/VotingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/VotingsScreen.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -209,8 +213,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/screens/VoteScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="179" column="76" lean-forward="true" selection-start-line="179" selection-start-column="76" selection-end-line="179" selection-end-column="76" />
+            <state relative-caret-position="141">
+              <caret line="107" column="45" lean-forward="true" selection-start-line="107" selection-start-column="45" selection-end-line="107" selection-end-column="45" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -304,14 +308,17 @@
       <find>nextBytes</find>
       <find>itemSelected</find>
       <find>console.log</find>
+      <find>decide-ortosia.herokuapp</find>
     </findStrings>
     <replaceStrings>
       <replace>:</replace>
       <replace>export function</replace>
       <replace>this.props.item</replace>
+      <replace>decide-testing.herokuapp</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/js</dir>
+      <dir>$PROJECT_DIR$/screens</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -364,11 +371,6 @@
             <path>
               <item name="DecideBooth" type="b2602c69:ProjectViewProjectNode" />
               <item name="DecideBooth" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DecideBooth" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DecideBooth" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DecideBooth" type="b2602c69:ProjectViewProjectNode" />
@@ -426,7 +428,7 @@
       <workItem from="1546538720511" duration="13177000" />
       <workItem from="1546629295489" duration="5154000" />
       <workItem from="1546888282142" duration="13319000" />
-      <workItem from="1546972151428" duration="1225000" />
+      <workItem from="1546972151428" duration="2509000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'ortosia-cabina2' of https://github.com/pablotabares/decide into remotes/origin/ortosia-cabina2&#10;&#10;# Conflicts:&#10;#&#9;DecideBooth/navigation/MainTabNavigator.js&#10;#&#9;DecideBooth/screens/LoginScreen.js">
       <created>1545334493456</created>
@@ -460,16 +462,17 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58551000" />
+    <option name="totallyTimeSpent" value="59835000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1987" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19453552" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19453552" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32894737" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -478,9 +481,9 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32894737" />
+      <window_info anchor="bottom" id="Version Control" order="8" visible="true" weight="0.32894737" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.12938596" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.12938596" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -586,8 +589,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/screens/VoteScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="179" column="76" lean-forward="true" selection-start-line="179" selection-start-column="76" selection-end-line="179" selection-end-column="76" />
+        <state relative-caret-position="141">
+          <caret line="107" column="45" lean-forward="true" selection-start-line="107" selection-start-column="45" selection-end-line="107" selection-end-column="45" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

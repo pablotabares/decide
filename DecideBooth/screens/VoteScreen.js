@@ -32,7 +32,7 @@ export default class VoteScreen extends React.Component {
         const voting_id = this.props.navigation.getParam('voting_id', '0');
         if(id !== null && token !== null) {
             if(voting_id !== '0') {
-                fetch('http://decide-ortosia.herokuapp.com/census/' + voting_id + '/?voter_id=' + id, {
+                fetch('http://decide-testing.herokuapp.com/census/' + voting_id + '/?voter_id=' + id, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
@@ -41,7 +41,7 @@ export default class VoteScreen extends React.Component {
                 })
                     .then(response => {
                         if (response.status === 200) {
-                            fetch('http://decide-ortosia.herokuapp.com/voting/?id=' + voting_id, {
+                            fetch('http://decide-testing.herokuapp.com/voting/?id=' + voting_id, {
                                 method: 'GET',
                                 headers: {
                                     'Accept': 'application/json',
@@ -94,7 +94,7 @@ export default class VoteScreen extends React.Component {
             voter: parseInt(id),
             token: token
         };
-        fetch("http://decide-ortosia.herokuapp.com/store/", {
+        fetch("http://decide-testing.herokuapp.com/store/", {
             method : 'POST',
             headers : {
                 'Accept': 'application/json',
@@ -104,6 +104,7 @@ export default class VoteScreen extends React.Component {
             body: JSON.stringify(data)
         })
             .then(response => {
+                console.log(response);
                 if(response.status === 200) {
                     alert("Conglatulations. Your vote has been sent");
                     this.props.navigation.goBack();

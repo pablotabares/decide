@@ -27,7 +27,7 @@ export default class ProfileScreen extends React.Component {
     _getProfileInfo = async() => {
         const token = await AsyncStorage.getItem('userToken');
         if(token !== null) {
-            fetch('http://decide-ortosia.herokuapp.com/authentication/getuser/', {
+            fetch('http://decide-testing.herokuapp.com/authentication/getuser/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

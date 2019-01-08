@@ -20,7 +20,7 @@ export default class LoginScreen extends React.Component {
     }
 
     _submitLogin() {
-        fetch('http://decide-ortosia.herokuapp.com/authentication/login/',{
+        fetch('http://decide-testing.herokuapp.com/authentication/login/',{
             method: 'POST',
             headers: {
                 'Accept' : 'application/json',
@@ -47,7 +47,7 @@ export default class LoginScreen extends React.Component {
                 }else{
                     let userToken = JSON.parse(response._bodyText).token;
                     AsyncStorage.setItem('userToken', userToken);
-                    fetch('http://decide-ortosia.herokuapp.com/authentication/getuser/',{
+                    fetch('http://decide-testing.herokuapp.com/authentication/getuser/',{
                         method: 'POST',
                         headers: {
                             'Accept' : 'application/json',

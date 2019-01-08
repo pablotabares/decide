@@ -102,7 +102,7 @@ export default class VotingsScreen extends React.Component {
         const token = await AsyncStorage.getItem('userToken');
         const id = await AsyncStorage.getItem('userId');
         if(id !== null && token !== null) {
-            fetch('http://decide-ortosia.herokuapp.com/census/voter/'+id, {
+            fetch('http://decide-testing.herokuapp.com/census/voter/'+id, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',

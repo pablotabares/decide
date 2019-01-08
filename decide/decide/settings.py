@@ -182,6 +182,9 @@ KEYBITS = 256
 
 APIS = {}
 
+# Decide Testing REDIS URL
+REDIS_URL = 'redis://h:p8fea4a319c13b9f1fd16e2257831fda77af130a2a81ab7ac0f4f88aa254d7e9f@ec2-63-32-230-12.eu-west-1.compute.amazonaws.com:12399'
+
 try:
     from local_settings import *
 except ImportError:
