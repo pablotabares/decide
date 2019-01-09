@@ -7,17 +7,22 @@
     border-radius:0;
     padding:60px 10px;
     margin:30px 0px;
+    height: 23em;
 }
 .text{
     margin:20px 0px;
 }
 
+.accion{
+    padding: 20px 20px;
+}
+
 .row .columna:nth-child(odd){
-    border: 3px solid #f23232;
+    border: 4px solid #f23232;
 }
 
 .row .columna:nth-child(even){
-    border: 3px solid #0066b2;
+    border: 4px solid #0066b2;
 }
 
 .big-title {
