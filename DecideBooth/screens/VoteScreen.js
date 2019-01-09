@@ -110,6 +110,10 @@ export default class VoteScreen extends React.Component {
                 }else if(response.status === 401) {
                     alert("Error! Voting is not permitted");
                     this.props.navigation.goBack();
+                }else{
+                    alert("Error");
+                    console.log(response);
+                    this.props.navigation.goBack();
                 }
             })
             .catch(error => {
