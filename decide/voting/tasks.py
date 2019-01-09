@@ -2,7 +2,6 @@ from celery import Celery
 from base import mods
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from decide.voting.models import Voting
 
 
 app = Celery('tasks')
@@ -11,6 +10,7 @@ app.conf.result_backend = settings.REDIS_URL
 
 @app.task
 def tally(voting_id, token):
+    from voting.models import Voting
     voting = get_object_or_404(Voting, pk=voting_id)
     votes = voting.get_votes(token)
 
