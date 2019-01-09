@@ -91,7 +91,7 @@ class VisualizerTestCase(BaseTestCase):
         voters = list(Census.objects.filter(voting_id=v.id))
         voter = voters.pop()
         clear = {}
-        for opt in v.question.options.all():
+        for opt in v.questions.first().options.all():
             clear[opt.number] = 0
             for i in range(2):
                 a, b = self.encrypt_msg(opt.number, v)
@@ -129,7 +129,7 @@ class VisualizerTestCase(BaseTestCase):
 
         #Check 3
         varTemp = response.context['voting']
-        self.assertEqual('Question1' in varTemp['question'].values() , True)
+        self.assertEqual('Question1' in varTemp['questions'][0].values() , True)
 
         #Test Finished OK
         
