@@ -33,6 +33,7 @@ deploy:
     docker push registry.heroku.com/$HEROKU_APP_NAME/web;
     heroku container:release web --app $HEROKU_APP_NAME;
     heroku config:set WEB_CONCURRENCY=3;
+    heroku run --app $HEROKU_APP_NAME python manage.py makemigrations 
     heroku run --app $HEROKU_APP_NAME python manage.py migrate 
   on:
     branch: docker-heroku
