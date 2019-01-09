@@ -5,9 +5,9 @@ from django.shortcuts import get_object_or_404
 import os
 
 
-app = Celery('tasks', BROKER_URL=settings.REDIS_URL,
-             CELERY_RESULT_BACKEND=settings.REDIS_URL)
-
+app = Celery('tasks')
+app.conf.broker_url = settings.REDIS_URL
+app.conf.result_backend = settings.REDIS_URL
 
 @app.task
 def tally(voting_id, token):

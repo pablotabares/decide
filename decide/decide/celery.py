@@ -6,8 +6,9 @@ from django.conf import settings
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'decide.settings')
 
-app = Celery('decide', BROKER_URL=settings.REDIS_URL,
-             CELERY_RESULT_BACKEND=settings.REDIS_URL)
+app = Celery('decide')
+app.conf.broker_url = settings.REDIS_URL
+app.conf.result_backend = settings.REDIS_URL
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.
