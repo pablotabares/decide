@@ -36,7 +36,7 @@ deploy:
     heroku run --app $HEROKU_APP_NAME python manage.py makemigrations;
     heroku run --app $HEROKU_APP_NAME python manage.py migrate 
   on:
-    branch: docker-heroku
+    branch: ortosia-prepro
 sudo: required
 services:
   - docker
