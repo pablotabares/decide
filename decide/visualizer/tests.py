@@ -54,7 +54,8 @@ class VisualizerTestCase(BaseTestCase):
             opt.save()
 
         #Create and save votation with question
-        v = Voting(name='Votation1', question=q)
+        v = Voting(name='Votation1')
+        v.questions.add(q)
         v.save()
 
         #Add auth to votation and save it
