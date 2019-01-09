@@ -55,8 +55,9 @@ class VisualizerTestCase(BaseTestCase):
 
         #Create and save votation with question
         v = Voting(name='Votation1')
-        v.questions.add(q)
         v.save()
+
+        v.questions.add(q)
 
         #Add auth to votation and save it
         a, _ = Auth.objects.get_or_create(url=settings.BASEURL,

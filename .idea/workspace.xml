@@ -30,7 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/decide/visualizer/tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="270">
+              <caret line="57" column="26" lean-forward="true" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -114,6 +115,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/decide/visualizer/tests.py" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="2180" />
     <option name="y" value="40" />
@@ -137,12 +145,6 @@
               <item name="decide" type="b2602c69:ProjectViewProjectNode" />
               <item name="decide" type="462c0819:PsiDirectoryNode" />
               <item name="decide" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="decide" type="b2602c69:ProjectViewProjectNode" />
-              <item name="decide" type="462c0819:PsiDirectoryNode" />
-              <item name="decide" type="462c0819:PsiDirectoryNode" />
-              <item name="visualizer" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -182,11 +184,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="314000" />
+    <option name="totallyTimeSpent" value="809000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1987" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1953514" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -250,7 +251,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/decide/visualizer/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="270">
+          <caret line="57" column="26" lean-forward="true" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>
