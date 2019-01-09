@@ -2,9 +2,7 @@ from celery import Celery
 from base import mods
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from .models import Voting
-
-import os
+from decide.voting.models import Voting
 
 
 app = Celery('tasks')
