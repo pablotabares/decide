@@ -11,6 +11,7 @@ RUN pip install ipython
 WORKDIR /app
 
 RUN git clone -b "ortosia-prepro" https://github.com/pablotabares/decide.git .
+
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
