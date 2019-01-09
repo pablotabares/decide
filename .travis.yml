@@ -35,7 +35,7 @@ deploy:
     heroku config:set WEB_CONCURRENCY=3;
     heroku run --app $HEROKU_APP_NAME python manage.py migrate 
   on:
-    branch: docker-heroku
+    branch: ortosia-prepro
 sudo: required
 services:
   - docker
