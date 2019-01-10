@@ -3,6 +3,10 @@
     padding:60px 0px;
 }
 
+.col-lg-5 {
+    width: 50% !important; 
+}
+
 .box-part{
     border-radius:0;
     padding:60px 10px;
