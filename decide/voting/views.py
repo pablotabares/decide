@@ -57,7 +57,7 @@ def crear_referendum(request):
 
 def create_options(request):
     if request.method == "POST":
-        print() #TODO: manejar las entradas
+        print()  # TODO: manejar las entradas
     else:
         form = someQuestionsOptions()
 
@@ -65,7 +65,6 @@ def create_options(request):
 
 
 def create_voting(request):
-
     if request.method == "POST":
         form = VotingForm2(request.POST)
         if form.is_valid():
@@ -105,25 +104,57 @@ class VotingView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         self.permission_classes = (UserIsStaff,)
         self.check_permissions(request)
-        for data in ['name', 'desc', 'question', 'question_opt']:
-            if not data in request.data:
-                return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
-        question = Question(desc=request.data.get('question'))
-        question.save()
+        if 'multiple' in request.data:
+            for data in ['name', 'desc', 'questions']:
+                if not data in request.data:
+                    return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
-        for idx, q_opt in enumerate(request.data.get('question_opt')):
-            opt = QuestionOption(question=question, option=q_opt, number=idx)
-            opt.save()
-        voting = Voting(name=request.data.get('name'), desc=request.data.get('desc'))
-        voting.save()
-        voting.questions.add(question)
+            voting = Voting(name=request.data.get('name'), desc=request.data.get('desc'))
+            voting.save()
+
+            for q in request.data.get('questions'):
+
+                question = Question(desc=q['desc'])
+                question.save()
+                voting.questions.add(question)
+
+                for idx, q_opt in enumerate(q['options']):
+                    opt = QuestionOption(question=question, option=q_opt['option'], number=idx)
+                    opt.save()
+
+                    if q_opt.get('unlocksQuestions'):
+
+                        for q2 in q_opt['unlocksQuestions']:
+                            question = Question(desc=q2['desc'])
+                            question.save()
+                            opt.unlockquestion.add(question)
+
+                            for idx2, q_opt2 in enumerate(q2['options']):
+                                opt = QuestionOption(question=question, option=q_opt2['option'], number=idx2)
+                                opt.save()
 
 
-        auth, _ = Auth.objects.get_or_create(url=settings.BASEURL,
-                                             defaults={'me': True, 'name': 'test auth'})
-        auth.save()
-        voting.auths.add(auth)
+        else:
+
+            for data in ['name', 'desc', 'question', 'question_opt']:
+                if not data in request.data:
+                    return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+            question = Question(desc=request.data.get('question'))
+            question.save()
+
+            for idx, q_opt in enumerate(request.data.get('question_opt')):
+                opt = QuestionOption(question=question, option=q_opt, number=idx)
+                opt.save()
+            voting = Voting(name=request.data.get('name'), desc=request.data.get('desc'))
+            voting.save()
+            voting.questions.add(question)
+
+            auth, _ = Auth.objects.get_or_create(url=settings.BASEURL,
+                                                 defaults={'me': True, 'name': 'test auth'})
+            auth.save()
+            voting.auths.add(auth)
         return Response({}, status=status.HTTP_201_CREATED)
 
 
