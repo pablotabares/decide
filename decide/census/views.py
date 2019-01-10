@@ -34,11 +34,8 @@ class VotingListView(ListView):
         self.objects = object_list
         return ListView.get(self, request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['object_list'] = self.objects
-        context['userId'] = self.voter_id
-        return context
+    def get_context_data(self, *, object_list=None, **kwargs):
+        return super().get_context_data(object_list=self.objects, **kwargs)
 
 class VotingFilterListView(ListView):
     model = Voting
@@ -46,55 +43,49 @@ class VotingFilterListView(ListView):
     ids = None
     objects = None
     paginate_by = 3
-    voter_id = 0
 
     def post(self, request, *args, **kwargs): #We took the inputs of the form
-        self.voter_id = kwargs.get('voter_id')
+        voter_id = kwargs.get('voter_id')
         datos = request.POST
         try:
-            if("startDate" in datos):
+            if(bool(datos['startDate'])):
                 votingIds = Voting.objects.filter(start_date__gte=datos['startDate']).filter(end_date__lte=datos['endDate']).values('id')
-                self.ids = Census.objects.filter(voting_id__in=votingIds).filter(voter_id=self.voter_id).values('voting_id')
+                self.ids = Census.objects.filter(voting_id__in=votingIds).filter(voter_id=voter_id).values('voting_id')
             else:
                 votingIds = Voting.objects.filter(name__iregex=datos['votingName']).values('id')
-                self.ids = Census.objects.filter(voting_id__in=votingIds).filter(voter_id=self.voter_id).values('voting_id')
+                self.ids = Census.objects.filter(voting_id__in=votingIds).filter(voter_id=voter_id).values('voting_id')
         except ObjectDoesNotExist as n:
             return redirect('census_list')  
         self.objects = Voting.objects.filter(pk__in=self.ids)
         return ListView.get(self, request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['object_list'] = self.objects
-        context['userId'] = self.voter_id
-        return context
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        return super().get_context_data(object_list=self.objects, **kwargs)
 
 class orderingVotingByListView(ListView):
     model = Voting
     template_name = "voting_list.html"
     objects = None
     paginate_by = 3
-    voter_id = 0
 
     def get(self, request, *args, **kwargs):
-        self.voter_id = kwargs.get('voter_id')
+        voter_id = kwargs.get('voter_id')
         orden = kwargs.get('orden')
-        ids = Census.objects.filter(voter_id=self.voter_id).values('voting_id')
-        print(ids)
+        ids = Census.objects.filter(voter_id=voter_id).values('voting_id')
         if(orden == 'name'):
+            print('name')
             object_list = Voting.objects.filter(pk__in=ids).order_by('name')
         elif (orden == 'startDate'):
+            print('start')
             object_list = Voting.objects.filter(pk__in=ids).order_by('start_date')
         else:
+            print('end')
             object_list = Voting.objects.filter(pk__in=ids).order_by('end_date')
         self.objects = object_list
         return ListView.get(self, request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['object_list'] = self.objects
-        context['userId'] = self.voter_id
-        return context
+    def get_context_data(self, *, object_list=None, **kwargs):
+        return super().get_context_data(object_list=self.objects, **kwargs)
 
 class UserListView(ListView):
     model = User

@@ -18,23 +18,25 @@
 		      <h4 class="big_title2">Censo</h3>
 </div>
 
+<script type="text/javascript">
+    function returnUserId() {
+        var h = window.location.href.split("user/")
+        var p = h[1].split("/")
+        document.forms[0].action = "/census/list/user/" + p[0] + "/votingFilter/";
+    }
+</script>
+
 <div class="container">
-    <label for="dateFilter">Filtering by date</label>
-    <form action="/census/list/user/{{userId}}/votingFilter/" method="post">
+    <label for="dateFilter">Filtering by start date and end date or filtering by name:</label>
+    <form action="" method="post">
         {% csrf_token %}
         <label for="dateFilter">Start date: </label>
         <input id="startDate" type="datetime-local" name="startDate">
         <label for="dateFilter">End date: </label>
         <input id="endDate" type="datetime-local" name="endDate">
-        <input type="submit">
-    </form> 
-    <br>
-    <label for="nameFilter">Filtering by name</label>
-    <form action="/census/list/user/{{userId}}/votingFilter/" method="post">
-            {% csrf_token %}
-            <label for="nameFilter">Name: </label>
-            <input id="votingName" type="text" name="votingName">
-            <input type="submit">
+        <label for="nameFilter">Name: </label>
+        <input id="votingName" type="text" name="votingName">
+        <input type="submit" onclick="returnUserId()">
     </form> 
     <br>
     <script type="text/javascript">
