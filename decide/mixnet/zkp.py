@@ -1,8 +1,9 @@
 
 import random
-import mixcrypt
+from mixnet import mixcrypt
 import hashlib
 from Crypto.Util.number import inverse
+from Crypto.Math.Numbers import Integer
 '''Non-interactive random oracle access for zero-knowledge proofs'''
 k1=mixcrypt.MixCrypt()
 p = int(k1.k.p)
