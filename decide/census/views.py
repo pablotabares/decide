@@ -43,7 +43,7 @@ class VotingFilterListView(ListView):
     ids = None
     objects = None
     paginate_by = 3
-
+ 
     def post(self, request, *args, **kwargs): #We took the inputs of the form
         voter_id = kwargs.get('voter_id')
         datos = request.POST
