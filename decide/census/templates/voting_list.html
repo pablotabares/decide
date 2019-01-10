@@ -20,7 +20,7 @@
 
 <div class="container">
     <label for="dateFilter">Filtering by date</label>
-    <form action="{%url 'voting_by_date_list'%}" method="post">
+    <form action="{%url 'voting_filter_list'%}" method="post">
         {% csrf_token %}
         <label for="dateFilter">Start date: </label>
         <input id="startDate" type="datetime-local" name="startDate">
@@ -30,7 +30,7 @@
     </form> 
     <br>
     <label for="nameFilter">Filtering by name</label>
-    <form action="{%url 'voting_by_name_list'%}" method="post">
+    <form action="{%url 'voting_filter_list'%}" method="post">
             {% csrf_token %}
             <label for="nameFilter">Name: </label>
             <input id="votingName" type="text" name="votingName">
@@ -54,20 +54,26 @@
             {% endif %}
         </span>
     </div>
-    <form action="{%url 'ordering_by_name_list'%}" method="get">
-        {% csrf_token %}
-        <input type="submit" value="Ordering by name">
-    </form> 
-    <br>
-    <form action="{%url 'ordering_by_startDate_list'%}" method="get">
-        {% csrf_token %}
-        <input type="submit" value="Ordering by start date">
-    </form> 
-    <br>
-    <form action="{%url 'ordering_by_endDate_list'%}" method="get">
-        {% csrf_token %}
-        <input type="submit" value="Ordering by end date">
-    </form> 
+    <script type="text/javascript">
+        var h = window.location.href.split("user/")
+        var p = h[1].split("/")
+        function orderingByName(){
+            window.location.href = "/census/list/user/" + p[0] + "/name";
+        }
+
+        function orderingByStartDate(){
+            window.location.href = "/census/list/user/" + p[0] + "/startDate";
+        }
+    
+        function orderingByEndDate(){
+            window.location.href = "/census/list/user/" + p[0] + "/endDate";
+        }
+    </script>
+    <div>
+    <button type="button" onclick="orderingByName()">Ordering by name</button>
+    <button type="button" onclick="orderingByStartDate()">Ordering by start date</button>
+    <button type="button" onclick="orderingByEndDate()">Ordering by end date</button>
+    </div>
     <br>
     <div class="row">
         <section class="content">
