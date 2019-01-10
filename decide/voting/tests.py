@@ -177,15 +177,6 @@ class VotingTestCase(BaseTestCase):
         response = self.client.post('/voting/', data, format='json')
         self.assertEqual(response.status_code, 201)
 
-        """
-        print('-------------------------------')
-        print(response.status_code)
-        print('-----------------------------')
-        print(response)
-        print('-------------------------------------response.status_code')
-        print(data)
-        """
-
         response_get = self.client.get('/voting/?id=1')
         self.assertEqual(response_get.status_code, 200)
 
@@ -217,14 +208,8 @@ class VotingTestCase(BaseTestCase):
         self.client.post('/voting/api/referendum', data, format='json')
         response = self.client.get('/voting/?id=1')
 
-        print('-------------------------------')
-        print(response.status_code)
-        print('-----------------------------')
-        print(response)
-        print('-------------------------------------')
         #self.assertEqual(response.status_code, 201)
 
-        print(data)
 
 
 
@@ -286,6 +271,7 @@ class VotingTestCase(BaseTestCase):
         self.assertEqual(response.json(), 'Voting already stopped')
 
         data = {'action': 'tally'}
+
         response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), 'Voting tallied')
