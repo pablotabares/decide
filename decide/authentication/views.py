@@ -1,14 +1,11 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
-from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from .serializers import UserSerializer, AuthCustomTokenSerializer
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
-
-#Nuevo
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
@@ -17,7 +14,6 @@ from django.template.loader import render_to_string
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from .forms import RegisterUser
 from .serializers import UserSerializer
 from .tokens import activation_token
@@ -31,6 +27,18 @@ class GetUserView(APIView):
         tk = get_object_or_404(Token, key=key)
         return Response(UserSerializer(tk.user, many=False).data)
 
+
+class GetUserByUsernameView(APIView):
+    def post(self, request):
+        username = request.data.get('username', '')
+        try:
+            uid = User.objects.get(username=username)
+            return Response(UserSerializer(uid, many=False).data)
+
+        except User.DoesNotExist:
+            message = 'The user does not exists'
+            return Response({'message':message}, status=404)
+        
 
 class LogoutView(APIView):
     def post(self, request):

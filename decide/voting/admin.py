@@ -10,7 +10,8 @@ from .filters import StartedFilter
 
 def start(modeladmin, request, queryset):
     for v in queryset.all():
-        v.create_pubkey()
+        token = request.session.get('auth-token', '')
+        v.create_pubkey(token)
         v.start_date = timezone.now()
         v.save()
 
