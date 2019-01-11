@@ -37,9 +37,9 @@ class MixnetViewSet(viewsets.ModelViewSet):
             response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
             # Returns a negative response if the user is not an administrator
             if(not response.json()["is_staff"]):
-                return HttpResponseForbidden
+                return HttpResponseForbidden("Forbidden")
         except:
-            return HttpResponseForbidden
+            return HttpResponseForbidden("Forbidden")
         
         # Authorities: different authorities in charge of shuffling and decrypting. Can be in the same system or not
         auths = request.data.get("auths")
@@ -121,9 +121,9 @@ class Shuffle(APIView):
             response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
             # Returns a negative response if the user is not an administrator
             if(not response.json()["is_staff"]):
-                return HttpResponseForbidden
+                return HttpResponseForbidden("Forbidden")
         except:
-            return HttpResponseForbidden
+            return HttpResponseForbidden("Forbidden")
 
         # Attempts to get the position of this authority in the chain call; if it's not there, this is the first auth and thus
         # it must be zero.
@@ -177,9 +177,9 @@ class Decrypt(APIView):
             response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
             # Returns a negative response if the user is not an administrator
             if(not response.json()["is_staff"]):
-                return HttpResponseForbidden
+                return HttpResponseForbidden("Forbidden")
         except:
-            return HttpResponseForbidden
+            return HttpResponseForbidden("Forbidden")
 
         # Attempts to get the position of this authority in the chain call; if it's not there, this is the first auth and thus
         # it must be zero.
