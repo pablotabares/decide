@@ -1,9 +1,9 @@
 from django.conf import settings
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse
 
 from .serializers import MixnetSerializer
 from .models import Auth, Mixnet, Key
@@ -11,6 +11,7 @@ from base.serializers import KeySerializer, AuthSerializer
 from base import mods
 
 from mixnet.control_panel_utils import pingAuths, mixnetStatus
+from mixnet.forms import LoginForm
 
 from django.views.generic import TemplateView
 
@@ -243,5 +244,39 @@ class ControlPanel(TemplateView):
 
         context['auths'] = auths
         context['mixnets'] = mixnets
+        context['mixnet_url'] = settings.APIS.get('mixnet', settings.BASEURL)
 
         return context
+
+    def get(self, request):
+        form = LoginForm()
+        return render(request, 'login_mixnet.html', {'form': form})
+
+    def post(self, request):
+        # Extracts data from form
+        form = LoginForm(request.POST)
+        data = {
+            "username": form.data["username"],
+            "password": form.data["password"],
+        }
+        
+        # Logs in
+        token = mods.post('authentication/login', baseurl=settings.APIS.get('authentication', settings.BASEURL), json=data)
+        
+        # Tries to get user data
+        try:
+            user = mods.post('authentication/getuser', baseurl=settings.APIS.get('authentication', settings.BASEURL), json={"token": token["token"]})
+            # If it's not an admin
+            if(not user["is_staff"]):
+                return render(request, 'login_mixnet.html', {'form': form, "error": "You are not an admin. Begone!"})
+            # If it's an admin
+            else:
+                return render(request, "mixnet_control_panel.html", self.get_context_data())
+        except KeyError as k:
+            # If incorrect user/pass
+            return render(request, 'login_mixnet.html', {'form': form, "error": "Incorrect username or password"})
+        except Exception as e:
+            # If unknown error
+            print(e)
+            return HttpResponse("Unexpected server error")
+        return HttpResponse("Unexpected server error")
