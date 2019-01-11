@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import django_heroku
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.conf.global_settings import EMAIL_USE_TLS
@@ -29,7 +30,6 @@ SECRET_KEY = '^##ydkswfu0+=ofw0l#$kv^8n)0$i(qd&d&ol#p9!b$8*5%j1+'
 DEBUG = False
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -72,7 +72,9 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'http://localhost:8000'
+BASEURL = 'https://decide-ortosia.herokuapp.com'
+# BASEURL = 'http://localhost:8000'
+#BASEURL = 'https://decide-ortosia-visualizacion.herokuapp.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -166,6 +168,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
 
+APIS = {}
+
 try:
     from local_settings import *
 except ImportError:
@@ -173,8 +177,6 @@ except ImportError:
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
-
-
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "authentication/sent_emails")
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -184,8 +186,9 @@ EMAIL_HOST_PASSWORD = 'pruebadecide'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/census/static/',
+]
 
-
-# Activate Django-Heroku.
 django_heroku.settings(locals())
-

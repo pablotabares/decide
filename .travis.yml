@@ -1,29 +1,51 @@
 language: python
-python:
-- 3.6.6
+python: 
+  - "3.6.6"
+env:
+  - DJANGO=2.0 DB=postgres
+before_install:
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
 install:
-- pip install -r requirements.txt
+  - pip install -r requirements.txt
+before_script:
+  - cd decide
+  - cp local_settings.example.py local_settings.py
+  - psql -c "create user decide with password 'decide'"
+  - psql -c "create database decide owner decide"
+  - python manage.py makemigrations
+  - python manage.py migrate
+script:
+  - cd ..
+  - sonar-scanner
+  - cd decide
+  - coverage run --source=. manage.py test
+  - coverage report
+  - coveralls
+  - cd ../docker
+  - docker build -t ortosiacabina/decide-ortosia .
+  - docker tag ortosiacabina/decide-ortosia registry.heroku.com/$HEROKU_APP_NAME/web
+deploy:
+  provider: script
+  script: 
+    docker push ortosiacabina/decide-ortosia;
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+    heroku container:release web --app $HEROKU_APP_NAME;
+    heroku config:set WEB_CONCURRENCY=3;
+    heroku run --app $HEROKU_APP_NAME python manage.py makemigrations;
+    heroku run --app $HEROKU_APP_NAME python manage.py migrate 
+  on:
+    branch: ortosia-prepro
 sudo: required
 services:
-- docker
-script:
-- sonar-scanner
-- cd docker
-- docker exec -ti decide_web ./manage.py test
-- cd ..
+  - docker
+  - postgresql
 addons:
+  postgresql: "9.6"
   sonarcloud:
-    organization: pablotabares-github
+    organization: "pablotabares-github"
+global:
+  - PGPORT=5432
 notifications:
   email: false
-before_install:
-- cd docker
-- docker-compose up -d
-- cd ..
-deploy:
-  provider: heroku
-  api_key:
-    secure: Ex+oACib5efs+6SqO4Fk1muCKwE6xIf64WW/RXyGwSlS9Guiyl6QcSw4gpFdIYLEDY4/R7gVPi6GMwhX+CgsvYriqvolL6dxiRM0MSN+S44neGm4M4DwgvQhpJg1lGmkB3YYqPFrFWzAuoRBSkGZTUxktBlR8H8QzT8VMyxBTF362VZrEwo8I4sj3SQwWnhQ94Kv/jAdcM4nrn1q+aa/6RWAuBoUjt0hbVAxPUm7fYitrjJtLGCJjnjri63jdDt/gHaSwPo/Q7wcHYbh0VTXzNSAnmzoIZPsJOeTE2BT5IZU8DI1pjQC93WtN8gRNphYw8WJsy9Pga0N0/e1tLu/t75DWxxkwwwtzf5eOAwnA4OrTDOLss9jaSs97aHpTEh8heAUrwPItQtMabaIR+ocn0RnhYhgKPd6B+oKoA5ty1Q3//NuIxdpWm0n2xTZxxMj40PDTdnh/h2XXjN2oewAxrW+lMTs0ccQo3Te4kGGDaP4T+LxxL3I8xnuobply3F4bZ2/Fu+DxZ0KW1vETAvdX7AfEtollRlG0uXLI0uw/YZncFnnAEVEAkyDwRNcUA189cKYUJpO3kciaBwNFtQVNHaWomjP9JOc9dP8hhuyNFvbVZT8UE6DxEvVANvUnhks+ZGgKRP+4kxHpkK0yXqp+ITKzdK0ngTgJ/t2+w9ajCk=
-  app: ortosia-auth
-  on: ortosia-auth
-  skip_cleanup: true

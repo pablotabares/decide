@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+
+    <title>{{title}}</title>
+</head>
+<body>
+<!-- Header -->
+<div class="text-center"><h3 class="mt-3"><a class="card-link text-secondary" href="home">Voting module</a></h3>
+    <hr>
+</div>
+<!-- Content -->
+<main role="main" class="container">
+    {% include content %}
+</main>
+</body>
+<!-- Footer -->
+<footer class="footer" style="background-color:#6c757d;">
+    <div class="container py-3 text-center">
+        <p class="text-light">&copy Decide 2018 · Voting module</p>
+        <a class="text-light" href="" data-toggle="modal"
+           data-target="#modal_aboutus">About us</a>
+    </div>
+</footer>
+
+<div id="modal_aboutus" class="modal fade bd-example-modal-lg"
+     tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    About us
+                </h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>The voting module is a subsystem of the electronic voting system <i>Decide</i>.
+                    This subsystem has been developed by the group <i>Ortosia-Votacion</i> during the
+                    subject <i>Evolución y Gestión de la Configuración</i> of the degree in
+                    Software Engineering (4th year). The members of <i>Ortosia-Votacion</i> are:
+                </p>
+                <ul>
+                    <li>Lozano Pineda, José Ángel · <span class="text-info">joslozpin@alum.us.es</span> </li>
+                    <li>Pérez Llorente, Ángel · <span class="text-info">angperllo@alum.us.es</span> </li>
+                    <li>Sánchez Montiel, José Luis · <span class="text-info">jossanmon6@alum.us.es</span> </li>
+                    <li>Valero García, Luis · <span class="text-info">luisvalgar@alum.us.es</span> </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
