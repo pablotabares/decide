@@ -20,6 +20,10 @@ from voting.models import Voting
 from voting.serializers import VotingSerializer
 from django.core.paginator import Paginator
 
+class LDAP(ListView):
+    model = Voting
+    template_name = "ldap.html"
+
 class VotingListView(ListView):
     model = Voting
     template_name = "voting_list.html"

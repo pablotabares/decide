@@ -1,124 +1,111 @@
-{% extends "base.html" %}
+{% extends "census_base.html" %}
 {% load i18n static %}
 
-{% block extrahead %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-{% endblock %}
-
-{% block content %}
+{% block contenido %}
 
 <div class="box">
     <div class="container">
-<header>
-<div class="big-title">
-		      <h3 class="big_title">Decide</h3>
-</div>
 
-<div class="big-title2">
-		      <h4 class="big_title2"><a href="/census/list">Censo</a></h3>
-</div>
+        <script type="text/javascript">
+            function returnUserId() {
+                var h = window.location.href.split("user/")
+                var p = h[1].split("/")
+                document.forms[0].action = "/census/list/user/" + p[0] + "/votingFilter/";
+            }
+        </script>
 
-<script type="text/javascript">
-    function returnUserId() {
-        var h = window.location.href.split("user/")
-        var p = h[1].split("/")
-        document.forms[0].action = "/census/list/user/" + p[0] + "/votingFilter/";
-    }
-</script>
+        <label for="dateFilter">Filtering by start date and end date or filtering by name:</label>
+        <form action="" method="post">
+            {% csrf_token %}
+            <label for="dateFilter">Start date: </label>
+            <input id="startDate" type="datetime-local" name="startDate">
+            <label for="dateFilter">End date: </label>
+            <input id="endDate" type="datetime-local" name="endDate">
+            <label for="nameFilter">Name: </label>
+            <input id="votingName" type="text" name="votingName">
+            <input type="submit" onclick="returnUserId()">
+        </form>
+        <br>
+        <script type="text/javascript">
+            var h = window.location.href.split("user/")
+            var p = h[1].split("/")
+            function orderingByName() {
+                window.location.href = "/census/list/user/" + p[0] + "/name";
+            }
 
-<div class="container">
-    <label for="dateFilter">Filtering by start date and end date or filtering by name:</label>
-    <form action="" method="post">
-        {% csrf_token %}
-        <label for="dateFilter">Start date: </label>
-        <input id="startDate" type="datetime-local" name="startDate">
-        <label for="dateFilter">End date: </label>
-        <input id="endDate" type="datetime-local" name="endDate">
-        <label for="nameFilter">Name: </label>
-        <input id="votingName" type="text" name="votingName">
-        <input type="submit" onclick="returnUserId()">
-    </form> 
-    <br>
-    <script type="text/javascript">
-        var h = window.location.href.split("user/")
-        var p = h[1].split("/")
-        function orderingByName(){
-            window.location.href = "/census/list/user/" + p[0] + "/name";
-        }
+            function orderingByStartDate() {
+                window.location.href = "/census/list/user/" + p[0] + "/startDate";
+            }
 
-        function orderingByStartDate(){
-            window.location.href = "/census/list/user/" + p[0] + "/startDate";
-        }
-    
-        function orderingByEndDate(){
-            window.location.href = "/census/list/user/" + p[0] + "/endDate";
-        }
-    </script>
-    <div>
-    <button type="button" onclick="orderingByName()">Ordering by name</button>
-    <button type="button" onclick="orderingByStartDate()">Ordering by start date</button>
-    <button type="button" onclick="orderingByEndDate()">Ordering by end date</button>
-    </div>
-    <br>
-    <div class="row">
-        <section class="content">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="table-container">
-                            <table class="table table-filter">
-                                <tbody>
-                                    {% for voting in object_list %}
-                                    <tr data-status="pagado">
-                                        <td>
-                                            <div class="media">
-                                                <span href="#" class="pull-left">
-                                                    <img src="{% static 'images/voting-urn.png' %}" class="media-photo">
-                                                </span>
-                                                <div class="media-body">
-                                                    {% if voting.start_date %}
-                                                    <span class="media-meta pull-right">{{voting.start_date}}
-                                                        {% if voting.end_date %}
-                                                        - {{voting.end_date}}
-                                                        {% endif %}
+            function orderingByEndDate() {
+                window.location.href = "/census/list/user/" + p[0] + "/endDate";
+            }
+        </script>
+        <div>
+            <button type="button" onclick="orderingByName()">Ordering by name</button>
+            <button type="button" onclick="orderingByStartDate()">Ordering by start date</button>
+            <button type="button" onclick="orderingByEndDate()">Ordering by end date</button>
+        </div>
+        <br>
+        <div class="row">
+            <section class="content">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="table-container">
+                                <table class="table table-filter">
+                                    <tbody>
+                                        {% for voting in object_list %}
+                                        <tr data-status="pagado">
+                                            <td>
+                                                <div class="media">
+                                                    <span href="#" class="pull-left">
+                                                        <img src="{% static 'images/voting-urn.png' %}" class="media-photo">
                                                     </span>
-                                                    {% endif %}
-                                                    <h4 class="title">
-                                                        {{voting.name}}
-                                                        {% comment %} <span class="pull-right pagado">(Pagado)</span>
-                                                        {% endcomment %}
-                                                    </h4>
-                                                    <p class="summary">{{voting.desc}}</p>
-                                                    <hr style="color: #0056b2;" />
-                                                    <p class="summary">{{voting.question.desc}}</p>
+                                                    <div class="media-body">
+                                                        {% if voting.start_date %}
+                                                        <span class="media-meta pull-right">{{voting.start_date}}
+                                                            {% if voting.end_date %}
+                                                            - {{voting.end_date}}
+                                                            {% endif %}
+                                                        </span>
+                                                        {% endif %}
+                                                        <h4 class="title">
+                                                            {{voting.name}}
+                                                            {% comment %} <span class="pull-right pagado">(Pagado)</span>
+                                                            {% endcomment %}
+                                                        </h4>
+                                                        <p class="summary">{{voting.desc}}</p>
+                                                        <hr style="color: #0056b2;" />
+                                                        <p class="summary">{{voting.question.desc}}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+        </div>
+
+        <ul class="pager">
+            <li>
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+            </li>
+            <li>
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                {% endif %}
+            </li>
+        </ul>
 
     </div>
-
-    <ul class="pager">
-        <li>
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-            {% endif %}
-            </li>
-        <li>
-            {% if page_obj.has_next %}
-              <a href="?page={{ page_obj.next_page_number }}">Next</a> 
-            {% endif %}
-        </li>
-    </ul>
-
 </div>
-
-{% endblock content %}
+    {% endblock contenido %}

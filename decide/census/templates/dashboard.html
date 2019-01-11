@@ -1,11 +1,6 @@
-{% extends "base.html" %}
-{% load i18n static %}
+{% extends "census_base.html" %}
 
-{% block extrahead %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-{% endblock %}
-
-{% block content %}
+{% block contenido %}
 
 <script type="text/javascript">
 	function listarUsers() {
@@ -22,16 +17,7 @@
 
 <div class="box">
 	<div class="container">
-		<header>
-			<div class="big-title">
-				<h3 class="big_title">Decide</h3>
-			</div>
-
-			<div class="big-title2">
-				<h4 class="big_title2"><a href="/census/list">Censo</a></h3>
-			</div>
-
-		</header>
+		
 		<div class="row">
 
 			<div class="columna col-lg-5 col-md-5 col-sm-5 col-xs-12">
@@ -52,7 +38,7 @@
 						{% for votation in votingList %}
 						<option value="{{votation.id}}">{{votation.name}}</option>
 						{% endfor %}
-					</select></br>
+					</select><br>
 
 					<label for="votationOrigen">Votacion de destino</label>
 					<select name="votationDestino" id="votationDestino">
@@ -146,4 +132,4 @@
 </div>
 
 
-{% endblock content %}
+{% endblock contenido %}

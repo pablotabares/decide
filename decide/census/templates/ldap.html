@@ -1,0 +1,32 @@
+{% extends "census_base.html" %}
+{% load i18n static %}
+
+{% block contenido %}
+<div class="box">
+    <div class="container">
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="URL">URL</label>
+                <input type="url" class="form-control" id="URL" aria-describedby="urlHelp" placeholder="Enter URL">
+                <small id="urlHelp" class="form-text text-muted">This is the URL of the LDAP directory</small>
+            </div>
+            <div class="form-group">
+                <label for="user">User</label>
+                <input type="text" class="form-control" id="user" aria-describedby="userHelp" placeholder="Enter the LDAP user">
+                <small id="userHelp" class="form-text text-muted">This is the user to authenticate in the LDAP
+                    directory</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label class="form-check-label" for="base">Base DN</label>
+                <input type="text" class="form-control" id="base" aria-describedby="baseHelp" placeholder="Enter the base DN">
+                <small id="baseHelp" class="form-text text-muted">This is the base of the LDAP directory</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock contenido %}
