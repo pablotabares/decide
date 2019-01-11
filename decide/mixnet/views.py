@@ -3,12 +3,11 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.http import HttpResponseForbidden
 
 from .serializers import MixnetSerializer
 from .models import Auth, Mixnet, Key
 from base.serializers import KeySerializer, AuthSerializer
-from base import mods
+
 
 class MixnetViewSet(viewsets.ModelViewSet):
     """
@@ -26,18 +25,6 @@ class MixnetViewSet(viewsets.ModelViewSet):
          * position: int / nullable
          * key: { "p": int, "g": int } / nullable
         """
-
-        try:
-            # Retrieves the token from the request
-            token = request.data.get("token")
-            # Asks the auth module for user info
-            response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
-            # Returns a negative response if the user is not an administrator
-            if(not response.json()["is_staff"]):
-                return HttpResponseForbidden
-        except:
-            return HttpResponseForbidden
-        
 
         auths = request.data.get("auths")
         voting = request.data.get("voting")
@@ -87,17 +74,6 @@ class Shuffle(APIView):
          * position: int / nullable
         """
 
-        try:
-            # Retrieves the token from the request
-            token = request.data.get("token")
-            # Asks the auth module for user info
-            response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
-            # Returns a negative response if the user is not an administrator
-            if(not response.json()["is_staff"]):
-                return HttpResponseForbidden
-        except:
-            return HttpResponseForbidden
-
         position = request.data.get("position", 0)
         mn = get_object_or_404(Mixnet, voting_id=voting_id, auth_position=position)
 
@@ -131,16 +107,6 @@ class Decrypt(APIView):
          * pk: { "p": int, "g": int, "y": int } / nullable
          * position: int / nullable
         """
-        try:
-            # Retrieves the token from the request
-            token = request.data.get("token")
-            # Asks the auth module for user info
-            response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
-            # Returns a negative response if the user is not an administrator
-            if(not response.json()["is_staff"]):
-                return HttpResponseForbidden
-        except:
-            return HttpResponseForbidden
 
         position = request.data.get("position", 0)
         mn = get_object_or_404(Mixnet, voting_id=voting_id, auth_position=position)

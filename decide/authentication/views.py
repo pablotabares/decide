@@ -1,11 +1,14 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
+from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from .serializers import UserSerializer, AuthCustomTokenSerializer
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
+
+#Nuevo
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
@@ -14,12 +17,13 @@ from django.template.loader import render_to_string
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from .forms import RegisterUser
 from .serializers import UserSerializer
 from .tokens import activation_token
 from django.contrib.auth.models import User
 from django.conf import settings
-from authentication.models import DecideUser
+
 
 class GetUserView(APIView):
     def post(self, request):
@@ -27,33 +31,6 @@ class GetUserView(APIView):
         tk = get_object_or_404(Token, key=key)
         return Response(UserSerializer(tk.user, many=False).data)
 
-
-class GetUserByUsernameView(APIView):
-    def post(self, request):
-        username = request.data.get('username', '')
-        try:
-            uid = User.objects.get(username=username)
-            decide_user = DecideUser.objects.get(user = uid.id)
-            sex = 'other'
-            if(decide_user.sex == 0):
-                sex = 'female'
-            elif(decide_user.sex == 1):
-                sex = 'male'
-
-            data = {
-                'username': uid.username,
-                'first_name': uid.first_name,
-                'last_name': uid.last_name,
-                'email': uid.email,
-                'sex': sex,
-                'birthday': decide_user.birthday
-            }            
-            return Response(data)
-
-        except User.DoesNotExist:
-            message = 'The user does not exists'
-            return Response({'message':message}, status=404)
-        
 
 class LogoutView(APIView):
     def post(self, request):

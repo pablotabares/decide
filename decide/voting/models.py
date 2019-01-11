@@ -42,15 +42,14 @@ class Voting(models.Model):
     tally = JSONField(blank=True, null=True)
     postproc = JSONField(blank=True, null=True)
 
-    def create_pubkey(self, token=''):
+    def create_pubkey(self):
         if self.pub_key or not self.auths.count():
             return
 
         auth = self.auths.first()
         data = {
             "voting": self.id,
-            "auths": [{"name": a.name, "url": a.url} for a in self.auths.all()],
-            "token": token,
+            "auths": [ {"name": a.name, "url": a.url} for a in self.auths.all() ],
         }
         key = mods.post('mixnet', baseurl=auth.url, json=data)
         pk = Key(p=key["p"], g=key["g"], y=key["y"])
@@ -77,17 +76,17 @@ class Voting(models.Model):
         auths = [{"name": a.name, "url": a.url} for a in self.auths.all()]
 
         # first, we do the shuffle
-        data = {"msgs": votes, "token": token}
+        data = { "msgs": votes }
         response = mods.post('mixnet', entry_point=shuffle_url, baseurl=auth.url, json=data,
-                             response=True)
+                response=True)
         if response.status_code != 200:
             # TODO: manage error
             pass
 
         # then, we can decrypt that
-        data = {"msgs": response.json(), "token": token}
+        data = {"msgs": response.json()}
         response = mods.post('mixnet', entry_point=decrypt_url, baseurl=auth.url, json=data,
-                             response=True)
+                response=True)
 
         if response.status_code != 200:
             # TODO: manage error
@@ -114,7 +113,7 @@ class Voting(models.Model):
                 'votes': votes
             })
 
-        data = {'type': 'IDENTITY', 'options': opts}
+        data = { 'type': 'IDENTITY', 'options': opts }
         postp = mods.post('postproc', json=data)
 
         self.postproc = postp
