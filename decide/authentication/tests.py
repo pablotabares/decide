@@ -22,7 +22,7 @@ from django.utils import six
 from . import forms, validators
 
 from .base import RegistrationTestCase
-
+from authentication.models import DecideUser
 
 class AuthTestCase(APITestCase):
 
@@ -33,6 +33,11 @@ class AuthTestCase(APITestCase):
         u.set_password('123')
         u.email = 'test@gmail.com'
         u.save()
+
+        decide_user = DecideUser()
+        decide_user.user = u
+        decide_user.birthday = '1995-01-11'
+        decide_user.save()
 
     def tearDown(self):
         self.client = None
@@ -107,7 +112,8 @@ class AuthTestCase(APITestCase):
 
         user = response.json()
         self.assertEqual(user['username'], 'voter1')
-        self.assertEqual(user['is_staff'], False)
+        self.assertEqual(user['sex'], 'other')
+        self.assertEqual(user['birthday'], '1995-01-11')
 
 
     def test_getuser_by_username_invented(self):
