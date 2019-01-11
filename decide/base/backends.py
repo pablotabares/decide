@@ -18,7 +18,7 @@ class AuthBackend(ModelBackend):
                                  password=password, **kwargs)
 
         # only doing this for the admin web interface
-        if u:
+        if u and request.content_type == 'application/x-www-form-urlencoded':
             data = {
                 'username': username,
                 'password': password,

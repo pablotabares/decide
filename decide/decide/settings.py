@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^##ydkswfu0+=ofw0l#$kv^8n)0$i(qd&d&ol#p9!b$8*5%j1+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -72,8 +72,7 @@ MODULES = [
     'voting',
 ]
 
-#BASEURL = 'http://localhost:8000'
-BASEURL='https://decide-ortosia-mixnet-adru.herokuapp.com'
+BASEURL = 'http://localhost:8000'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -166,7 +165,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
-APIS={}
+
 try:
     from local_settings import *
 except ImportError:
