@@ -19,7 +19,7 @@ from .serializers import UserSerializer
 from .tokens import activation_token
 from django.contrib.auth.models import User
 from django.conf import settings
-
+from authentication.models import DecideUser
 
 class GetUserView(APIView):
     def post(self, request):
@@ -33,7 +33,22 @@ class GetUserByUsernameView(APIView):
         username = request.data.get('username', '')
         try:
             uid = User.objects.get(username=username)
-            return Response(UserSerializer(uid, many=False).data)
+            decide_user = DecideUser.objects.get(user = uid.id)
+            sex = 'other'
+            if(decide_user.sex == 0):
+                sex = 'female'
+            elif(decide_user.sex == 1):
+                sex = 'male'
+
+            data = {
+                'username': uid.username,
+                'first_name': uid.first_name,
+                'last_name': uid.last_name,
+                'email': uid.email,
+                'sex': sex,
+                'birthday': decide_user.birthday
+            }            
+            return Response(data)
 
         except User.DoesNotExist:
             message = 'The user does not exists'
