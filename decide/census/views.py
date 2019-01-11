@@ -28,13 +28,13 @@ class CensusCreate(generics.ListCreateAPIView):
             return Response('Error try to create census', status=ST_409)
         return Response('Census created', status=ST_201)
     
-    def reutilize(self, request, voting_id, *args, **kwargs):
-        voting_id_prev = request.data.get('voting_id')
-        voters = Census.objects.filter(voting_id=voting_id_prev, voter_id__in=voters)
+    def reutilize(self, request, *args, **kwargs):
+        voting_id_new = request.data.get('voting_id_new')
+        voters = CensusCreate.list(self, request, *args, **kwargs)
 
         try:
             for voter in voters:
-                census = Census(voting_id = voting_id, voter_id = voter)
+                census = Census(voting_id = voting_id_new, voter_id = voter)
                 census.save()
         except IntegrityError:
             return Response ('Error trying to create census', status = ST_409)
