@@ -18,9 +18,49 @@
 		      <h4 class="big_title2"><a href="/census/list">Censo</a></h3>
 </div>
 
-<div class="container">
-    <div class="row">
+<script type="text/javascript">
+    function returnUserId() {
+        var h = window.location.href.split("user/")
+        var p = h[1].split("/")
+        document.forms[0].action = "/census/list/user/" + p[0] + "/votingFilter/";
+    }
+</script>
 
+<div class="container">
+    <label for="dateFilter">Filtering by start date and end date or filtering by name:</label>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="dateFilter">Start date: </label>
+        <input id="startDate" type="datetime-local" name="startDate">
+        <label for="dateFilter">End date: </label>
+        <input id="endDate" type="datetime-local" name="endDate">
+        <label for="nameFilter">Name: </label>
+        <input id="votingName" type="text" name="votingName">
+        <input type="submit" onclick="returnUserId()">
+    </form> 
+    <br>
+    <script type="text/javascript">
+        var h = window.location.href.split("user/")
+        var p = h[1].split("/")
+        function orderingByName(){
+            window.location.href = "/census/list/user/" + p[0] + "/name";
+        }
+
+        function orderingByStartDate(){
+            window.location.href = "/census/list/user/" + p[0] + "/startDate";
+        }
+    
+        function orderingByEndDate(){
+            window.location.href = "/census/list/user/" + p[0] + "/endDate";
+        }
+    </script>
+    <div>
+    <button type="button" onclick="orderingByName()">Ordering by name</button>
+    <button type="button" onclick="orderingByStartDate()">Ordering by start date</button>
+    <button type="button" onclick="orderingByEndDate()">Ordering by end date</button>
+    </div>
+    <br>
+    <div class="row">
         <section class="content">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
@@ -65,6 +105,19 @@
         </section>
 
     </div>
+
+    <ul class="pager">
+        <li>
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            </li>
+        <li>
+            {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}">Next</a> 
+            {% endif %}
+        </li>
+    </ul>
 
 </div>
 
