@@ -16,6 +16,6 @@ RUN pip install -r requirements.txt
 WORKDIR /app/decide
 
 # local settings.py
-ADD docker-settings.py /app/docker
+ADD docker-settings.py /app/decide/local_settings.py
 
-RUN ./manage.py collectstatic
+RUN python3 manage.py collectstatic
