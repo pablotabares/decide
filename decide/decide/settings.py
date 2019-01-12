@@ -10,13 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import django_heroku
 import os
-import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from django.conf.global_settings import EMAIL_USE_TLS
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -27,9 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^##ydkswfu0+=ofw0l#$kv^8n)0$i(qd&d&ol#p9!b$8*5%j1+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -40,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'social_django',
 
     'corsheaders',
     'django_filters',
@@ -57,16 +53,7 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'base.backends.EmailBackend',
     'base.backends.AuthBackend',
-    # 'social_core.backends.open_id.OpenIdAuth',
-    # 'social_core.backends.open_id.GoogleOpenId',
-    # 'social_core.backends.google.GoogleOAuth2',
-    # 'social_core.backends.github.GithubOAuth2',
-    # 'social_core.backends.facebook.FacebookOAuth2',
-    #
-    # 'django.contrib.auth.backends.ModelBackend',
-
 ]
 
 MODULES = [
@@ -99,9 +86,7 @@ ROOT_URLCONF = 'decide.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'authentication/templates')
-        ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -109,13 +94,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # 'social_django.context_processors.backends',
-                # 'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'decide.wsgi.application'
 
@@ -168,12 +150,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'authentication/styles')
-]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256

@@ -1,1 +1,0 @@
-npm install && npm install native-base --save && npm install @expo/vector-icons --save && npm install crypto-js && npm install --save react-native-calendars && expo start 

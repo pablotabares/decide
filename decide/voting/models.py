@@ -83,7 +83,6 @@ class Voting(models.Model):
         The tally is a shuffle and then a decrypt
         '''
 
-
         votes = self.get_votes(token)
 
         auth = self.auths.first()
@@ -104,17 +103,14 @@ class Voting(models.Model):
         response = mods.post('mixnet', entry_point=decrypt_url, baseurl=auth.url, json=data,
                              response=True)
 
-        if response.status_code != 200 and len(votes) >0 :
-            # TODO: manage error, necesitamos unir las api, para ver que se haga bien cuando no hay votaciones
-            error_response = "error: Decrypt fails"
-            return error_response
+        if response.status_code != 200:
+            # TODO: manage error
             pass
 
         self.tally = response.json()
         self.save()
-        self.do_postproc()
-        return 'Voting tallied'
 
+        self.do_postproc()
 
     def do_postproc(self):
         tally = self.tally

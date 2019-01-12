@@ -13,9 +13,7 @@ services:
     restart: always
     container_name: decide_web
     image: decide_web:latest
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    build: .
     command: ash -c "python manage.py migrate && gunicorn -w 5 decide.wsgi --timeout=500 -b 0.0.0.0:5000"
     expose:
       - "5000"
