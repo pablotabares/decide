@@ -3,9 +3,9 @@ import ldap
 
 # Funcion para importar usuarios de ldap,
 # return lista de nombres
-def importLdap(ldap_server,username,password,base_dn):
+def importUser(ldap_server,username,password,base_dn):
 
-
+    user_dn = "cn="+username+","+base_dn
     connect = ldap.initialize(ldap_server)
     #Filtro para buscar objectos de tipo persona
     search_filter = "objectClass=inetOrgPerson"

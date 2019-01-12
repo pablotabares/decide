@@ -20,14 +20,43 @@ from voting.models import Voting
 from voting.serializers import VotingSerializer
 from django.core.paginator import Paginator
 
+from census.importLdap import importUser
+
+
 class LDAP(ListView):
     model = Voting
     template_name = "ldap.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        ids = Census.objects.values('voting_id').distinct()
-        object_list = Voting.objects.all().filter(pk__in=ids)
+        object_list = Voting.objects.all().distinct()
         return super().get_context_data(object_list=object_list, **kwargs)
+    
+    def post(self, request, *args, **kwargs): #We took the inputs of the form
+        datos = request.POST
+        try:
+            print("==============================================================================")
+            print(datos)
+            print("==============================================================================")
+            ldap_server=datos["ldap_server"]
+            username=datos["user"]
+            password=datos["password"]
+            base_dn=datos["base"]
+            voting_id = datos["selectVoting"]
+            
+            listPerson=importUser(ldap_server,username,password,base_dn)
+            
+            for voter in listPerson:
+                us=User(username=voter,first_name=voter,password="password") # se le asigna una contraseña por defecto 
+                us.save()
+                census = Census(voting_id=voting_id, voter_id=us.pk)
+                census.save()
+
+        except IntegrityError as n:
+            print("petaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+            return ListView.get(self, request, *args, **kwargs) 
+        
+        return ListView.get(self, request, *args, **kwargs)
+
 
 class VotingListView(ListView):
     model = Voting
