@@ -9,22 +9,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
 from rest_framework import generics
-from rest_framework.response import Response
-from django.views.generic.list import ListView
-from rest_framework.renderers import JSONRenderer
-from rest_framework.status import (
-        HTTP_201_CREATED as ST_201,
-        HTTP_204_NO_CONTENT as ST_204,
-        HTTP_400_BAD_REQUEST as ST_400,
-        HTTP_401_UNAUTHORIZED as ST_401,
-        HTTP_409_CONFLICT as ST_409
-)
 
-
-from base.perms import UserIsStaff
-from .models import Visualizer
-from voting.models import Voting
-from voting.serializers import VotingSerializer
 
 class VisualizerView(TemplateView):
     template_name = 'visualizer/visualizer.html'
@@ -48,8 +33,6 @@ class VisualizerView(TemplateView):
 
 
 class VisualizerJSON(generics.ListAPIView):
-    serializer_class = VisualizerSerializer
-    model = serializer_class.Meta.model
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
