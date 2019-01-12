@@ -169,7 +169,8 @@ Un ejemplo de depuración de código se puede ver en esta issue: https://github.
 
 # Gestión de liberaciones, despliegues y entregas
 
-Liberación: El protocolo de liberación de cambios que hemos seguido consiste en:
+## Liberación:
+El protocolo de liberación de cambios que hemos seguido consiste en:
 
 - Alfa: Implementación de la funcionalidad asignada. Una vez realizada, se guardan los 
   cambios en el repositorio de desarrollo de nuestro módulo (github.com/pablo-tabares/decide-ortosia-develop)
@@ -179,7 +180,12 @@ Liberación: El protocolo de liberación de cambios que hemos seguido consiste e
   al repositorio master de nuestro módulo (github.com/pablotabares/ortosia-votacion-prepro)
 - Versión estable: una vez está el contenido en nuestro repositorio master, se realiza un pull-request 
   al repositorio master en común con el resto de módulos (github.com/pablotabares/decide)
-  
+ 
+## Despliegue:
+como hemos explicado previamente, el despligue se realiza sobre la plataforma Heroku. Para 
+que la aplicación se despligue de manera satisfactoria en dicha plataforma, deberá pasar los tests específicos
+para que queden palpables los cambios que se han realizado en el proyecto. 
+
 # Gestión del código fuente
 
 El formato de los títulos de los commits es: [Verbo en Participio Pasado] + [Breve explicación de que se ha hecho]
