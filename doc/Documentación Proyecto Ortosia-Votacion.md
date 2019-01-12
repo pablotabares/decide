@@ -186,6 +186,12 @@ como hemos explicado previamente, el despligue se realiza sobre la plataforma He
 que la aplicación se despligue de manera satisfactoria en dicha plataforma, deberá pasar los tests específicos
 para que queden palpables los cambios que se han realizado en el proyecto. 
 
+## Entregables:
+hemos considerado que los entregables eran los milestone, en nuestro caso, 3 milestones.
+Tienen una nomenclatura interna en el equipo como Entregable MX siendo X el número del milestone en cuestión. 
+En cada milestone, se realizaba un control de seguimiento de los avances del módulo en cuestión y para recibir
+feedback, en forma de proposición de mejoras para el siguiente milestone.
+
 # Gestión del código fuente
 
 El formato de los títulos de los commits es: [Verbo en Participio Pasado] + [Breve explicación de que se ha hecho]
