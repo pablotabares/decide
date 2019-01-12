@@ -24,6 +24,11 @@ class LDAP(ListView):
     model = Voting
     template_name = "ldap.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ids = Census.objects.values('voting_id').distinct()
+        object_list = Voting.objects.all().filter(pk__in=ids)
+        return super().get_context_data(object_list=object_list, **kwargs)
+
 class VotingListView(ListView):
     model = Voting
     template_name = "voting_list.html"

@@ -25,6 +25,14 @@
                 <input type="text" class="form-control" id="base" aria-describedby="baseHelp" placeholder="Enter the base DN">
                 <small id="baseHelp" class="form-text text-muted">This is the base of the LDAP directory</small>
             </div>
+            <div class="form-group">
+                <label for="selectVoting">Voting</label>
+                <select class="form-control" id="selectVoting">
+                    {% for voting in object_list %}
+                        <option {{voting.id}}>{{voting.name}}</option>
+                    {% endfor %}
+                  </select>
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
