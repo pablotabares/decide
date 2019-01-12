@@ -23,7 +23,11 @@ schema_view = get_swagger_view(title='Decide API')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('doc/', schema_view)
+    path('doc/', schema_view),
+    #path(r'^login/$', views.login, name='login'),
+    #path(r'^logout/$', views.logout, name='logout'),
+    #path(r'^auth/', include('social_django.urls', namespace='social')),
+    #path(r'^$', home, name='home')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 for module in settings.MODULES:

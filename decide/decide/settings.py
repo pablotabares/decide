@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'social_django',
 
     'corsheaders',
     'django_filters',
@@ -58,6 +59,14 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = [
     'base.backends.EmailBackend',
     'base.backends.AuthBackend',
+    # 'social_core.backends.open_id.OpenIdAuth',
+    # 'social_core.backends.open_id.GoogleOpenId',
+    # 'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.github.GithubOAuth2',
+    # 'social_core.backends.facebook.FacebookOAuth2',
+    #
+    # 'django.contrib.auth.backends.ModelBackend',
+
 ]
 
 MODULES = [
@@ -101,6 +110,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'social_django.context_processors.backends',
+                # 'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -177,6 +188,7 @@ except ImportError:
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
+
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "authentication/sent_emails")
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

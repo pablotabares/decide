@@ -1,3 +1,5 @@
+import os
+
 DEBUG = True
 
 DATABASES = {
@@ -10,8 +12,7 @@ DATABASES = {
     }
 }
 
-STATIC_ROOT = '/app/static/'
-MEDIA_ROOT = '/app/static/media/'
+
 ALLOWED_HOSTS = ['*']
 
 # Modules in use, commented modules that you won't use
@@ -40,3 +41,6 @@ APIS = {
     'visualizer': 'https://decide-ortosia.herokuapp.com',
     'voting': 'https://decide-ortosia.herokuapp.com',
 }
+
+STATIC_ROOT = os.path.dirname(os.path.abspath(__file__))+'/static'
+MEDIA_ROOT = os.path.dirname(os.path.abspath(__file__))+'/static/media'
