@@ -13,5 +13,5 @@ urlpatterns = [
     path('list/user/<int:voter_id>/', views.VotingListView.as_view(), name="voting_list"),
     path('list/voting/<int:voting_id>/', views.UserListView.as_view(), name="user_list"),
     path('voter/<int:voter_id>/', views.CensusList.as_view(), name="votings_by_voter"),
-    path('ldap/', views.LDAP.as_view(), name="ldap"),
+    # path('ldap/', views.LDAP.as_view(), name="ldap"),
 ]
