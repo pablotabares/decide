@@ -167,6 +167,8 @@ de pycharm y una vez se resuelva se deberá asociar el commit a la incidencia y 
 
 Un ejemplo de depuración de código se puede ver en esta issue: https://github.com/pablotabares/decide/issues/100
 
+# Gestión de liberaciones, despliegues y entregas
+
 # Gestión del código fuente
 
 El formato de los títulos de los commits es: [Verbo en Participio Pasado] + [Breve explicación de que se ha hecho]
@@ -196,7 +198,7 @@ git checkout ortosia-votacion-develop
 ```
 Ahora nos aseguramos de que tenemos nuestro repositorio actualizado, con el método:
 ```
-Git pull, 
+git pull 
 ```
 para asi, evitar conflictos de concurrencia, al olvidarnos tener la rama actualizada.
 Determinamos los cambios y clases en las que vamos a necesitar hacer modificaciones para las propuestas, que en este caso, son: models.py, para modificar nuestros modelos, views.py, para implementar la gestión del nuevo atributo, en este caso tenemos que modificar, el método createVoting, para la creación de una votación mediante el panel de administración, y el metodo votingView, para la gestión del mismo en las llamadas de nuestra api, al igual que modificar el la clase serializers.py para que correspondan con nuestros modelos y test.py para actualizar los test, y añadir si fuera necesario, añadir alguno nuevo.
@@ -217,9 +219,9 @@ Si todo esta correcto, y la funcionalidad correcta, modificamos las clases seria
 Finalemente, realizamos los test.
 Cuando todo este totalemtne correcto, subimos los cambios a nuestro repositorio:
 ```
-Git add <nombre_de_archivo_cambiado>
-Git commit -m “Titulo del mensaje” -m “Cuerpo del mensaje”
-Git push
+git add <nombre_de_archivo_cambiado>
+git commit -m “Titulo del mensaje” -m “Cuerpo del mensaje”
+git push
 ```
 
 
