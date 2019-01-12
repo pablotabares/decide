@@ -169,6 +169,17 @@ Un ejemplo de depuración de código se puede ver en esta issue: https://github.
 
 # Gestión de liberaciones, despliegues y entregas
 
+Liberación: El protocolo de liberación de cambios que hemos seguido consiste en:
+
+- Alfa: Implementación de la funcionalidad asignada. Una vez realizada, se guardan los 
+  cambios en el repositorio de desarrollo de nuestro módulo (github.com/pablo-tabares/decide-ortosia-develop)
+- Beta: Una vez unificados todos los cambios en el repositorio de desarrollo, se ponen a prueba
+  los cambios realizados con la herramienta Travis CI, con unos tests ya modificados para comprobar
+  las nuevas implementaciones. Si los tests se completan de manera satisfactoria, se realiza un commit
+  al repositorio master de nuestro módulo (github.com/pablotabares/ortosia-votacion-prepro)
+- Versión estable: una vez está el contenido en nuestro repositorio master, se realiza un pull-request 
+  al repositorio master en común con el resto de módulos (github.com/pablotabares/decide)
+  
 # Gestión del código fuente
 
 El formato de los títulos de los commits es: [Verbo en Participio Pasado] + [Breve explicación de que se ha hecho]
