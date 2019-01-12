@@ -2,7 +2,7 @@ from python:alpine
 
 RUN apk add --no-cache git postgresql-dev gcc libc-dev
 RUN apk add --no-cache gcc g++ make libffi-dev python3-dev build-base 
-RUN apt-get update && apk-get install libsasl2-dev python-dev libldap2-dev libssl-dev
+RUN apk add --no-cache libldap2-dev libssl-dev
 
 RUN pip install gunicorn
 RUN pip install psycopg2
