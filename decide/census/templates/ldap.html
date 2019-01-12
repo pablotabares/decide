@@ -4,32 +4,32 @@
 {% block contenido %}
 <div class="box">
     <div class="container">
-        <form action="#" method="POST">
+        <form action="/census/ldap/" method="POST">{% csrf_token %}
             <div class="form-group">
                 <label for="URL">URL</label>
-                <input type="url" class="form-control" id="URL" aria-describedby="urlHelp" placeholder="Enter URL">
+                <input type="url" class="form-control" id="ldap_server" name="ldap_server" aria-describedby="urlHelp" placeholder="Enter URL">
                 <small id="urlHelp" class="form-text text-muted">This is the URL of the LDAP directory</small>
             </div>
             <div class="form-group">
                 <label for="user">User</label>
-                <input type="text" class="form-control" id="user" aria-describedby="userHelp" placeholder="Enter the LDAP user">
+                <input type="text" class="form-control" id="user" name="user" aria-describedby="userHelp" placeholder="Enter the LDAP user">
                 <small id="userHelp" class="form-text text-muted">This is the user to authenticate in the LDAP
                     directory</small>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <input type="password" class="form-control" id="password" name="password"  placeholder="Password">
             </div>
             <div class="form-group">
                 <label class="form-check-label" for="base">Base DN</label>
-                <input type="text" class="form-control" id="base" aria-describedby="baseHelp" placeholder="Enter the base DN">
+                <input type="text" class="form-control" id="base" name="base" aria-describedby="baseHelp" placeholder="Enter the base DN">
                 <small id="baseHelp" class="form-text text-muted">This is the base of the LDAP directory</small>
             </div>
             <div class="form-group">
                 <label for="selectVoting">Voting</label>
-                <select class="form-control" id="selectVoting">
+                <select class="form-control" id="selectVoting" name="selectVoting">
                     {% for voting in object_list %}
-                        <option {{voting.id}}>{{voting.name}}</option>
+                        <option value="{{voting.id}}">{{voting.name}}</option>
                     {% endfor %}
                   </select>
             </div>
