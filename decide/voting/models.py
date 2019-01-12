@@ -5,6 +5,7 @@ from django.dispatch import receiver
 
 from base import mods
 from base.models import Key, Auth
+from django.http import JsonResponse
 
 IMPORTANCE_CHOICES = (
     (0, ("None")),
@@ -25,7 +26,7 @@ class Question(models.Model):
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
-    unlockquestion = models.ManyToManyField(Question, related_name='unlockquestion', null=True, blank=True)
+    unlockquestion = models.ManyToManyField(Question, related_name='unlockquestion', blank=True)
     number = models.PositiveIntegerField(blank=True, null=True)
     #Adding the weight of this option
     weight = models.IntegerField( blank=False, null=True)
@@ -83,6 +84,7 @@ class Voting(models.Model):
         The tally is a shuffle and then a decrypt
         '''
 
+
         votes = self.get_votes(token)
 
         auth = self.auths.first()
@@ -92,10 +94,17 @@ class Voting(models.Model):
 
         # first, we do the shuffle
         data = {"msgs": votes}
+
+
         response = mods.post('mixnet', entry_point=shuffle_url, baseurl=auth.url, json=data,
                              response=True)
-        if response.status_code != 200:
-            # TODO: manage error
+
+
+        if response.status_code != 200 and len(votes) >0:
+
+            # TODO: manage error necesitamos unir las api, para ver que se haga bien cuando no hay votaciones
+            error_response = "error: Shuffle fails"
+            return error_response
             pass
 
         # then, we can decrypt that
@@ -103,14 +112,17 @@ class Voting(models.Model):
         response = mods.post('mixnet', entry_point=decrypt_url, baseurl=auth.url, json=data,
                              response=True)
 
-        if response.status_code != 200:
-            # TODO: manage error
+        if response.status_code != 200 and len(votes) >0 :
+            # TODO: manage error, necesitamos unir las api, para ver que se haga bien cuando no hay votaciones
+            error_response = "error: Decrypt fails"
+            return error_response
             pass
 
         self.tally = response.json()
         self.save()
-
         self.do_postproc()
+        return 'Voting tallied'
+
 
     def do_postproc(self):
         tally = self.tally

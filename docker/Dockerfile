@@ -10,13 +10,12 @@ RUN pip install ipython
 
 WORKDIR /app
 
-RUN git clone --single-branch -b ortosia-cabina2 https://github.com/pablotabares/decide.git .
+RUN git clone -b "ortosia-prepro" https://github.com/pablotabares/decide.git .
 
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
 
-# local settings.py
-ADD ./docker/docker-settings.py local_settings.py
+ADD docker-settings.py /app/decide/local_settings.py
 
-RUN python3 manage.py collectstatic --no-input
+CMD ["sh", "-c", "python3 manage.py runserver 0.0.0.0:$PORT"]

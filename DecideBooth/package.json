@@ -14,14 +14,14 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
-    "@expo/vector-icons": "^8.0.0",
+    "@expo/vector-icons": "^8.1.0",
     "crypto-js": "^3.1.9-1",
     "expo": "^31.0.2",
     "moment": "^2.23.0",
-    "native-base": "^2.8.1",
+    "native-base": "^2.10.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
-    "react-native-svg": "^8.0.10",
+    "react-native-calendars": "^1.21.0",
     "react-native-swipe-gestures": "^1.0.3",
     "react-navigation": "^2.18.2"
   },
