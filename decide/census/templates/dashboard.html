@@ -14,16 +14,29 @@
 	}
 
 	function reutilize(){
-    id1 = document.getElementById("votationOrigen").value;
-    id2 = document.getElementById("votationDestino").value;
-    window.location.href = window.location.href + 'create/' + id1 + "/" + id2 + "/";
-  }
+		id1 = document.getElementById("votationOrigen").value;
+		id2 = document.getElementById("votationDestino").value;
+		if(id1 != id2){
+			window.location.href = "/census/list/" + 'create/' + id1 + "/" + id2 + "/";}
+		else {
+			alert("Votations have to be different")
+		}
+  	}
 
 </script>
 
 <div class="box">
 	<div class="container">
-		
+		{% if error %}
+			<div class="alert alert-danger" role="alert">
+				{{error}}
+			</div>
+		{% endif %}
+		{% if success %}
+			<div class="alert alert-success" role="alert">
+				{{success}}
+			</div>
+		{% endif %}
 		<div class="row">
 
 			<div class="columna col-lg-5 col-md-5 col-sm-5 col-xs-12">

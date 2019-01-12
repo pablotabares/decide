@@ -145,6 +145,16 @@ class UserListView(ListView):
 class CensuslListView(ListView):
     model = Census
     template_name = "dashboard.html"
+    error = ""
+    success = ""
+
+    def get(self, request, *args, **kwargs):
+        if(args):
+            if('error' in args[0]):
+                self.error = args[0]['error']
+            if('success' in args[0]):
+                self.success = args[0]['success']
+        return super().get(self, request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -153,6 +163,10 @@ class CensuslListView(ListView):
         context['votaciones'] = Voting.objects.all()
         context['userList'] = User.objects.all().filter(pk__in=userIds)
         context['votingList'] = Voting.objects.all().filter(pk__in=ids)
+        if(self.error != ""):
+            context['error'] = self.error
+        if(self.success != ""):
+            context['success'] = self.success
         return context
 
 class CensuslByVotingListView(ListView):
@@ -218,16 +232,14 @@ class CensusDetail(generics.RetrieveDestroyAPIView):
 
 
 def reutilize(request, voting_id, voting_id_new):
-    voters = Census.objects.filter(voting_id=voting_id).values_list('voter_id')
+    voters = Census.objects.filter(voting_id=voting_id).values_list('voter_id').distinct()
 
     try:
         for voter in voters:
-            census = Census(voting_id = voting_id_new, voter_id = voter[0])
-            census.save()
-    except IntegrityError:
-        return render(request, 'dashboard.html', {'error': 'Something crashed, no census were created'})
-    return HttpResponseRedirect('list/')
-
+            Census.objects.get_or_create(voting_id = voting_id_new, voter_id = voter[0])
+    except IntegrityError as e:
+        return CensuslListView.as_view()(request,{'error': 'Something crashed, no census were created'})
+    return CensuslListView.as_view()(request,{'success': 'The census was properly copied'})
 
 class CensusList(generics.ListAPIView):
     serializer_class = VotingSerializer
