@@ -249,7 +249,67 @@ Para el desarrollo hemos realizado el proyecto con django y postgressql. Dicho p
 
 
 \section{Ejercicio de propuesta de cambio}
+En esta sección vamos a explicar un cambio desde 0 incluyendo todos los pasos que deberiamos de realizar para llevarlo desde el desarrollo hasta la fase de producción.
 
+El primer paso sería clonar el proyecto de Github:
+
+\emph{\$ git clone 
+https://github.com/pablotabares/decide.git}
+
+Una vez hecho esto, será necesario instalar las dependencias del proyecto, las cuales están en el fichero requirements.txt:
+
+\emph{\$ pip install -r requirements.txt}
+
+Tras esto tendremos que crearnos nuestra base de datos con postgres:
+
+\emph{\$ sudo su - postgres}
+
+\emph{psql -c "create user decide with password 'decide'"}
+
+\emph{psql -c "create database decide owner decide"
+}
+
+Entramos en la carpeta del proyecto y realizamos la primera migración para preparar la base de datos que utilizaremos:
+
+\emph{\$ cd decide
+\$ python manage.py migrate
+}
+
+El cambio que proponemos es el de aumentar el numero de atributos que tiene el objeto user. El primer paso que debemos hacer es crear una issue tal como se vió en el apartado de la gestion del código fuente. Esta issue fue reportada en el siguiente url:
+
+\url{https://github.com/pablotabares/decide/issues/52}
+
+Ahora lo que vamos a hacer es crear una rama siguiendo el estilo anteriormente descrito que sera donde vamos a trabajar en esta issue, para ello usamos el comando:
+
+\emph{\$ git checkout -b ortosia-auth-model-decideuser}
+
+
+Ahora podemos trabajar en la issue, sin problemas. 
+Cuando hayamos terminado con los cambios en el desarrollo debemos subir el código y posteriormente hacer un PR a nuestra rama base, para ello debemos de usar el comando:
+
+\emph{\$ git add .}
+
+\emph{\$ git commit .}
+
+\emph{\$ git push origin ortosia-auth-model-decideuser}
+
+Cuando hayamos terminado podemos crear un pull request para ello debemos ir a Github a nuestra rama (ortosia-auth-model-decideuser) y hacer click en new pull request, nosotros ya hemos realizado el PR en la siguiente url; \url{https://github.com/pablotabares/decide/pull/174}
+
+Nuestro compañero validará el pull request o nos pedirá distintos cambios y en caso de que el pull request sea aceptado podremos mergearlo a nuestra rama base (ortosia-auth). 
+
+Ahora si entramos en la web de TravisCI y entramos en la rama de ortosia-auth podemos ver en el fichero de log como se pasán los test unitarios, de calidad de código (SonarQube) y si no hay problemas se desplegará una nueva versión en Heroku. Esto se realiza de forma automatica, no tenemos que preocuparnos de nada. En nuestro caso podemos visualizar dichos resultados en el siguiente enlace:
+
+\url{https://travis-ci.org/pablotabares/decide/builds/478420406}
+
+Gracias al fichero Postman que hemos realizado podemos hacer una consulta y comprobar que el cambio que hemos realizado funciona sin problemas.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{call.png}
+\caption{Ejemplo de incidencia}
+\end{figure}
+
+Como se puede ver en la figura, aparecen todos los datos del usuario ademas de los atributos de sexo y fecha de nacimiento.
 
 \section{Conclusiones y trabajo futuro}
 
