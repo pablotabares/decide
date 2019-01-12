@@ -1,14 +1,14 @@
 import requests
-from .models import Auth, Mixnet
+from .models import Auth, Mixnet, ConnectionStatus
 import re
+import datetime
+from autotask.tasks import periodic_task
 
 # Returns a dictionary with key/value pairs authority/status
-
 
 def pingAuths():
     # Retrieves all authorities from the database
     auths = Auth.objects.all()
-
     # Initializes dictionary of auths/
     reached_auths = {}
     regexp = re.compile(".*localhost.*")
@@ -58,3 +58,26 @@ def mixnetStatus():
     
     return mixnets_status
 
+
+#Every 5 minutes, we will store the status of all the authorities
+@periodic_task(seconds=300)
+def updateConnections():
+     # Retrieves all authorities from the database
+    auths = Auth.objects.all()
+
+    regexp = re.compile(".*localhost.*")
+    for auth in auths:
+        status = False
+        if(regexp.search(auth.url) == None):
+            try:
+                r = requests.get(auth.url)
+                if r.status_code == requests.codes.ok:
+                    status = True
+                else:
+                    status = False
+            except:
+                status = False
+        else:
+            status = True
+        c = ConnectionStatus(auth=auth, date=datetime.datetime.now(), status=status)
+        c.save()

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'autotask',
 
     'corsheaders',
     'django_filters',
@@ -161,3 +162,5 @@ except ImportError:
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
+
+AUTOTASK_IS_ACTIVE = True

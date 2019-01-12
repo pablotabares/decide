@@ -6,11 +6,11 @@ from rest_framework.views import APIView
 from django.http import HttpResponseForbidden, HttpResponse
 
 from .serializers import MixnetSerializer
-from .models import Auth, Mixnet, Key
+from .models import Auth, Mixnet, Key, ConnectionStatus
 from base.serializers import KeySerializer, AuthSerializer
 from base import mods
 
-from mixnet.control_panel_utils import pingAuths, mixnetStatus
+from mixnet.control_panel_utils import pingAuths, mixnetStatus, updateConnections
 from mixnet.forms import LoginForm
 
 from django.views.generic import TemplateView
@@ -242,9 +242,16 @@ class ControlPanel(TemplateView):
         # Retrieve the list of mixnets and their status
         mixnets = mixnetStatus()
 
+        # Retrieve the last connections of the authorities
+        auth_status = {}
+        for auth in auths:
+            auth_status[auth] = ConnectionStatus.objects.all().order_by('-date').filter(auth=auth)
+        
         context['auths'] = auths
         context['mixnets'] = mixnets
+        context['auth_status'] = auth_status
         context['mixnet_url'] = settings.APIS.get('mixnet', settings.BASEURL)
+
 
         return context
 

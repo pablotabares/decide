@@ -61,19 +61,34 @@
 <h3 id="authorities">Authorities status</h3>
 <div class="center">
 <table class="table">
-    <tr><th>Name</th><th>Auth</th><th>Status</th></tr>
+    <tr><th>Name</th><th>Auth</th><th>Current Status</th><th>Status log</th></tr>
+
     {% for auth, ping in auths.items %}
     
     <tr><td>{{ auth.name }}</td>
     <td>{{ auth }}</td> 
         <td>{{ ping }} {% if ping == "OFFLINE" %}
-            <img width="24" height="24" src="https://i.imgur.com/cKnrL1t.png"/>
+            <img width="24" height="24" src="https://i.imgur.com/cKnrL1t.png" alt="offline"/>
             {% else %}
-            <img width="24" height="24" src="https://i.imgur.com/BQym8rF.png"/>
+            <img width="24" height="24" src="https://i.imgur.com/BQym8rF.png" alt="online"/> 
             {% endif %}
         </td>
+    <td>{% for authh, status in auth_status.items %}
+            {% if auth == authh %}
+                {% for statuss in status %}
+                    {% if forloop.counter < 4 %}
+                        {% if statuss.status == False %}
+                        <img width="24" height="24" src="https://i.imgur.com/cKnrL1t.png" alt="offline"/>
+                        {% else %}
+                        <img width="24" height="24" src="https://i.imgur.com/BQym8rF.png" alt="online"/>
+                        {% endif %}
+                    {{ statuss.date }} <br/>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </td>
     </tr>
-    
     {% endfor %}
 </table>
 </div>
