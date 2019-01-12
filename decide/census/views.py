@@ -38,7 +38,7 @@ class CensusCreate(generics.ListCreateAPIView):
                 census.save()
         except IntegrityError:
             return Response ('Error trying to create census', status = ST_409)
-        return Response('Census created', ST_201)
+        return Response('Census created', status = ST_201)
 
     def list(self, request, *args, **kwargs):
         voting_id = request.GET.get('voting_id')
