@@ -80,7 +80,9 @@
 
         function decideEncrypt(input) {
             var msg = document.querySelector(input).value;
+            alert(msg)
             var bigmsg = BigInt.fromJSONObject(msg);
+            alert(bigmsg)
             var cipher = ElGamal.encrypt(bigpk, bigmsg);
             return cipher;
         }
