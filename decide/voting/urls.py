@@ -8,6 +8,7 @@ urlpatterns = [
     path('home', home),
     path('referendum', crear_referendum),
     path('options', create_options),
-    path('voting', create_voting)
+    path('voting', create_voting),
+    path('api/referendum', views.VotingReferendumView().as_view()),
 
 ]
