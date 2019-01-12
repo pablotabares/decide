@@ -1,23 +1,41 @@
 language: python
-python: 
- - "3.6.6"
-install:
- - pip install -r requirements.txt
-sudo: required
+python:
+- '3.6'
 services:
- - docker
-script:
- - sonar-scanner
- - cd docker
- - docker exec -ti decide_web ./manage.py test
- - cd ..
-addons:
-  sonarcloud:
-    organization: "pablotabares-github"
-notifications:
-  email: false
+- postgresql
+env:
+- DJANGO=2.0 DB=postgres
+global:
+- PGPORT=5432
 before_install:
- - cd docker
- - docker-compose up -d
- - cd ..
-
+- cd decide
+- cd decide
+- cp settings_ci.py settings.py
+- cd ..
+install:
+- pip install -r ../requirements.txt
+before_script:
+- cp local_settings.example.py local_settings.py
+- psql -c "create user decide with password 'decide'"
+- psql -c "create database decide owner decide"
+- psql -c "alter user decide createdb"
+- python manage.py migrate
+- python manage.py makemigrations
+- python manage.py migrate
+script:
+- python ./manage.py test
+after_success:
+- cd decide
+- cp settings_heroku.py settings.py
+- cd ..
+- cd ..
+addons:
+  postgresql: '9.6'
+deploy:
+  provider: heroku
+  api_key:
+    ortosia-votacion:
+      secure: Ro2/Hl2tfa1vwjox6RAsRtEDCvFU9zwbKtFTYnH6FZCW8X9U5SCEbAXPd8y+ln4MYrtnhM3ctXSpROxPUVGJun7Oc70Nmw6BpG6e6c9WIOO+4Zn7nGrnw0uXgJ4wSepRERwc9j+CyqtPDm365J6+58BJxLdZkCilI1umDLU/FluG6uw4nsQ+ntkUjtL5u/fY/2ojRlb9v2TZ9aRodr4AOWwB1ZKRKg/iN5qvI+YtUL3VC2EE22L0JQc4YvVPGjZ2kmyjmy0QC+zdGsPXcNTDKa4+IPfwQqlsDQH9cbXkX0X3NhH0npxheSQvbV/W1wjypviVXR5bQ3UYb4nkE+qSNayuQ9D5SYUW41WgpnQvd3MzGwYcpda/+B/XPe9zrH52o8aLNqo3tsk4lOQsrmaik9VP+ZA77fBQzdHdS15Q9F6HZFwhX7MbZPZngbukBx3p0HIwHfQSrfsITvyC3yx4r4pwkAWX5dnCZyrHVOxsRuMmYscYCV1fi4Rz+Ph8DFybYzOC6jhQlcxmsubwcd7xTXzBLzxUUeP/p+TlQwQIQVUAn0h40swo0oTlmKQxYsAJad+p6Rxc5ykGSbj7lIN9FpatxCvK2MxnSxcPgRRUEX1bs5+IzXATnn4cWr1k5MsNB46JghtgEH9TDVeoc8FGgdM/GUL7cL7ODiy1JQjDdWk=
+  app:
+    ortosia-votacion: decide-ortosia-votacion
+  skip_cleanup: true

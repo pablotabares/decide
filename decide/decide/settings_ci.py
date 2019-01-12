@@ -66,8 +66,7 @@ MODULES = [
     'voting',
 ]
 
-# BASEURL = 'http://localhost:8000'
-BASEURL = 'https://decide-ortosia-votacion.herokuapp.com'
+BASEURL = 'http://localhost:8000'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -149,9 +148,6 @@ STATIC_URL = '/static/'
 KEYBITS = 256
 
 
-APIS= {}
-
-
 
 try:
     from local_settings import *
@@ -160,6 +156,4 @@ except ImportError:
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
 
-import django_heroku
-django_heroku.settings(locals())
 
