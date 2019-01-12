@@ -4,7 +4,8 @@ from rest_framework.authtoken.models import Token
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 
-from .serializers import UserSerializer, AuthCustomTokenSerializer
+from .serializers import UserSerializer
+
 
 class GetUserView(APIView):
     def post(self, request):
@@ -23,11 +24,3 @@ class LogoutView(APIView):
             pass
 
         return Response({})
-
-class LoginView(APIView):
-    def post(self, request):
-        serializer = AuthCustomTokenSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
