@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from .models import Question, QuestionOption, Voting
 from base.serializers import KeySerializer, AuthSerializer
 
@@ -33,7 +32,6 @@ class VotingSerializer(serializers.HyperlinkedModelSerializer):
     questions = QuestionSerializer(many=True)
     pub_key = KeySerializer()
     auths = AuthSerializer(many=True)
-
     class Meta:
         model = Voting
         fields = ('id', 'name', 'desc', 'questions', 'start_date',

@@ -1,9 +1,4 @@
-% worker processes for bots
-telegram-bot: sh -c 'cd telegram-bot && python main.py'
-slack-bot: sh -c 'cd slack-bot && python slackbot.py'
-
-% set up repository to deploy
+% prepara el repositorio para su despliegue. 
 release: sh -c 'cd decide && python manage.py migrate'
-
-% launch decide in web process
-web: sh -c 'cd decide && gunicorn decide.wsgi --log-file -' 
+% especifica el comando para lanzar Decide
+web: sh -c 'cd decide && gunicorn decide.wsgi --log-file -'
