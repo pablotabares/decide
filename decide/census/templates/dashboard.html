@@ -1,0 +1,135 @@
+{% extends "census_base.html" %}
+
+{% block contenido %}
+
+<script type="text/javascript">
+	function listarUsers() {
+		id = document.getElementById("selectUsuario").value;
+		window.location.href = window.location.href + "user/" + id + "/";
+	}
+
+	function listarVotations() {
+		id = document.getElementById("selectVotation").value;
+		window.location.href = window.location.href + "voting/" + id + "/";
+	}
+
+</script>
+
+<div class="box">
+	<div class="container">
+		
+		<div class="row">
+
+			<div class="columna col-lg-5 col-md-5 col-sm-5 col-xs-12">
+
+				<div class="box-part text-center">
+
+					<div>
+						<h4>Compartir censo</h4>
+					</div>
+
+					<div class="text">
+						<span>Para compartir el censo entre dos votaciones basta elegir la votación desde donde se quiere usar el censo y
+							la nueva</span>
+					</div>
+
+					<label for="votationOrigen">Votacion de origen</label>
+					<select name="votationOrigen" id="votationOrigen">
+						{% for votation in votingList %}
+						<option value="{{votation.id}}">{{votation.name}}</option>
+						{% endfor %}
+					</select><br>
+
+					<label for="votationOrigen">Votacion de destino</label>
+					<select name="votationDestino" id="votationDestino">
+						{% for votation in votingList %}
+						<option value="{{votation.id}}">{{votation.name}}</option>
+						{% endfor %}
+					</select>
+					<div class="accion">
+						<button type="button">Copiar</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="columna col-lg-5 col-md-5 col-sm-5 col-xs-12">
+
+				<div class="box-part text-center">
+
+					<div>
+						<h4>Importar desde LDAP</h4>
+					</div>
+
+					<div class="text">
+						<span>Para importar los datos desde un archivo LDAP es necesario introducir la URL donde está almacenado</span>
+					</div>
+
+					<label for="LDAP_URL">Introduzca la URL</label>
+					<input type="text" name="LDAP_URL" id="LDAP_URL">
+
+					<div class="accion">
+						<button type="button">Importar</button>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="columna col-lg-5 col-md-5 col-sm-5 col-xs-12">
+
+				<div class="box-part text-center">
+
+					<div>
+						<h4>Listado de votaciones de un usuario</h4>
+					</div>
+
+					<div class="text">
+						<span>Para obtener una lista de las votaciones donde participa un usuario seleccionelo de la siguiente lista</span>
+					</div>
+
+					<label for="selectUsuario">Usuario</label>
+					<select name="selectUsuario" id="selectUsuario">
+						{% for usuario in userList %}
+						<option value="{{usuario.id}}">{{usuario.first_name}}</option>
+						{% endfor %}
+					</select>
+
+					<div class="accion">
+						<button type="button" onclick="listarUsers()">Listar</button>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="columna col-lg-5 col-md-5 col-sm-5 col-xs-12">
+
+				<div class="box-part text-center">
+
+					<div>
+						<h4>Listado de usuarios de una votación</h4>
+					</div>
+
+					<div class="text">
+						<span>Para obtener una lista de los usuarios que participan en la votación seleccionela de la siguiente lista</span>
+					</div>
+
+					<label for="selectVotation">Votación</label>
+					<select name="selectVotation" id="selectVotation">
+						{% for votation in votingList %}
+						<option value="{{votation.id}}">{{votation.name}}</option>
+						{% endfor %}
+					</select>
+
+					<div class="accion">
+						<button type="button" onclick="listarVotations()">Listar</button>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+{% endblock contenido %}
