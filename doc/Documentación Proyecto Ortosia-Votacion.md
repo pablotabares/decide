@@ -186,32 +186,32 @@ Los commits se harán en el momento que se haya avanzando una cantidad notoria o
 Añadir importancia a las questions:
 
 Antes de comenzar a trabajar en cualquier cosa, lo primero que debemos hacer es asegurarnos de que estamos en la rama pertinente a nuestro desarrollo, ortosia-votacion-develop con el comando:
-"""
+```
 git branch
-"""
+```
 Este comando nos devuelve las ramas, y la rama en la que nos encontamos.
 Si no estamos en nuestra rama, ejecutamos:
-"""
+```
 git checkout ortosia-votacion-develop
-"""
+```
 Ahora nos aseguramos de que tenemos nuestro repositorio actualizado, con el método:
-"""
+```
 Git pull, 
-"""
+```
 para asi, evitar conflictos de concurrencia, al olvidarnos tener la rama actualizada.
-Determinamos los cambios y clases en las que vamos a necesitar hacer modificaciones para las propuestas, que en este caso, son: models.py, para modificar nuestros modelos, views.py, para implementar la gestión del nuevo atributo, en este caso tenemos que modificar, el método createVoting, para la creación de una votación mediante el panel de administración, y el metodo votingView, para la gestión del mismo en las llamadas de nuestra api, al igual que modificar el metodo seriarizers.py para que correspondan con nuestros modelos y test.py para actualizar los test, y añadir si fuera necesario, añadir alguno nuevo.
+Determinamos los cambios y clases en las que vamos a necesitar hacer modificaciones para las propuestas, que en este caso, son: models.py, para modificar nuestros modelos, views.py, para implementar la gestión del nuevo atributo, en este caso tenemos que modificar, el método createVoting, para la creación de una votación mediante el panel de administración, y el metodo votingView, para la gestión del mismo en las llamadas de nuestra api, al igual que modificar el la clase serializers.py para que correspondan con nuestros modelos y test.py para actualizar los test, y añadir si fuera necesario, añadir alguno nuevo.
 Una vez identificados los cambios necesarios para su implementación, gestionamos primero lo necesario para su implementación por el panel de administración.
 Modificamos el modelo, y realizamos los comandos:
 ```
-Python3 ./manage.py makemigrations
-Python3 ./manage.py migrate
+python3 ./manage.py makemigrations
+python3 ./manage.py migrate
 ```
 Con estos dos, se modifica la base de datos conforme a los nuevos modelos
 Realizamos los cambios necesarios en el view.
 Tras esto, creamos los test pertinentes.
 Cuando veamos que esta funcional, ejecutamos el servidor, y hacemos las pruebas a mano
 ```
-Python3 ./manage.py runserver.
+python3 ./manage.py runserver
 ```
 Si todo esta correcto, y la funcionalidad correcta, modificamos las clases serializers.py para que esten conforme a los modelos, y el metodo VotingView, para que gestione el metodo de la api con la nueva funcionalidad.
 Finalemente, realizamos los test.
