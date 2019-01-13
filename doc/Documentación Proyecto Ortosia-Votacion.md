@@ -25,8 +25,9 @@ Enlaces de interés:
 * [Gestión de incidencias](#Gestión-de-incidencias)
 * [Gestión de depuración](#Gestión-de-depuración)
 * [Gestión de liberaciones, despliegues y entregas](#Gestión-de-liberaciones,-despliegues-y-entregas)
-* [Gestión del código fuente](#Gestión-del-código-fuente]
+* [Gestión del código fuente](#Gestión-del-código-fuente)
 * [Ejercicio de propuesta de cambio](#Ejercicio-de-propuesta-de-cambio)
+* [Conclusiones y trabajo futuro](#Conclusiones-y-trabajo-futuro)
 
 # Resumen
 
@@ -39,7 +40,7 @@ Debido a la estructura modular del proyecto, se distribuyeron los problemas intr
 
 En nuestro proyecto intervienen 8 módulos diferenciados, e intervienen 8 equipos, pero no todos los equipos tienen asignado un módulo distinto. Tenemos 2 grupos para el módulo de Cabina y ninguno para el de módulo de Almacenamiento. 
 
-En nuestro caso, tenemos asignado el módulo de Votación que comprende lo relacionado a las votaciones y las preguntas incluidas en ellas.  
+En nuestro caso, tenemos asignado el módulo de Votación que abarca lo relacionado a las votaciones y las preguntas incluidas en ellas.  
 
 Debido a la relevancia de nuestro módulo, estamos en permanente contacto con el resto de los módulos ya que, ante cualquier mejora desarrollada por nosotros, conllevará una modificación en alguno/s del resto de los módulos. Así mismo, cualquier mejora del resto de los grupos, también implica cambios en nuestro módulo.
 
@@ -84,13 +85,13 @@ Las tareas asignadas a cada integrante del grupo fueron: (Se han realizado todas
   * Mejora de la API
   * Incluir fecha de inicio en creación de votación
   * Mejora del JSON de una votación
-  * Controlar errores para mixnet
+  * Controlar errores para Mixnet
 * Pérez Llorente, Ángel:
   * Posibilidad de crear votación en 2 fases según respuestas a preguntas previas
   * Mejora del JSON de una votación
   * Añadir el peso y enviarlo a postprocesado
   * Crear votaciones con multiples preguntas por POST
-  * Enviar token de admin a mixnet
+  * Enviar token de admin a Mixnet
   * Automatización de los tests y el despliegue
   * Arreglo de los tests de nuestro módulo
   * Creación de la MV
@@ -108,7 +109,7 @@ Las tareas asignadas a cada integrante del grupo fueron: (Se han realizado todas
 
 Todos los miembros del grupo hemos usado una máquina virtual con el sistema operativo Ubuntu 18.04, dicha máquina tiene instalado Pycharm Commnunity Edition, el cual hemos utilizado como IDE.
 
-Como lenguaje será necesario Python 3.6.6, además de la instalación de git, docker heroku y travis. Todo está inicialmente en la máquina virtual excepto travis y heroku, para instarlarlos habrá que usar los siguientes comando en terminal:
+Como lenguaje será necesario Python 3.6.6, además de la instalación de Git, Docker, Heroku y Travis CI. Todo está inicialmente en la máquina virtual excepto Travis CI y Heroku, para instarlarlos habrá que usar los siguientes comando en terminal:
 
 ### Instalación de travis
 
@@ -124,7 +125,7 @@ sudo snap install --classic heroku
 ```
 
 Cabe destacar que para los requisitos de python hemos usado el requirements.txt que hay en nuestro proyecto,
-el cual pycharm lo instalará automatáticamente si esta en el directorio del proyecto y si no se puede instalar mediante el siguiente comando, ejecutado en el directorio donde se encuentre el fichero requirements.txt:
+el cual PyCharm lo instalará automatáticamente si está en el directorio del proyecto y si no se puede instalar mediante el siguiente comando, ejecutado en el directorio donde se encuentre el fichero requirements.txt:
 
 ```
 pip3 install -r requirements.txt
@@ -135,12 +136,12 @@ La máquina virtual que usamos cada miembro inicialmente puede ser descargada en
 # Gestión de incidencias
 
 Hemos gestionado las incidencias a través de los issues de github. El formato definido para 
-dichas incidencias es el ha utilizado por  la mayoría de módulos, entre ellos nosotros, es: [Nombre del módulo que la crea] - Breve titulo descriptivo.
+dichas incidencias es el ya utilizado por la mayoría de módulos, entre ellos nosotros, es: [Nombre del módulo que la crea] - Breve titulo descriptivo.
 Por otro lado, en todos los módulos se ha acordado añadir como etiqueta al módulo al que va dirigido esa issue. La descripción deberá ser lo más
-extensa posible, dando datos de manera concisa, como contener trazas de excepción y ser lo más explícito posible.
+extensa posible, dando datos de manera concisa, como por ejemplo contener trazas de excepción y ser lo más explícito posible.
 
 En nuestro módulo hemos considerado también otras características sobre los issues como: añadir etiquetas de la prioridad y el tipo
-de incidencia que es (cambio, mejora, fallo...). Además habrá que asignar al desarrollador de nuestro módulo que se encarge de la resolución
+de incidencia que es (cambio, mejora, fallo...). Además habrá que asignar al desarrollador de nuestro módulo que se encarge de la resolución de dicha incidencia. 
 
 Por último en nuestro módulo se creo un proyecto en github para controlar el estado de las incidencias,
 tenemos dos estados: Working (incidencias en proceso de resolución) y DONE (incidencias resueltas).
@@ -148,9 +149,9 @@ tenemos dos estados: Working (incidencias en proceso de resolución) y DONE (inc
 En cuanto a las incidencias internas, simplemente se crean y se asignan al miembro del grupo que tuviera que encargarse de dicha parte,
 para finalizar dicha incidencia hay dos opciones: 
 
-1. Si se arregla mediante un commit, en el commit se deberá referenciar a la incidencia, para que se cierre automáticamente o, al menos, para llevar
+1. Si se arregla mediante un commit, se deberá referenciar en el mismo a la incidencia, para que se cierre automáticamente o, al menos, para llevar
 un histórico de los pasos que ha seguido esa incidencia.
-1. Si no se arregla mediante un commit, o se debe añadir más informació entonces, aunque haya commits referenciados se deberá cerrar manualmente tras el comentario
+1. En otro caso, si la issue no se arregla mediante un commit, o se debe añadir más información , aunque haya commits referenciados se deberá cerrar manualmente tras el comentario
 
 Una vez cerrada se pasará a DONE en nuestro proyecto. La política de finalización de incidencias será igual para las incidencias externas. En cuanto a la creación de las externas
 se acordó que una vez creada el issue se notificaría al manager de cada módulo para que se lo asignarán en dicho grupo. Además de los commits también se podrán
@@ -169,7 +170,7 @@ Algunos ejemplos de la resolución de incidencias son:
 
 Para la gestión de depuración, una vez se encuentre una excepción, se deberá crear un issue y explicar en que situación se genera esa incidencia
 y detallar, si se conoce, el motivo para que ocurra. Una vez creada se deberá investigar sobre el error, intentar aislarlo en código mediante la herramiena de depuración (Debug) 
-de pycharm y una vez se resuelva se deberá asociar el commit a la incidencia y explicar en el commit el motivo del error y cómo se ha solucionado, incluyendo la fuente en caso de haber consultado información externa.
+de PyCharm y una vez se resuelva se deberá asociar el commit a la incidencia y explicar en el commit el motivo del error y cómo se ha solucionado, incluyendo la fuente en caso de haber consultado información externa.
 
 Un ejemplo de depuración de código se puede ver en esta issue: https://github.com/pablotabares/decide/issues/100
 
@@ -188,15 +189,14 @@ El protocolo de liberación de cambios que hemos seguido consiste en:
   al repositorio master en común con el resto de módulos (github.com/pablotabares/decide)
  
 ## Despliegue:
-Como hemos explicado previamente, el despligue se realiza sobre la plataforma Heroku. Para 
-que la aplicación se despligue de manera satisfactoria en dicha plataforma, deberá pasar los tests específicos
-para que queden palpables los cambios que se han realizado en el proyecto. 
+Como se menciona anteriormente, el despligue se realiza sobre la plataforma Heroku. Para que la aplicación se despligue de manera satisfactoria en dicha plataforma, deberá pasar los tests específicos para que queden registrados los cambios que se han realizado en el proyecto. 
 
 ## Entregables:
-Hemos considerado que los entregables eran los milestone, en nuestro caso, 3 milestones.
-Tienen una nomenclatura interna en el equipo como Entregable MX siendo X el número del milestone en cuestión. 
-En cada milestone, se realizaba un control de seguimiento de los avances del módulo en cuestión y para recibir
-feedback, en forma de proposición de mejoras para el siguiente milestone.
+Hemos considerado que los entregables eran los milestones, en nuestro caso, 3 milestones.
+Tienen una nomenclatura interna en el equipo como Entregable MX, siendo X el número del milestone en cuestión. 
+En cada milestone, se realizaba un control de seguimiento de los avances del módulo en cuestión y recibir
+feedback, en forma de proposición de mejoras para el siguiente milestone. Hemos tratado de implementar las mejoras propuestas
+como la creación de un label propio para los issues concernientes a nuestro módulo(#Gestión-de-incidencias) o una estructura para los títulos de los issues, como se explicará en la sección (#Gestión-del-código-fuente)
 
 # Gestión del código fuente
 
@@ -222,8 +222,20 @@ Los merges a la rama master de nuestro módulo, es decir, Ortosia-Votacion-Prepr
 
 Ejemplo: https://github.com/pablotabares/decide/pull/145
 
+# Mapa de herramientas
 
+IDE: 			PyCharm Community Edition
+Control de versiones: 	Git
+Repositorio: 		Github
+Control de repositorio: Terminal 
+Integración continua:	Travis CI
+Despliegue: 		Heroku
 
+Para el desarrollo del código, asi como el uso para el resto de herramientas mencionadas en la sección de Entorno de Desarrollo(#Entorno-de-desarrollo),
+utilizaremos el IDE PyCharm, centralizando el uso del resto de herramientas. Utilizaremos el Terminal que incluye PyCharm para hacer las pertinentes acciones relacionadas
+con el repositorio alojado en Github. Una vez desarrollados los cambios en el IDE, para el control de los commits, se realizarán pruebas automatizadas, con el uso de la herramienta 
+Travis CI, a la cual se le especificará la rutina a realizar para comprobar que no contiene ningún error, de acuerdo con los tests especificados. Si dicha comprobación es satisfactoria, 
+Travis CI permite que la actualización se manifieste en el servicio de despliegue que utilizamos que hemos mencionado en la sección de Despliegue(##Despliegue). 
 
 # Ejercicio de propuesta de cambio
 
@@ -253,11 +265,11 @@ python3 ./manage.py migrate
 Con estos dos, se modifica la base de datos conforme a los nuevos modelos
 Realizamos los cambios necesarios en el view.
 Tras esto, creamos los test pertinentes.
-Cuando veamos que esta funcional, ejecutamos el servidor, y hacemos las pruebas en la aplicación desplegada en local.
+Cuando veamos que esta funcional, ejecutamos el servidor, y hacemos las pruebas con la aplicación desplegada en local.
 ```
 python3 ./manage.py runserver
 ```
-Si todo esta correcto, y la funcionalidad correcta, modificamos las clases serializers.py para que estén conforme a los modelos, y el método VotingView, para que gestione el metodo de la API con la nueva funcionalidad.
+Si todo está correcto, y la funcionalidad responde de la manera esperada, modificamos las clases serializers.py para que estén conforme a los modelos, y el método VotingView, para que gestione el método de la API con la nueva funcionalidad.
 Finalmente, realizamos los test.
 Cuando todo esté completamente correcto, subimos los cambios a nuestro repositorio:
 ```
@@ -265,6 +277,11 @@ git add <nombre_de_archivo_cambiado>
 git commit -m “Titulo del mensaje” -m “Cuerpo del mensaje”
 git push
 ```
+
+# Conclusiones y trabajo futuro
+
+Hemos obtenido una base bastante completa de numerosas herramientas utilizadas en la actualidad, citadas en la sección de Mapa de herramientas(#Mapa-de-herramientas)
+como Django para desarrollo de servicios web, Heroku para despliegue de las aplicaciones o Travis CI para desarrollar rutinas de control para la integración continua. 
 
 
 
