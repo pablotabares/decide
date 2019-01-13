@@ -100,6 +100,8 @@ ENV/
 # mypy
 .mypy_cache/
 
+decide/local_settings.py
+
 #idea
 .idea/
 DecideBooth/.idea/
