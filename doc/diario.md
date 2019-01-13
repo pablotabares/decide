@@ -121,5 +121,17 @@ En este documento se detalla el trabajo realizado por todos los integrantes del 
 * 13 de enero
   * *2 horas* - **José Luis Sánchez Montiel** termina de unificar el diario de grupo en un solo documento.
   * *3 horas* - **Ángel Pérez Llorente** termina de la documentación del proyecto y añade imagenes.
+  * *30 minutos* - **José Ángel Lozano Pineda** revisa la documentacion redactada y añade el computo de horas total.
 
- 
+ ## Computo total de horas
+ * Horas computadas por integrante
+   * Lozano Pineda, José Ángel - **53:30h**
+   * Pérez Llorente, Ángel - **76:30h**
+   * Sánchez Montiel, José Luis - **55:00h**
+   * Valero García, Luis - **38:30h**
+   
+ * Horas computadas en el proyecto
+   * Entre todos los integrantes se han invertido **223h** en el desarrollo de las mejoras del modulo de votacion.
+
+
+
