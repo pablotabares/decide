@@ -21,7 +21,7 @@ class BigBigField(models.TextField):
 
 
 class Auth(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     url = models.URLField()
     me = models.BooleanField(default=False)
 
