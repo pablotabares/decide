@@ -100,8 +100,12 @@ ENV/
 # mypy
 .mypy_cache/
 
-#idea
-.idea/
+# idea
+.*idea/
+.*idea/*
+
+# idea
+**/migrations
 DecideBooth/.idea/
 
 #React Native
@@ -114,4 +118,3 @@ DecideBooth/npm-debug.*
 *.mobileprovision
 DecideBooth/metro-cache/**/*
 DecideBooth/.idea/**/*
-
