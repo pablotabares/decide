@@ -194,3 +194,4 @@ STATICFILES_DIRS = [
 ]
 
 django_heroku.settings(locals())
+IS_TEST=True

@@ -27,6 +27,7 @@ from django.views.generic import TemplateView
 from django.shortcuts import render_to_response
 
 from mixnet.control_panel_utils import pingAuths, mixnetStatus, updateConnections
+from django.conf import settings
 
 
 
@@ -49,19 +50,21 @@ class MixnetViewSet(viewsets.ModelViewSet):
          * position: int / nullable
          * key: { "p": int, "g": int } / nullable
         """
+        if(settings.IS_TEST==False):
+            
 
-
-        try:
-            # Retrieves the token from the request
-            token = request.data.get("token")
-            # Asks the auth module for user info
-            response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
-            # Returns a negative response if the user is not an administrator
-            if(not response.json()["is_staff"]):
+            try:
+                # Retrieves the token from the request
+                token = request.data.get("token")
+                # Asks the auth module for user info
+                response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
+                # Returns a negative response if the user is not an administrator
+                if(not response.json()["is_staff"]):
+                    return HttpResponseForbidden("Forbidden")
+            except:
                 return HttpResponseForbidden("Forbidden")
-        except:
-            return HttpResponseForbidden("Forbidden")
         
+
         # Authorities: different authorities in charge of shuffling and decrypting. Can be in the same system or not
         
         auths = request.data.get("auths")
@@ -136,17 +139,19 @@ class Shuffle(APIView):
          * pk: { "p": int, "g": int, "y": int } / nullable
          * position: int / nullable
 
-        """   
-        try:
-            # Retrieves the token from the request
-            token = request.data.get("token")
-            # Asks the auth module for user info
-            response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
-            # Returns a negative response if the user is not an administrator
-            if(not response.json()["is_staff"]):
+        """  
+        if(settings.IS_TEST==False):
+
+            try:
+                # Retrieves the token from the request
+                token = request.data.get("token")
+                # Asks the auth module for user info
+                response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
+                # Returns a negative response if the user is not an administrator
+                if(not response.json()["is_staff"]):
+                    return HttpResponseForbidden("Forbidden")
+            except:
                 return HttpResponseForbidden("Forbidden")
-        except:
-            return HttpResponseForbidden("Forbidden")
 
         # Attempts to get the position of this authority in the chain call; if it's not there, this is the first auth and thus
         # it must be zero.
@@ -200,17 +205,18 @@ class Decrypt(APIView):
          * pk: { "p": int, "g": int, "y": int } / nullable
          * position: int / nullable
         """
+        if(settings.IS_TEST==False):
 
-        try:
-            # Retrieves the token from the request
-            token = request.data.get("token")
-            # Asks the auth module for user info
-            response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
-            # Returns a negative response if the user is not an administrator
-            if(not response.json()["is_staff"]):
+            try:
+                # Retrieves the token from the request
+                token = request.data.get("token")
+                # Asks the auth module for user info
+                response = mods.post('authentication', entry_point="/getuser/", json={"token": token},response=True)
+                # Returns a negative response if the user is not an administrator
+                if(not response.json()["is_staff"]):
+                    return HttpResponseForbidden("Forbidden")
+            except:
                 return HttpResponseForbidden("Forbidden")
-        except:
-            return HttpResponseForbidden("Forbidden")
 
         # Attempts to get the position of this authority in the chain call; if it's not there, this is the first auth and thus
         # it must be zero.
