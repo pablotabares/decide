@@ -169,6 +169,8 @@ KEYBITS = 256
 
 APIS = {}
 
+IS_TEST=False
+
 try:
     from local_settings import *
 except ImportError:
