@@ -20,6 +20,12 @@ Enlaces de interés:
 * [Resumen](#Resumen)
 * [Introducción y contexto](#Introducción-y-contexto)
 * [Descripción del sistema](#Descripción-del-sistema)
+* [Planificación del proyecto](#Planificación-del-proyecto)
+* [Entorno de desarrollo](#Entorno-de-desarrollo)
+* [Gestión de incidencias](#Gestión-de-incidencias)
+* [Gestión de depuración](#Gestión-de-depuración)
+* [Gestión de liberaciones, despliegues y entregas](#Gestión-de-liberaciones,-despliegues-y-entregas)
+* [Gestión del código fuente](#Gestión-del-código-fuente]
 * [Ejercicio de propuesta de cambio](#Ejercicio-de-propuesta-de-cambio)
 
 # Resumen
@@ -37,7 +43,7 @@ En nuestro caso, tenemos asignado el módulo de Votación que comprende lo relac
 
 Debido a la relevancia de nuestro módulo, estamos en permanente contacto con el resto de los módulos ya que, ante cualquier mejora desarrollada por nosotros, conllevará una modificación en alguno/s del resto de los módulos. Así mismo, cualquier mejora del resto de los grupos, también implica cambios en nuestro módulo.
 
-#Descripción del sistema
+# Descripción del sistema
 
 Los módulos participantes en el desarrollo del proyecto son los siguientes:
 *	Ortosia-authentication: Sistema de autenticación para saber quién puede votar.
@@ -203,6 +209,19 @@ En cuanto a la descripción deberá ser concisa y dar tantos detalles como sean 
 Ejemplo: https://github.com/pablotabares/decide/commit/832e081c512950302cdf74040e80ba5b6d34750f
 
 Los commits se harán en el momento que se haya avanzando una cantidad notoria o terminado una funcionalidad, siempre y cuando la versión sea estable y no provoque errores a priori en otras partes del proyecto.
+
+En cuanto a la gestión del repositorio se han usado varías ramas (enlaces al principio del documento):
+
+* Master: Es la rama principal del proyecto, sólo un alumno tenía acceso a esa rama
+* Ortosia-Prepro: Es la rama de preproducción, para asegurarnos de que no hay ningún problema antes de subirlo a la rama master. También un solo alumno tiene permisos de escritura para esta rama
+* Ortosia-Votacion: Es la rama "master" de nuestro módulo, tras un problema con un pull request dejó de usarse y se volvió a una versión anterior en la siguiente rama.
+* Ortosia-Votacion-Prepro: Finalmente esta fue nuestra rama master y es donde se conservan los cambios aislados del módulo de votación.
+* Ortosia-Votacion-Develop: La rama utilizada para el desarrollo de los cambios en el módulo de votación
+
+Los merges a la rama master de nuestro módulo, es decir, Ortosia-Votacion-Prepro se harán cuando se posean versiones estables, una vez todos los cambios esten allí y se haya desplegado el sistema se harán pruebas para asegurarse que todo está correcto. Tras finalizar las pruebas, el manager de nuestro módulo será el encargado de hacer un pull request a Ortosia-Prepro; preparando debidamente la rama para no causar conflictos ni pisar archivos de configuración, como travis, requirements, settings...
+
+Ejemplo: https://github.com/pablotabares/decide/pull/145
+
 
 
 
