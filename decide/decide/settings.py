@@ -165,9 +165,9 @@ except ImportError:
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
 
-import django_heroku
-django_heroku.settings(locals())
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/census/static/',
 ]
+import django_heroku
+django_heroku.settings(locals())
