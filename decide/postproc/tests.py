@@ -798,7 +798,7 @@ class PostProcTestCase(APITestCase):
         values = response.json()
         self.assertEqual(values, expected_result)
 
-    def test_multiquestion(self):
+    def test_multiquestionone(self):
         data = {
             "type": "MULTIPLE",
             "questions": [{
@@ -869,6 +869,166 @@ class PostProcTestCase(APITestCase):
                 "option": "Second option",
                 "number": 2,
                 "postproc": 1
+            }]
+        }]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+    def test_multiquestiontwo(self):
+        data = {
+            "type": "MULTIPLE",
+            "questions": [{
+                "text": "First question",
+                "options": [{
+                    "votes": 0,
+                    "option": "First option",
+                    "number": 1
+                }, {
+                    "votes": 1,
+                    "option": "Second option",
+                    "number": 2
+                }, {
+                    "votes": 0,
+                    "option": "Third option",
+                    "number": 3
+                }]
+            }, {
+                "text": "Second question",
+                "options": [{
+                    "votes": 15,
+                    "option": "First option",
+                    "number": 1
+                }, {
+                    "votes": 15,
+                    "option": "Second option",
+                    "number": 2
+                }, {
+                    "votes": 15,
+                    "option": "Third option",
+                    "number": 3
+                }]
+            }]
+        }
+
+        expected_result = [{
+            "text": "First question",
+            "options": [{
+                "votes": 1,
+                "option": "Second option",
+                "number": 2,
+                "postproc": 1
+            }, {
+                "votes": 0,
+                "option": "First option",
+                "number": 1,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Third option",
+                "number": 3,
+                "postproc": 0
+            }]
+        }, {
+            "text": "Second question",
+            "options": [{
+                "votes": 15,
+                "option": "First option",
+                "number": 1,
+                "postproc": 15
+            }, {
+                "votes": 15,
+                "option": "Second option",
+                "number": 2,
+                "postproc": 15
+            }, {
+                "votes": 15,
+                "option": "Third option",
+                "number": 3,
+                "postproc": 15
+            }]
+        }]
+
+        response = self.client.post('/postproc/', data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        values = response.json()
+        self.assertEqual(values, expected_result)
+
+    def test_multiquestionthree(self):
+        data = {
+            "type": "MULTIPLE",
+            "questions": [{
+                "text": "First question",
+                "options": [{
+                    "votes": 0,
+                    "option": "First option",
+                    "number": 1
+                }, {
+                    "votes": 0,
+                    "option": "Second option",
+                    "number": 2
+                }, {
+                    "votes": 0,
+                    "option": "Third option",
+                    "number": 3
+                }]
+            }, {
+                "text": "Second question",
+                "options": [{
+                    "votes": 0,
+                    "option": "First option",
+                    "number": 1
+                }, {
+                    "votes": 0,
+                    "option": "Second option",
+                    "number": 2
+                }, {
+                    "votes": 0,
+                    "option": "Third option",
+                    "number": 3
+                }]
+            }]
+        }
+
+        expected_result = [{
+            "text": "First question",
+            "options": [{
+                "votes": 0,
+                "option": "First option",
+                "number": 1,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Second option",
+                "number": 2,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Third option",
+                "number": 3,
+                "postproc": 0
+            }]
+        }, {
+            "text": "Second question",
+            "options": [{
+                "votes": 0,
+                "option": "First option",
+                "number": 1,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Second option",
+                "number": 2,
+                "postproc": 0
+            }, {
+                "votes": 0,
+                "option": "Third option",
+                "number": 3,
+                "postproc": 0
             }]
         }]
 
