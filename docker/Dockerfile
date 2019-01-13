@@ -10,7 +10,7 @@ RUN pip install ipython
 
 WORKDIR /app
 
-RUN git clone --single-branch -b ortosia-mixnet https://github.com/pablotabares/decide.git .
+RUN git clone --single-branch -b ortosia-mixnet-limit https://github.com/pablotabares/decide.git .
 RUN pip install -r requirements.txt
 
 WORKDIR /app/decide
