@@ -128,13 +128,13 @@ class VoteItem extends React.Component{
                 }}>
                 <View style={{marginTop: 22}}>
                   <View>
-                    <Text>Hello World!</Text>
+                    <Text>¡For future implementation!</Text>
 
                     <TouchableHighlight
                       onPress={() => {
                         this.setModalVisible(!this.state.modalVisible);
                       }}>
-                      <Text>Hide Modal</Text>
+                      <Text>Close Modal</Text>
                     </TouchableHighlight>
                   </View>
                 </View>

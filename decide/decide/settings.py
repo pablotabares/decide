@@ -169,7 +169,7 @@ KEYBITS = 256
 
 APIS = {}
 
-IS_TEST=False
+IS_TEST=True
 
 try:
     from local_settings import *

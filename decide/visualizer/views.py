@@ -32,20 +32,13 @@ class VisualizerView(TemplateView):
 
 
 
-class VisualizerJSON(generics.ListAPIView):
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        vid = kwargs.get('voting_id', 0)
-        admin_id = User.objects.filter(is_staff='t').first().id
-        try:
-            tk = Token.objects.filter(user_id=admin_id)[0].key
-            r = mods.get('voting', params={'id': vid})
-            c = mods.get('census', params={'voting_id': vid}, HTTP_AUTHORIZATION='Token ' + tk)
-            #Investigar otra forma de pasar Token
-            context['voting'] = r[0]
-            context['census'] = c
-        except:
-            raise Http404
-
-        return context
+# class VisualizerJSON(generics.ListAPIView):
+#
+#     def get_queryset(self):
+#         context = super().get_context_data(**kwargs)
+#         vid = kwargs.get('voting_id', 0)
+#         admin_id = User.objects.filter(is_staff='t').first().id
+#         tk = Token.objects.filter(user_id=admin_id)[0].key
+#         r = mods.get('voting', params={'id': vid})
+#         queryset = mods.get('census', params={'voting_id': vid}, HTTP_AUTHORIZATION='Token ' + tk)
+#         return queryset
