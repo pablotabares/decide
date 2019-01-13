@@ -25,6 +25,7 @@ Enlaces de interés:
 * [Gestión de incidencias](#Gestión-de-incidencias)
 * [Gestión de depuración](#Gestión-de-depuración)
 * [Gestión de liberaciones, despliegues y entregas](#Gestión-de-liberaciones,-despliegues-y-entregas)
+* [Mapa de herramientas](#Mapa-de-herramientas)
 * [Gestión del código fuente](#Gestión-del-código-fuente)
 * [Ejercicio de propuesta de cambio](#Ejercicio-de-propuesta-de-cambio)
 * [Conclusiones y trabajo futuro](#Conclusiones-y-trabajo-futuro)
@@ -189,14 +190,14 @@ El protocolo de liberación de cambios que hemos seguido consiste en:
   al repositorio master en común con el resto de módulos (github.com/pablotabares/decide)
  
 ## Despliegue:
-Como se menciona anteriormente, el despligue se realiza sobre la plataforma Heroku. Para que la aplicación se despligue de manera satisfactoria en dicha plataforma, deberá pasar los tests específicos para que queden registrados los cambios que se han realizado en el proyecto. 
+Como se menciona anteriormente, el despligue se realiza sobre la plataforma Heroku. Para que la aplicación se despligue de manera satisfactoria en dicha plataforma, deberá pasar los tests específicos para que queden registrados los cambios que se han realizado en el proyecto, dichos tests están autmoatizados con la herramienta Travis CI, explicada en el [Mapa de herramientas](#Mapa-de-herramientas). 
 
 ## Entregables:
 Hemos considerado que los entregables eran los milestones, en nuestro caso, 3 milestones.
 Tienen una nomenclatura interna en el equipo como Entregable MX, siendo X el número del milestone en cuestión. 
 En cada milestone, se realizaba un control de seguimiento de los avances del módulo en cuestión y recibir
 feedback, en forma de proposición de mejoras para el siguiente milestone. Hemos tratado de implementar las mejoras propuestas
-como la creación de un label propio para los issues concernientes a nuestro módulo(#Gestión-de-incidencias) o una estructura para los títulos de los issues, como se explicará en la sección (#Gestión-del-código-fuente)
+como la creación de un label propio para los issues concernientes a nuestro módulo, como se ha explicado en la sección de [Gestión de incidencias](#Gestión-de-incidencias) o una estructura definida para los títulos de los issues, como se explicará en la sección de [Gestión del código fuente](#Gestión-del-código-fuente)
 
 # Gestión del código fuente
 
@@ -231,11 +232,11 @@ Control de repositorio: Terminal
 Integración continua:	Travis CI
 Despliegue: 		Heroku
 
-Para el desarrollo del código, asi como el uso para el resto de herramientas mencionadas en la sección de Entorno de Desarrollo(#Entorno-de-desarrollo),
+Para el desarrollo del código, asi como el uso para el resto de herramientas mencionadas en la sección de [Entorno de Desarrollo](#Entorno-de-desarrollo),
 utilizaremos el IDE PyCharm, centralizando el uso del resto de herramientas. Utilizaremos el Terminal que incluye PyCharm para hacer las pertinentes acciones relacionadas
 con el repositorio alojado en Github. Una vez desarrollados los cambios en el IDE, para el control de los commits, se realizarán pruebas automatizadas, con el uso de la herramienta 
 Travis CI, a la cual se le especificará la rutina a realizar para comprobar que no contiene ningún error, de acuerdo con los tests especificados. Si dicha comprobación es satisfactoria, 
-Travis CI permite que la actualización se manifieste en el servicio de despliegue que utilizamos que hemos mencionado en la sección de Despliegue(##Despliegue). 
+Travis CI permite que la actualización se manifieste en el servicio de despliegue que utilizamos que hemos mencionado en la sección de [Despliegue](##Despliegue). 
 
 # Ejercicio de propuesta de cambio
 
@@ -280,8 +281,10 @@ git push
 
 # Conclusiones y trabajo futuro
 
-Hemos obtenido una base bastante completa de numerosas herramientas utilizadas en la actualidad, citadas en la sección de Mapa de herramientas(#Mapa-de-herramientas)
-como Django para desarrollo de servicios web, Heroku para despliegue de las aplicaciones o Travis CI para desarrollar rutinas de control para la integración continua. 
+Hemos obtenido una base bastante completa de numerosas herramientas utilizadas en la actualidad, citadas en la sección de [Mapa de herramientas],(#Mapa-de-herramientas)
+como Django para desarrollo de servicios web, Heroku para despliegue de las aplicaciones o Travis CI para desarrollar rutinas de control para la integración continua, 
+además del enfoque al trabajo es útil ya que es una primera toma de contacto en el desarrollo de proyectos con un mayor número de grupos participantes para su desarrollo, 
+lo que nos ha ayudado a mejorar en nuestras capacidades de comunicación con equipos externos a nuestro propio módulo, dándole una vista realista al proyecto en el que hemos trabajado.
 
 
 
