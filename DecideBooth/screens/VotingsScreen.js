@@ -3,7 +3,7 @@ import {AsyncStorage, StyleSheet} from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Body, Right, Icon, Left, Button} from 'native-base';
 import moment from "moment";
 
-class VoteRightItem extends React.Component{
+export class VoteRightItem extends React.Component{
     render(){
         switch(this.props.status) {
             case 0:
@@ -43,7 +43,7 @@ class VoteRightItem extends React.Component{
     }
 }
 
-class VoteItem extends React.Component{
+export class VoteItem extends React.Component{
 
     render(){
         let status = null;
