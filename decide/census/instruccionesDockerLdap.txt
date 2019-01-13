@@ -1,0 +1,5 @@
+# comando para crear un docker de un servidor ldap con una base de datos de prueba
+# Enlace: https://github.com/osixia/docker-openldap
+docker run -p 389:389 -p 689:689 --name my-openldap-container --detach osixia/openldap:1.2.2
+# Ejemplo busqueda
+docker exec my-openldap-container ldapsearch -x -H ldap://localhost -b dc=example,dc=org -D "cn=admin,dc=example,dc=org" -w admin

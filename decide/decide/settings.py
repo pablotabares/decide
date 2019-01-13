@@ -190,7 +190,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    '/census/static/',
+    os.path.join(BASE_DIR, "census/static"),
 ]
 
 django_heroku.settings(locals())
