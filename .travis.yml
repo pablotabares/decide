@@ -6,7 +6,7 @@ env:
 before_install:
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+  - echo "$HEROKU_PASSWORD_CABINA" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
 install:
   - pip install -r requirements.txt
 before_script:
@@ -33,7 +33,7 @@ deploy:
     docker push registry.heroku.com/cabina-ortosia/web;
     heroku container:release web --app cabina-ortosia;
     heroku config:set WEB_CONCURRENCY=3;
-    heroku run --app $HEROKU_APP_NAME python manage.py makemigrations;
+    heroku run --app cabina-ortosia python manage.py makemigrations;
     heroku run --app cabina-ortosia python manage.py migrate 
   on:
     branch: ortosia-cabina
