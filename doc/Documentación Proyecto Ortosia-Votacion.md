@@ -423,7 +423,37 @@ git push
 
 ## Comprobación de la integración continua en travis
 
-Una vez hecho el commit accederemos a la web de github para ver nuestro commit
+Una vez hecho el commit accederemos a la web de github para ver nuestro commit y comprobar que nos dice travis sobre nuestro commit.
+
+![Figura 11: Commit](/doc/images/CommitTravis1.PNG)
+
+*Figura 11: Commit*
+
+En la figura 11 podemos ver el circulo naranja de travis que significa que esta ejecutando los tests del proyecto, para ver más sobre travis podriamos clicar en el circulo y darle a details para ver como esta llevando la ejecución. 
+
+Una vez travis nos de el visto bueno, tendremos que mergear las ramas.
+
+## Merge de ramas
+
+Para esto tenemos dos opciones, por consola o por pull request. Para hacerlo por consola:
+
+'''
+git checkout ortosia-votacion-prepro
+git merge ortosia-votacion-develop
+git push
+'''
+
+Para hacer pull request accedemos a https://github.com/pablotabares/decide/pulls y le damos a new pull request. Tendremos que seleccionar las ramas de nuestros repositorio y mergear ortosia-votacion-develop into ortosia-votacion-prepro. Y luego mergeamos nuestras ramas
+
+## Comprobación del despliegue
+
+Tras esto tendremos que hacer lo mismo que anteriormente pero en la rama ortosia-votacion-master, comprobando que travis pasa los tests y hace deploy correctamente. Aquí es importante saber que saldrá en rojo en github debido a que se comparten las variables de entornos en todas las ramas y nosotros tenemos una api key para que solo pueda desplegar los commits del manager en esa rama. Al no tener esa clave como variable de entorno, para no fastidiar el resto de ramas, sale en rojo la integración continua pero hay otro proceso en travis que se ejecuta correctamente y contiene el deploy.
+
+Para ello cuando acabe su ejecución accederemos a https://decide-ortosia-votacion.herokuapp.com/voting/home y comprobaremos que efectivamente los cambios se han realizado correctamente
+
+
+
+
 
 # Conclusiones y trabajo futuro
 
