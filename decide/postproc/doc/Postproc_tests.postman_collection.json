@@ -1,0 +1,691 @@
+{
+	"info": {
+		"_postman_id": "ecfcc50c-f247-4f6c-bd2a-fa161d6ea2dc",
+		"name": "Postproc tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Identity Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d2f06e98-38d4-470f-b746-9cb9e11d5f04",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returned JSON is the expected one\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql([",
+							"    {",
+							"        \"option\": \"Option 1\",",
+							"        \"number\": 1,",
+							"        \"votes\": 5,",
+							"        \"postproc\": 5",
+							"    },",
+							"    {",
+							"        \"option\": \"Option 5\",",
+							"        \"number\": 5,",
+							"        \"votes\": 5,",
+							"        \"postproc\": 5",
+							"    },",
+							"    {",
+							"        \"option\": \"Option 3\",",
+							"        \"number\": 3,",
+							"        \"votes\": 3,",
+							"        \"postproc\": 3",
+							"    },",
+							"    {",
+							"        \"option\": \"Option 4\",",
+							"        \"number\": 4,",
+							"        \"votes\": 2,",
+							"        \"postproc\": 2",
+							"    },",
+							"    {",
+							"        \"option\": \"Option 6\",",
+							"        \"number\": 6,",
+							"        \"votes\": 1,",
+							"        \"postproc\": 1",
+							"    },",
+							"    {",
+							"        \"option\": \"Option 2\",",
+							"        \"number\": 2,",
+							"        \"votes\": 0,",
+							"        \"postproc\": 0",
+							"    }",
+							"]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"IDENTITY\",\n    \"options\": [\n        {\"option\": \"Option 1\", \"number\": 1, \"votes\": 5},\n        {\"option\": \"Option 2\", \"number\": 2, \"votes\": 0},\n        {\"option\": \"Option 3\", \"number\": 3, \"votes\": 3},\n        {\"option\": \"Option 4\", \"number\": 4, \"votes\": 2},\n        {\"option\": \"Option 5\", \"number\": 5, \"votes\": 5},\n        {\"option\": \"Option 6\", \"number\": 6, \"votes\": 1}\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}/postproc/",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"postproc",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Weighted ramdon Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0f924d31-fefb-41d2-a39d-5969a7a1b990",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returned JSON is the expected one\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql([",
+							"    {",
+							"        \"option\": \"Option 1\",",
+							"        \"number\": 1,",
+							"        \"votes\": 1,",
+							"        \"postproc\": true",
+							"    },",
+							"    {",
+							"        \"option\": \"Option 2\",",
+							"        \"number\": 2,",
+							"        \"votes\": 0,",
+							"        \"postproc\": false",
+							"    }",
+							"]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"type\": \"WEIGHTED-RANDOM\",\n            \"options\": [\n                {\"option\": \"Option 1\", \"number\": 1, \"votes\": 1},\n                {\"option\": \"Option 2\", \"number\": 2, \"votes\": 0}\n            ]\n        }"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}/postproc/",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"postproc",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Weighted Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "472d32ca-03da-4e8f-a211-c0c57d555bb4",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returned JSON is the expected one\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql([",
+							"    {",
+							"        \"votes\": 1000,",
+							"        \"option\": \"Option 3\",",
+							"        \"number\": 3,",
+							"        \"weight\": 3,",
+							"        \"postproc\": 3000",
+							"    },",
+							"    {",
+							"        \"votes\": 2000,",
+							"        \"option\": \"Option 1\",",
+							"        \"number\": 1,",
+							"        \"weight\": 1,",
+							"        \"postproc\": 2000",
+							"    },",
+							"    {",
+							"        \"votes\": 1000,",
+							"        \"option\": \"Option 2\",",
+							"        \"number\": 2,",
+							"        \"weight\": 2,",
+							"        \"postproc\": 2000",
+							"    },",
+							"    {",
+							"        \"votes\": 360,",
+							"        \"option\": \"Option 5\",",
+							"        \"number\": 5,",
+							"        \"weight\": 3,",
+							"        \"postproc\": 1080",
+							"    },",
+							"    {",
+							"        \"votes\": 501,",
+							"        \"option\": \"Option 4\",",
+							"        \"number\": 4,",
+							"        \"weight\": 2,",
+							"        \"postproc\": 1002",
+							"    },",
+							"    {",
+							"        \"votes\": 100,",
+							"        \"option\": \"Option 6\",",
+							"        \"number\": 6,",
+							"        \"weight\": 3,",
+							"        \"postproc\": 300",
+							"    }",
+							"]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"type\": \"WEIGHT\",\n            \"options\": [{\n                \"votes\": 2000,\n                \"option\": \"Option 1\",\n                \"number\": 1,\n                \"weight\": 1\n            }, {\n                \"votes\": 1000,\n                \"option\": \"Option 2\",\n                \"number\": 2,\n                \"weight\": 2\n            }, {\n                \"votes\": 1000,\n                \"option\": \"Option 3\",\n                \"number\": 3,\n                \"weight\": 3\n            }, {\n                \"votes\": 501,\n                \"option\": \"Option 4\",\n                \"number\": 4,\n                \"weight\": 2\n            }, {\n                \"votes\": 360,\n                \"option\": \"Option 5\",\n                \"number\": 5,\n                \"weight\": 3\n            }, {\n                \"votes\": 100,\n                \"option\": \"Option 6\",\n                \"number\": 6,\n                \"weight\": 3\n            }]\n        }"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}/postproc/",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"postproc",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borda Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee71a020-bbb9-43bd-82c7-562d3971426a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returned JSON is the expected one\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql({",
+							"    \"Futbol\": 18,",
+							"    \"Baloncesto\": 19,",
+							"    \"Tenis\": 13,",
+							"    \"Natacion\": 15,",
+							"    \"Correr\": 10",
+							"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"type\": \"BORDA\",\n            \"options\": [{\n                \"option\": \"Futbol\",\n                \"positions\": [1, 1, 4, 5, 1]\n            }, {\n                \"option\": \"Baloncesto\",\n                \"positions\": [3, 3, 2, 1, 2]\n            }, {\n                \"option\": \"Tenis\",\n                \"positions\": [5, 2, 5, 2, 3]\n            }, {\n                \"option\": \"Natacion\",\n                \"positions\": [2, 5, 1, 3, 4]\n            }, {\n                \"option\": \"Correr\",\n                \"positions\": [4, 4, 3, 4, 5]\n            }]\n        }"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}/postproc/",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"postproc",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hondt Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f3221cc0-88ba-4abf-8b89-61291728e0f9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returned JSON is the expected one\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql([",
+							"    {",
+							"        \"votes\": 340000,",
+							"        \"option\": \"Option 1\",",
+							"        \"number\": 1,",
+							"        \"postproc\": 3",
+							"    },",
+							"    {",
+							"        \"votes\": 280000,",
+							"        \"option\": \"Option 2\",",
+							"        \"number\": 2,",
+							"        \"postproc\": 3",
+							"    },",
+							"    {",
+							"        \"votes\": 160000,",
+							"        \"option\": \"Option 3\",",
+							"        \"number\": 3,",
+							"        \"postproc\": 1",
+							"    },",
+							"    {",
+							"        \"votes\": 60000,",
+							"        \"option\": \"Option 4\",",
+							"        \"number\": 4,",
+							"        \"postproc\": 0",
+							"    },",
+							"    {",
+							"        \"votes\": 15000,",
+							"        \"option\": \"Option 5\",",
+							"        \"number\": 5,",
+							"        \"postproc\": 0",
+							"    }",
+							"]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"type\": \"HONDT\",\n            \"seats\": 7,\n            \"options\": [{\n                \"votes\": 340000,\n                \"option\": \"Option 1\",\n                \"number\": 1\n            }, {\n                \"votes\": 280000,\n                \"option\": \"Option 2\",\n                \"number\": 2\n            }, {\n                \"votes\": 160000,\n                \"option\": \"Option 3\",\n                \"number\": 3\n            }, {\n                \"votes\": 60000,\n                \"option\": \"Option 4\",\n                \"number\": 4\n            }, {\n                \"votes\": 15000,\n                \"option\": \"Option 5\",\n                \"number\": 5\n            }]\n        }"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}/postproc/",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"postproc",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Balanced gender Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "94b92760-03c7-495c-92c0-f8e5395677d8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returned JSON is the expected one\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql([",
+							"    {",
+							"        \"votes\": 5,",
+							"        \"option\": \"Man 1\",",
+							"        \"number\": 1,",
+							"        \"gender\": \"MALE\",",
+							"        \"postproc\": 1",
+							"    },",
+							"    {",
+							"        \"votes\": 3,",
+							"        \"option\": \"Woman 1\",",
+							"        \"number\": 2,",
+							"        \"gender\": \"FEMALE\",",
+							"        \"postproc\": 2",
+							"    },",
+							"    {",
+							"        \"votes\": 4,",
+							"        \"option\": \"Man 2\",",
+							"        \"number\": 3,",
+							"        \"gender\": \"MALE\",",
+							"        \"postproc\": 3",
+							"    },",
+							"    {",
+							"        \"votes\": 1,",
+							"        \"option\": \"Woman 2\",",
+							"        \"number\": 4,",
+							"        \"gender\": \"FEMALE\",",
+							"        \"postproc\": 4",
+							"    }",
+							"]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"type\": \"GENDER-BALANCED\",\n            \"options\": [{\n                \"votes\": 5,\n                \"option\": \"Man 1\",\n                \"number\": 1,\n                \"gender\": \"MALE\"\n            }, {\n                \"votes\": 4,\n                \"option\": \"Man 2\",\n                \"number\": 3,\n                \"gender\": \"MALE\"\n            }, {\n                \"votes\": 3,\n                \"option\": \"Woman 1\",\n                \"number\": 2,\n                \"gender\": \"FEMALE\"\n            }, {\n                \"votes\": 1,\n                \"option\": \"Woman 2\",\n                \"number\": 4,\n                \"gender\": \"FEMALE\"\n            }]\n        }"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}/postproc/",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"postproc",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Multi question Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "34816541-d2ad-4dd1-8140-82dd5e8b36fc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returned JSON is the expected one\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql([",
+							"    {",
+							"        \"text\": \"First question\",",
+							"        \"options\": [",
+							"            {",
+							"                \"votes\": 6,",
+							"                \"option\": \"Second option\",",
+							"                \"number\": 2,",
+							"                \"postproc\": 6",
+							"            },",
+							"            {",
+							"                \"votes\": 4,",
+							"                \"option\": \"First option\",",
+							"                \"number\": 1,",
+							"                \"postproc\": 4",
+							"            },",
+							"            {",
+							"                \"votes\": 2,",
+							"                \"option\": \"Third option\",",
+							"                \"number\": 3,",
+							"                \"postproc\": 2",
+							"            }",
+							"        ]",
+							"    },",
+							"    {",
+							"        \"text\": \"Second question\",",
+							"        \"options\": [",
+							"            {",
+							"                \"votes\": 8,",
+							"                \"option\": \"Third option\",",
+							"                \"number\": 3,",
+							"                \"postproc\": 8",
+							"            },",
+							"            {",
+							"                \"votes\": 5,",
+							"                \"option\": \"First option\",",
+							"                \"number\": 1,",
+							"                \"postproc\": 5",
+							"            },",
+							"            {",
+							"                \"votes\": 1,",
+							"                \"option\": \"Second option\",",
+							"                \"number\": 2,",
+							"                \"postproc\": 1",
+							"            }",
+							"        ]",
+							"    }",
+							"]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"type\": \"MULTIPLE\",\n            \"questions\": [{\n                \"text\": \"First question\",\n                \"options\": [{\n                    \"votes\": 4,\n                    \"option\": \"First option\",\n                    \"number\": 1\n                }, {\n                    \"votes\": 6,\n                    \"option\": \"Second option\",\n                    \"number\": 2\n                }, {\n                    \"votes\": 2,\n                    \"option\": \"Third option\",\n                    \"number\": 3\n                }]\n            }, {\n                \"text\": \"Second question\",\n                \"options\": [{\n                    \"votes\": 5,\n                    \"option\": \"First option\",\n                    \"number\": 1\n                }, {\n                    \"votes\": 1,\n                    \"option\": \"Second option\",\n                    \"number\": 2\n                }, {\n                    \"votes\": 8,\n                    \"option\": \"Third option\",\n                    \"number\": 3\n                }]\n            }]\n        }"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}/postproc/",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"postproc",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Drop quota Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "34816541-d2ad-4dd1-8140-82dd5e8b36fc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returned JSON is the expected one\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql([",
+							"    {",
+							"                \"votes\": 391000,",
+							"                \"option\": \"Option 1\",",
+							"                \"number\": 1,",
+							"                \"postproc\": 8",
+							"            }, {",
+							"                \"votes\": 311000,",
+							"                \"option\": \"Option 2\",",
+							"                \"number\": 2,",
+							"                \"postproc\": 7",
+							"            }, {",
+							"                \"votes\": 184000,",
+							"                \"option\": \"Option 3\",",
+							"                \"number\": 3,",
+							"                \"postproc\": 4",
+							"            }, {",
+							"                \"votes\": 73000,",
+							"                \"option\": \"Option 4\",",
+							"                \"number\": 4,",
+							"                \"postproc\": 2",
+							"            }, {",
+							"                \"votes\": 27000,",
+							"                \"option\": \"Option 5\",",
+							"                \"number\": 5,",
+							"                \"postproc\": 0",
+							"            }, {",
+							"                \"votes\": 12000,",
+							"                \"option\": \"Option 6\",",
+							"                \"number\": 6,",
+							"                \"postproc\": 0",
+							"            }, {",
+							"                \"votes\": 2000,",
+							"                \"option\": \"Option 7\",",
+							"                \"number\": 7,",
+							"                \"postproc\": 0",
+							"}",
+							"]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"type\": \"DROOP\",\n            \"seats\": 21,\n            \"options\": [{\n                \"votes\": 391000,\n                \"option\": \"Option 1\",\n                \"number\": 1\n            }, {\n                \"votes\": 311000,\n                \"option\": \"Option 2\",\n                \"number\": 2\n            }, {\n                \"votes\": 184000,\n                \"option\": \"Option 3\",\n                \"number\": 3\n            }, {\n                \"votes\": 73000,\n                \"option\": \"Option 4\",\n                \"number\": 4\n            }, {\n                \"votes\": 27000,\n                \"option\": \"Option 5\",\n                \"number\": 5\n            }, {\n                \"votes\": 12000,\n                \"option\": \"Option 6\",\n                \"number\": 6\n            }, {\n                \"votes\": 2000,\n                \"option\": \"Option 7\",\n                \"number\": 7\n            }]\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}/postproc/",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"postproc",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sainte lague Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "34816541-d2ad-4dd1-8140-82dd5e8b36fc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returned JSON is the expected one\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(",
+							" {",
+							"    \"Option A\": 3,",
+							"    \"Option B\": 2,",
+							"    \"Option C\": 1,",
+							"    \"Option D\": 1",
+							"},",
+							");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"type\": \"SAINTE-LAGUE\",\n            \"seats\": 7,\n            \"options\": [{\n                \"option\": \"Option A\",\n                \"votes\": 340000\n            }, {\n                \"option\": \"Option B\",\n                \"votes\": 280000\n            }, {\n                \"option\": \"Option C\",\n                \"votes\": 160000\n            }, {\n                \"option\": \"Option D\",\n                \"votes\": 60000\n            }]\n}"
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}/postproc/",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"postproc",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
