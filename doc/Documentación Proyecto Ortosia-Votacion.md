@@ -24,9 +24,10 @@ Enlaces de interés:
 * [Entorno de desarrollo](#Entorno-de-desarrollo)
 * [Gestión de incidencias](#Gestión-de-incidencias)
 * [Gestión de depuración](#Gestión-de-depuración)
-* [Gestión de liberaciones, despliegues y entregas](#Gestión-de-liberaciones,-despliegues-y-entregas)
-* [Mapa de herramientas](#Mapa-de-herramientas)
+* [Gestión de liberaciones, despliegues y entregas](#Gestión-de-liberaciones-despliegues-y-entregas)
 * [Gestión del código fuente](#Gestión-del-código-fuente)
+* [Gestión de la construcción e integración continua](#Gestión-de-la-construcción-e-integración-continua)
+* [Mapa de herramientas](#Mapa-de-herramientas)
 * [Ejercicio de propuesta de cambio](#Ejercicio-de-propuesta-de-cambio)
 * [Conclusiones y trabajo futuro](#Conclusiones-y-trabajo-futuro)
 
@@ -223,6 +224,12 @@ Los merges a la rama master de nuestro módulo, es decir, Ortosia-Votacion-Prepr
 
 Ejemplo: https://github.com/pablotabares/decide/pull/145
 
+# Gestión de la construcción e integración continua
+
+En todas las ramas de nuestro repositorio se ha usado travis ci para el control de la construcción e integración continua. En nuestro caso, en todas las ramas particulares de nuestro módulo, una vez realizado un commit y subido al repositorio, travis se encargaría de construir el sistema y ejecutar los tests comprobando así si hay algún error y notificándolo vía e-mail.
+
+En caso de haber errores y travis estar correctamente configurado, se deberá revisar el log de travis y arreglar el código para que no haya errores al ser integrados con otros módulos. La construcción en nuestras ramas se llevará a cabo mediante los comandos de django, mientras que en ortosia-prepro o la master se realizaran con docker. En la siguiente sección, podremos ver como influye travis en la automatización del despliegue.
+
 # Mapa de herramientas
 
 IDE: 			PyCharm Community Edition
@@ -240,13 +247,53 @@ Travis CI permite que la actualización se manifieste en el servicio de desplieg
 
 # Ejercicio de propuesta de cambio
 
-Añadir importancia a las questions:
+En esta sección se explicará como realizar un cambio en nuestro proyecto con la misma configuración que hemos seguido nosotros como si se incorporara un desarrollador nuevo y no tuviera nada configurado.
 
-Antes de comenzar a trabajar en cualquier aspecto relacionado con el proyeycto, en primer lugar, lo que debemos hacer es asegurarnos de que estamos en la rama pertinente a nuestro desarrollo, ortosia-votacion-develop con el comando:
+## Preparación máquina virtual
+El primer paso, será descargar virtual box para el sistema operativo que se esté utilizando, se puede descargar en el siguiente enlace: https://www.virtualbox.org/wiki/Downloads
+
+Una vez descargada la máquina virtual tendremos que descargar la imagen que se encuentra en [Entorno de desarrollo](#Entorno-de-desarrollo). Tras esto importaremos la imagen en virtual box siguiendo los pasos de las figuras 1-3:
+
+![Figura 1: Importando imagen](/doc/images/MV1.PNG)
+
+*Figura 1: Importando imagen*
+
+![Figura 2: Importando imagen](/doc/images/MV2.PNG)
+
+*Figura 2: Importando imagen*
+
+![Figura 3: Iniciando imagen](/doc/images/MV3.PNG)
+
+*Figura 3: Iniciando imagen*
+
+Más explicitamente los pasos que se han seguido en las figuras 1-3 han sido: abrir virtualbox>archivo>importar servicio virtualizado> clicar en la carpeta>buscar la imagen que nos hemos descargado de drive>importarla>seleccionarla en nuestras imagenes>darle a iniciar. Una vez dentro se nos pedirá una contraseña, todas las contraseñas de la máquina virtual es 'practica'. 
+
+Tras esto, convendría instalar [travis](##Instalación-de-travis) y [heroku](#Instalación-de-heroku), aunque no es completamente necesario, porque ambos estan ya configurados en el repositorio que vamos a descargar.
+
+## Descargando el proyecto
+
+Lo siguiente que tenemos que hacer es abrir el proyecto, para ello, nos abriremos una carpeta nueva en el escritorio y abriremos una terminal dentro dando clic derecho y abrir terminal dentro de la carpeta como vemos en la figura 4:
+
+![Figura 4: Abriendo terminal](/doc/images/Terminal.PNG)
+
+*Figura 4: Abriendo terminal*
+
+El comando a escribir para descargar el proyecto sería:
+
+```
+git clone https://github.com/pablotabares/decide.git --branch ortosia-votacion-develop
+```
+
+Eso nos descarga automáticamente el proyecto en la rama que usamos para el desarrollo, aún así, si nos equivocamos de rama los siguientes comandos nos pueden ser de utilidad.
+
+Para asegurarnos de que estamos en la rama pertinente a nuestro desarrollo, ortosia-votacion-develop con el comando:
 ```
 git branch
 ```
-Este comando nos devuelve las ramas, y la rama en la que nos encontamos.
+Otro comando que hace lo mismo y además te indica si estas commits por delante o detras del repo sería:
+```
+git status
+```
 Si no estamos en nuestra rama, ejecutamos:
 ```
 git checkout ortosia-votacion-develop
@@ -256,28 +303,127 @@ A continuación, nos aseguramos de que tenemos nuestro repositorio actualizado, 
 git pull 
 ```
 para así, evitar conflictos de concurrencia, al olvidarnos tener la rama actualizada.
-Determinamos los cambios y clases en las que vamos a necesitar hacer modificaciones para las propuestas, que en este caso, son: models.py, para modificar nuestros modelos, views.py, para implementar la gestión del nuevo atributo, en este caso tenemos que modificar, el método createVoting, para la creación de una votación mediante el panel de administración, y el método votingView, para la gestión del mismo en las llamadas de nuestra API, al igual que modificar el la clase serializers.py para que correspondan con nuestros modelos y test.py para actualizar los tests, y añadir si fuera necesario, alguno nuevo.
-Una vez identificados los cambios necesarios para su implementación, gestionamos primero lo necesario para su implementación por el panel de administración.
-Modificamos el modelo, y realizamos los comandos:
+
+Cabe destacar que todos esos comandos han de ser ejecutados en una carpeta que contenga el .git, es decir, que una vez instalado el proyecto tendremos que introducir la terminal en la carpeta del proyecto, para ello se ejecutará el siguiente comando:
+
 ```
+cd decide
+```
+
+Antes de abrir pycharm (nuestro IDE) y aprovechando que estamos en esa carpeta instalaremos los requisitos de python por si han cambiado desde la última vez ejecutando:
+
+```
+pip3 install -r requirements.txt
+```
+
+## Abriendo el proyecto
+
+Para este apartado necesitaremos abrir pycharm, es el programar que se está indicando con una flecha azul en la figura 5:
+
+![Figura 5: Abriendo Pycharm](/doc/images/Pycharm1.PNG)
+
+*Figura 5: Abriendo Pycharm*
+
+Si hay un proyecto abierto, tendremos que abrir uno nuevo pulsando en file>open tal y como se ve en la figura 6, en caso contrario pycharm nos mostrará una ventana con 3 opciones y una de ella será open.
+
+![Figura 6: Abriendo Pycharm](/doc/images/Pycharm2.PNG)
+
+*Figura 6: Abriendo Pycharm*
+
+Una vez se nos abra la ventana de open, tendremos que seleccionar el proyecto que hemos descargado, es importante que seleccionemos el segundo decide como se verá en la figura 7, en caso contrario, pycharm nos daría problemas al importar ciertas librerías
+
+![Figura 7: Abriendo Pycharm](/doc/images/Pycharm3.PNG)
+
+*Figura 7: Abriendo Pycharm*
+
+## Configurando la base de datos
+
+Se recomienda, a partir de ahora, dejar de usar el terminal por defecto de ubuntu y usar el terminal del propio pycharm, que estará en el directorio correcto, para ello seleccionamos el botón que se ve en la figura 8:
+
+![Figura 8: Abriendo terminal en pycharm](/doc/images/Pycharm4.PNG)
+
+*Figura 8: Abriendo terminal en Pycharm*
+
+Lo primero que haremos será crear nuestro local settings en base al local setting de ejemplo, podemos copiar y pegar de manera usual o ejecutando el siguiente comando en consola:
+
+```
+cp local_settings.example.py local_settings.py
+```
+
+Ahora tendremos que ejecutar una serie de comando en el terminal para configurar nuestra base de datos, que serán:
+
+```
+sudo su - postgres
+psql -c "create user decide with password 'decide'"
+psql -c "alter user decide createdb"
+psql -c "create database decide owner decide"
+logout
+python3 ./manage.py migrate
 python3 ./manage.py makemigrations
 python3 ./manage.py migrate
 ```
-Con estos dos, se modifica la base de datos conforme a los nuevos modelos
-Realizamos los cambios necesarios en el view.
-Tras esto, creamos los test pertinentes.
-Cuando veamos que esta funcional, ejecutamos el servidor, y hacemos las pruebas con la aplicación desplegada en local.
+
+Para comprobar que el modelo se ha creado correctamente, podríamos usar:
+
+```
+python3 ./manage.py inspectdb
+```
+
+Por último tendríamos que crearnos un superusuario para hacer operaciones en django, con el comando:
+
+```
+python3 ./manage.py createsuperuser
+```
+
+Debido a que la máquina virtual tiene dos pythons instalados es importante que se indique el 3 para que coja esa versión.
+
+
+## Realizando un cambio
+
+Una vez tengamos el proyecto configurado, deberíamos analizar que cambio queremos hacer y el impacto que conlleve. En este caso haremos un cambio menor para comprobarlo fácilmente. Primero de todo lanzaremos el server con el siguiente comando:
+
 ```
 python3 ./manage.py runserver
 ```
-Si todo está correcto, y la funcionalidad responde de la manera esperada, modificamos las clases serializers.py para que estén conforme a los modelos, y el método VotingView, para que gestione el método de la API con la nueva funcionalidad.
-Finalmente, realizamos los test.
+
+Cambiaremos una vista en html para ver el cambio rápidamente, para ello, primero accederemos a la vista que vamos a editar desde el navegador: http://localhost:8000/voting/home
+
+Veremos una vista como la siguiente:
+
+![Figura 9: Vista](/doc/images/Vista1.PNG)
+
+*Figura 9: Vista de la web*
+
+En la figura 9 vemos el html que se muestra antes del cambio, para el cambio accederemos al modulo de voting>templates>home, vamos por ejemplo a cambiar el titulo de la web, guardamos pulsando ctrl+s y volvemos a acceder a la web.
+
+![Figura 10: Vista](/doc/images/Vista2.PNG)
+
+*Figura 10: Vista de la web cambiada*
+
+En la figura anterior, se puede observar que el titulo ha pasado de Home a Home: Cambio realizado
+
+## Comprobando el impacto del cambio
+
+Para comprobar que el cambio no ha afectado a lo que ya teníamos ejecutaremos los tests con el siguiente comando
+
+```
+python3 ./manage.py test
+```
+
+si todo se ejecuta correctamente entonces subiremos los cambios al repositorio.
+
+## Subiendo al repositorio
+
 Cuando todo esté completamente correcto, subimos los cambios a nuestro repositorio:
 ```
 git add <nombre_de_archivo_cambiado>
 git commit -m “Titulo del mensaje” -m “Cuerpo del mensaje”
 git push
 ```
+
+## Comprobación de la integración continua en travis
+
+Una vez hecho el commit accederemos a la web de github para ver nuestro commit
 
 # Conclusiones y trabajo futuro
 
