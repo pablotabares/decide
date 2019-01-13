@@ -113,7 +113,7 @@ Las entregas se realizan subiendo el código al repositorio.
 
 ---
 ## Mapa de herramientas
-![Mapa de herramientas](/Documentacion/images/tools_map.jpg)
+![Mapa de herramientas](/Documentacion/tools_map.jpg)
 Visual Code Studio es nuestro IDE, como se puntualiza en el apartado [Entorno de desarrollo](#Entorno-de-desarrollo). Una vez hemos realizado los cambios pertinentes en el código hemos seguido dos sistemas: o bien hecho commit y push directamente desde el apartado de Visual Code Studio o por medio de la consola en la carpeta raíz del proyecto. Al realizar el push, Travis monta el proyecto en un entorno virtual y ejecuta las pruebas para ver que el código esté en óptimas condiciones. Si no da error, Travis se conecta con heroku y juntos se encargan de desplegar el. Una vez está desplegado, es accesible para su utilización por medio de un link que Heroku proporciona.
 
 ---
