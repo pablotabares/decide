@@ -1,9 +1,9 @@
 import requests
 from .models import Auth, Mixnet, ConnectionStatus
 import re
-import datetime
 from autotask.tasks import periodic_task
-
+from datetime import datetime, date, timedelta
+from django.utils import timezone
 # Returns a dictionary with key/value pairs authority/status
 
 def pingAuths():
@@ -62,7 +62,7 @@ def mixnetStatus():
 #Every 5 minutes, we will store the status of all the authorities
 @periodic_task(seconds=300)
 def updateConnections():
-     # Retrieves all authorities from the database
+    #Retrieves all authorities from the database
     auths = Auth.objects.all()
 
     regexp = re.compile(".*localhost.*")
@@ -79,5 +79,12 @@ def updateConnections():
                 status = False
         else:
             status = True
-        c = ConnectionStatus(auth=auth, date=datetime.datetime.now(), status=status)
+        c = ConnectionStatus(auth=auth, date=timezone.now(), status=status)
         c.save()
+
+
+#Deleting older objects. We choose a max of 1000 records for the log
+@periodic_task(seconds=600)
+def deleteOldConnections():
+    while ConnectionStatus.objects.all().count() >= 1000:
+        ConnectionStatus.objects.order_by('date')[0].delete()
