@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,10 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^##ydkswfu0+=ofw0l#$kv^8n)0$i(qd&d&ol#p9!b$8*5%j1+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -56,6 +56,14 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = [
     'base.backends.EmailBackend',
     'base.backends.AuthBackend',
+    # 'social_core.backends.open_id.OpenIdAuth',
+    # 'social_core.backends.open_id.GoogleOpenId',
+    # 'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.github.GithubOAuth2',
+    # 'social_core.backends.facebook.FacebookOAuth2',
+    #
+    # 'django.contrib.auth.backends.ModelBackend',
+
 ]
 
 MODULES = [
@@ -70,8 +78,9 @@ MODULES = [
     'voting',
 ]
 
-#BASEURL = 'http://localhost:8000'
-BASEURL='https://decide-ortosia-mixnet-adru.herokuapp.com'
+BASEURL = 'https://decide-ortosia.herokuapp.com'
+# BASEURL = 'http://localhost:8000'
+#BASEURL = 'https://decide-ortosia-visualizacion.herokuapp.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -96,6 +105,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'social_django.context_processors.backends',
+                # 'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -155,7 +166,9 @@ STATIC_URL = '/static/'
 
 # number of bits for the key, all auths should use the same number of bits
 KEYBITS = 256
-APIS={}
+
+APIS = {}
+
 try:
     from local_settings import *
 except ImportError:
@@ -164,8 +177,20 @@ except ImportError:
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
 
-import django_heroku
-django_heroku.settings(locals())
-
 AUTOTASK_IS_ACTIVE = False
 
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "authentication/sent_emails")
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'noreplay.decide@gmail.com'
+EMAIL_HOST_PASSWORD = 'pruebadecide'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/census/static/',
+]
+
+django_heroku.settings(locals())

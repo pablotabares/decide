@@ -1,28 +1,51 @@
 language: python
-python:
-- 3.6.6
+python: 
+  - "3.6.6"
+env:
+  - DJANGO=2.0 DB=postgres
+before_install:
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
 install:
-- pip install -r requirements.txt
+  - pip install -r requirements.txt
+before_script:
+  - cd decide
+  - cp local_settings.example.py local_settings.py
+  - psql -c "create user decide with password 'decide'"
+  - psql -c "create database decide owner decide"
+  - python manage.py makemigrations
+  - python manage.py migrate
+script:
+  - cd ..
+  - sonar-scanner
+  - cd decide
+  - coverage run --source=. manage.py test
+  - coverage report
+  - coveralls
+  - cd ../docker
+  - docker build -t ortosiacabina/decide-ortosia .
+  - docker tag ortosiacabina/decide-ortosia registry.heroku.com/$HEROKU_APP_NAME/web
+deploy:
+  provider: script
+  script: 
+    docker push ortosiacabina/decide-ortosia;
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+    heroku container:release web --app $HEROKU_APP_NAME;
+    heroku config:set WEB_CONCURRENCY=3;
+    heroku run --app $HEROKU_APP_NAME python manage.py makemigrations;
+    heroku run --app $HEROKU_APP_NAME python manage.py migrate 
+  on:
+    branch: ortosia-prepro
 sudo: required
 services:
-- docker
-script:
-- cd docker
-- docker exec -ti decide_web ./manage.py test
-- cd ..
+  - docker
+  - postgresql
 addons:
+  postgresql: "9.6"
   sonarcloud:
     organization: "pablotabares-github"
+global:
+  - PGPORT=5432
 notifications:
   email: false
-before_install:
-- cd docker
-- docker-compose up -d
-- cd ..
-deploy:
-  provider: heroku
-  api_key:
-    secure: nn83EDm0F9Dy7WQhLEKiIrezePBjuDxpx4po9GsyBTqGVMcQ7JM/RgjaNmSoPRNBckmZ00PMnYH+46PI4Rqy/OfcgmNZV7qJKV0idYLEO+AAqtVX3nZVfDuhOUq9gY29Ncuf+zSCoNIK/OVIRy4nkz0TDmg9ZM77QZog2CUiVug/Ywh0bDBlaL0XF901iYFaZl2p9w6BcrwP7whmChMHuPh+WHGiZaZ/xTB/30VnLPQVk3AlUxlHMRf2LH7i+2Q9XvWafltYrpT8dWltgy/CGG7fCRDKmIQjX+UT2fiGku8ZyPMdLeVOurrKtLojH5WGJZm+lMTHvN79vISuhKAFldU3RQ4lXJ3ScflVvs0MTip34FK3j+9waWDJ4NGQJJrO4W7Ohbu90LO1mZ9VZE+UbugCEQRIzZtAuj5eEhZej6BXkAJqcC4sFsPpqek6H9S4h2+oXOszaFTLyJs1NuRYYGVZxXeb0k7idjQI/P4cHvlj8x7uNfFwyl8A+b9vB01/rHKCarHCU9BBzyenE9wYDEBa1oY2wTv5uDqIIrEtzFh8NHLCTG0IjvsbC5v9qswdDxfzkNt3Asy3XSnlfzXSkXp0ZYL+9IrqZ9JG4cFd0oj9ho1+nwfsvJOdOYgboT8pvOUdfp4uikEN89G1R7V+2vedngzHJ/fadCy0sQKeIZs=
-  app: decide-ortosia-mixnet-adru
-  on: ortosia-mixnet
-  skip_cleanup: true

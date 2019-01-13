@@ -8,10 +8,9 @@ from .models import Voting
 from .filters import StartedFilter
 
 
-def start(modeladmin, request, queryset):
+def start(ModelAdmin, request, queryset):
     for v in queryset.all():
-        token = request.session.get('auth-token', '')
-        v.create_pubkey(token)
+        v.create_pubkey()
         v.start_date = timezone.now()
         v.save()
 
@@ -30,21 +29,23 @@ def tally(ModelAdmin, request, queryset):
 
 class QuestionOptionInline(admin.TabularInline):
     model = QuestionOption
+    fk_name = "question"
 
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [QuestionOptionInline]
 
 
+
 class VotingAdmin(admin.ModelAdmin):
-    list_display = ('name', 'start_date', 'end_date')
-    readonly_fields = ('start_date', 'end_date', 'pub_key',
+    list_display = ('name', 'start_date', 'end_date', 'isWeighted','start_date')
+    readonly_fields = ('end_date', 'pub_key',
                        'tally', 'postproc')
     date_hierarchy = 'start_date'
     list_filter = (StartedFilter,)
-    search_fields = ('name', )
+    search_fields = ('name',)
 
-    actions = [ start, stop, tally ]
+    actions = [start, stop, tally]
 
 
 admin.site.register(Voting, VotingAdmin)

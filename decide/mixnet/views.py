@@ -50,6 +50,7 @@ class MixnetViewSet(viewsets.ModelViewSet):
          * key: { "p": int, "g": int } / nullable
         """
 
+
         try:
             # Retrieves the token from the request
             token = request.data.get("token")
@@ -134,6 +135,7 @@ class Shuffle(APIView):
          * msgs: [ [int, int] ]
          * pk: { "p": int, "g": int, "y": int } / nullable
          * position: int / nullable
+
         """   
         try:
             # Retrieves the token from the request
@@ -148,6 +150,7 @@ class Shuffle(APIView):
 
         # Attempts to get the position of this authority in the chain call; if it's not there, this is the first auth and thus
         # it must be zero.
+
         position = request.data.get("position", 0)
         mn = get_object_or_404(
             Mixnet, voting_id=voting_id, auth_position=position)
@@ -197,6 +200,7 @@ class Decrypt(APIView):
          * pk: { "p": int, "g": int, "y": int } / nullable
          * position: int / nullable
         """
+
         try:
             # Retrieves the token from the request
             token = request.data.get("token")

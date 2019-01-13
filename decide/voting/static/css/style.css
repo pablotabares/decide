@@ -1,0 +1,30 @@
+.text-home-lg{
+    font-size: 20pt;
+}
+
+p{
+    margin-bottom: 0.5rem;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 200px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 100px;
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+}

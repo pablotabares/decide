@@ -2,19 +2,266 @@
 {% load i18n static %}
 
 {% block content %}
-    <h1>{{ voting.id }} - {{ voting.name }}</h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    {% if not voting.start_date %}
-        <h2>{% trans 'Voting not started' %}</h2>
-    {% elif not voting.end_date %}
-        <h2>{% trans 'Voting is opened' %}</h2>
-    {% else %}
-        <h2>{% trans 'Results: ' %}</h2>
-        <ul>
-            {% for option in voting.postproc %}
-                <li>{{option.option}}: {{option.postproc}} <span>({{option.votes}})</span></li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+<body class="bg-secondary">
+    <div class="container" id="maindiv">
+        <h1 class="text-center bg-primary"><div id="name">{{ voting.name }}</div></h1>
+
+        {% if not voting.start_date %}
+            <h2 class="text-danger">{% trans ' Voting not started' %}</h2>
+        {% elif not voting.end_date %}
+            <h2 class="text-warning">{% trans ' Voting is opened' %}</h2>
+        {% else %}
+
+            <h2> The voting has finished! You can see the final results below:</h2>
+            <hr>
+            <h2 class="text-left bg-secondary">{% trans ' Voting data: ' %}</h2>
+            </br>
+
+            <ul>  
+                <h4><strong>{% trans 'Question: ' %}</strong> {{voting.question.desc}}</h4>
+                <h4><strong>{% trans 'Description: ' %}</strong> {{voting.desc}}</h4>
+                <h4><strong>{% trans 'Start date: ' %}</strong> {{voting.start_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.start_date|slice:"11:19"}}</h4>
+                <h4><strong>{% trans 'End date: ' %}</strong> {{voting.end_date|slice:"0:10"}} &nbsp&nbsp&nbsp{{voting.end_date|slice:"11:19"}}</h4>
+                <h4><strong>{% trans 'Total votes: ' %}</strong> <div id="tally">{{voting.tally|length}}</div></h4>
+                <h4><strong>{% trans 'People registered in the Census: ' %}</strong><div id="censusVoters">{{census.voters|length}}</div></h4>
+            </br>
+            </ul>
+            <hr>
+            <h2 class="text-left bg-secondary">{% trans ' Results table: ' %}</h2>
+
+            <div data-spy="scroll">
+                <ul>
+                    <table class="table table-bordered table-hover table-condensed table-responsive">
+                        <thead class="bg-success">
+                        <tr>
+                            <th>Options</th>
+                            <th>Total votes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {% for option in voting.postproc %}
+                            <td>{{option.option}}</td>
+                            <td>{{option.votes}}</td>
+                        </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </ul>
+            </div>
+        {% endif %}
+        <hr>
+        <h2 class="text-left bg-secondary">{% trans ' Graph results: ' %}</h2>
+    
+
+    <!-- buttons to show graphs -->
+
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Voting Doughnut-Chart</a>
+                </h4>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse in">
+                <div style="width: 500px; height:300px; margin:0 auto;">
+                    <canvas id="my4Chart" style="border:1px solid #000000;"></canvas> 
+                    <button id="changeChart">Change Doughnut Chart Type</button>
+                </div>
+                
+            </div>
+        </div> 
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Voting Bar-Chart</a>
+            </h4>
+          </div>
+          <div id="collapse1" class="panel-collapse collapse">
+            <div style="width: 500px; height:300px; margin:0 auto;">
+                <canvas id="myChart" style="border:1px solid #000000;"></canvas> 
+            </div>
+          </div>
+        </div> 
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Voting Cake-Chart</a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div style="width: 500px; height:300px; margin:0 auto; ">
+                    <canvas id="my3Chart" style="border:1px solid #000000;"></canvas>
+                </div>
+            </div>
+        </div> 
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Participation</a>
+            </h4>
+          </div>
+          <div id="collapse3" class="panel-collapse collapse">
+            <div style="width: 500px; height:300px; margin:0 auto; ">
+                <canvas id="my2Chart" style="border:1px solid #000000;"></canvas>
+            </div>
+            </div>
+        </div> 
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+<script>
+    var myChart = document.getElementById('myChart').getContext('2d');
+    var my2Chart = document.getElementById('my2Chart').getContext('2d');
+    var my3Chart = document.getElementById('my3Chart').getContext('2d');
+    var my4Chart = document.getElementById('my4Chart').getContext('2d');
+    var allDivTd = document.getElementById("maindiv").getElementsByTagName("TD");
+    var title = document.getElementById("name").innerHTML;
+    var census = parseInt(document.getElementById("censusVoters").innerHTML);
+    var tally = parseInt(document.getElementById("tally").innerHTML)
+
+    var data = [];
+    var labels = [];
+    var label = title;
+    
+for(var i = 0; i < allDivTd.length; i++){
+    var td = allDivTd[i];
+    if(i%2 != 0){
+        data.push(parseInt(td.innerHTML));
+    }else{
+        labels.push(td.innerHTML);
+    }
+}
+
+    // barchart.
+    var firstChart = new Chart(myChart,{
+        type:'bar', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
+        data:{
+            labels,
+            datasets:[{
+            label,
+            data , 
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
+            }]
+        },
+        options: {
+        responsive:true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        legend:{display:false}
+        }
+    });
+
+    var thirdChart = new Chart(my3Chart,{
+        type:'polarArea', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
+        data:{
+            labels,
+            datasets:[{
+            label,
+            data , 
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
+            }]
+        },
+        options: {responsive:true, maintainAspectRatio: true}
+    });
+
+    var fourthChart = new Chart(my4Chart,{
+        type:'doughnut', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
+        data:{
+            labels,
+            datasets:[{
+            label,
+            data , 
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
+            }]
+        },
+        options: {responsive:true, maintainAspectRatio: true}
+    });
+
+
+    document.getElementById('changeChart').addEventListener('click', function() {
+			if (window.fourthChart.options.circumference === Math.PI) {
+				window.fourthChart.options.circumference = 2 * Math.PI;
+				window.fourthChart.options.rotation = -Math.PI / 2;
+			} else {
+				window.fourthChart.options.circumference = Math.PI;
+				window.fourthChart.options.rotation = -Math.PI;
+			}
+
+			window.fourthChart.update();
+		});
+</script>
+
+<script>
+
+    data = [];
+    data[0]= tally;
+    data[1]= census-tally;
+
+    // Doghnut chart.
+    var secondChart = new Chart(my2Chart,{
+        type:'doughnut', //bar, horizontalBar, pie, line ,doughnut, radar, polarArea
+        data:{
+            labels: ["Participants", "Non Participants"],
+            datasets:[{
+            label:"Voters",
+            data, 
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
+            }]
+        },
+        options: {responsive: true, maintainAspectRatio: true}
+    });
+
+</script>
+
+</body>
 
 {% endblock %}
