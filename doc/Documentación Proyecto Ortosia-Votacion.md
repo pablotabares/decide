@@ -58,7 +58,9 @@ Los módulos participantes en el desarrollo del proyecto son los siguientes:
 * Ortosia-visualizer: Visualizador de los votos.
 * Ortosia-voting: Votaciones.
 
-Durante el proceso de integración continua, hemos tratado de conectar todos los módulos en desarrollo por un grupo. Principalmente, nuestra relación directa es con Authentication, Booth, Mixnet y Postprocesado.
+Durante el proceso de integración continua, hemos tratado de conectar todos los módulos en desarrollo por un grupo. Principalmente, nuestra relación directa es con Authentication, Booth, Mixnet y Postprocesado. 
+
+Las funcionalidades que se han realizado en nuestro módulo son:
 
 1.	Automatización de la creación de una votación tipo referéndum.
 1.	Posibilidad de aumentar el número de preguntas dentro de una votación.
@@ -127,7 +129,7 @@ sudo snap install --classic heroku
 ```
 
 Cabe destacar que para los requisitos de python hemos usado el requirements.txt que hay en nuestro proyecto,
-el cual PyCharm lo instalará automatáticamente si está en el directorio del proyecto y si no se puede instalar mediante el siguiente comando, ejecutado en el directorio donde se encuentre el fichero requirements.txt:
+el cual PyCharm lo instalará automatáticamente si está en el directorio del proyecto y en caso contrario, se puede instalar mediante el siguiente comando (ejecutado en el directorio donde se encuentre el fichero requirements.txt):
 
 ```
 pip3 install -r requirements.txt
@@ -137,27 +139,23 @@ La máquina virtual que usamos cada miembro inicialmente puede ser descargada en
 
 # Gestión de incidencias
 
-Hemos gestionado las incidencias a través de los issues de github. El formato definido para 
-dichas incidencias es el ya utilizado por la mayoría de módulos, entre ellos nosotros, es: [Nombre del módulo que la crea] - Breve titulo descriptivo.
-Por otro lado, en todos los módulos se ha acordado añadir como etiqueta al módulo al que va dirigido esa issue. La descripción deberá ser lo más
-extensa posible, dando datos de manera concisa, como por ejemplo contener trazas de excepción y ser lo más explícito posible.
+Hemos gestionado las incidencias a través de los issues de github. El formato definido para dichas incidencias es el utilizado por la mayoría de módulos, entre ellos nosotros, es: [Nombre del módulo que la crea] - Breve titulo descriptivo.
 
-En nuestro módulo hemos considerado también otras características sobre los issues como: añadir etiquetas de la prioridad y el tipo
-de incidencia que es (cambio, mejora, fallo...). Además habrá que asignar al desarrollador de nuestro módulo que se encarge de la resolución de dicha incidencia. 
+Por otro lado, en todos los módulos se ha acordado añadir como etiqueta el módulo al que va dirigido esa issue. La descripción deberá ser lo más extensa posible, dando datos de manera concisa, como por ejemplo contener trazas de excepción y estar redactado de manera explícita.
 
-Por último en nuestro módulo se creo un proyecto en github para controlar el estado de las incidencias,
-tenemos dos estados: Working (incidencias en proceso de resolución) y DONE (incidencias resueltas).
+En nuestro módulo hemos considerado otras características sobre los issues como: añadir etiquetas de la prioridad y el tipo de incidencia que es (cambio, mejora, fallo...). Además habrá que asignar al desarrollador de nuestro módulo que se encarge de la resolución de dicha incidencia. 
+
+Por último en nuestro módulo se creo un proyecto en github para controlar el estado de las incidencias, tenemos dos estados: Working (incidencias en proceso de resolución) y DONE (incidencias resueltas). Puede consultarse este proyecto en: https://github.com/pablotabares/decide/projects/4
 
 En cuanto a las incidencias internas, simplemente se crean y se asignan al miembro del grupo que tuviera que encargarse de dicha parte,
 para finalizar dicha incidencia hay dos opciones: 
 
-1. Si se arregla mediante un commit, se deberá referenciar en el mismo a la incidencia, para que se cierre automáticamente o, al menos, para llevar
-un histórico de los pasos que ha seguido esa incidencia.
+1. Si se arregla mediante un commit, se deberá referenciar en el mismo a la incidencia, para que se cierre automáticamente o, al menos, para llevar un histórico de los pasos que ha seguido esa incidencia.
 1. En otro caso, si la issue no se arregla mediante un commit, o se debe añadir más información , aunque haya commits referenciados se deberá cerrar manualmente tras el comentario
 
-Una vez cerrada se pasará a DONE en nuestro proyecto. La política de finalización de incidencias será igual para las incidencias externas. En cuanto a la creación de las externas
-se acordó que una vez creada el issue se notificaría al manager de cada módulo para que se lo asignarán en dicho grupo. Además de los commits también se podrán
-referenciar otros issues en caso de que uno dependa de otro. En caso de no realizar una incidencia se deberá de finalizar con la etiqueta "Wontfix" y explicar por qué no se ha realizado.
+Una vez cerrada se pasará a DONE en nuestro proyecto. La política de finalización de incidencias será igual para las incidencias externas. 
+
+En cuanto a la creación de las externas se acordó que una vez creada el issue se notificaría al manager de cada módulo para que se lo asignarán en dicho grupo. Además de los commits también se podrán referenciar otros issues, en caso de que uno dependa de otro. Si finalmenteno se va a resolver una incidencia se deberá de finalizar con la etiqueta "Wontfix" y explicar por qué no se ha llevado a cabo.
 
 Algunos ejemplos de la resolución de incidencias son:
 
@@ -170,9 +168,7 @@ Algunos ejemplos de la resolución de incidencias son:
 
 # Gestión de depuración
 
-Para la gestión de depuración, una vez se encuentre una excepción, se deberá crear un issue y explicar en que situación se genera esa incidencia
-y detallar, si se conoce, el motivo para que ocurra. Una vez creada se deberá investigar sobre el error, intentar aislarlo en código mediante la herramiena de depuración (Debug) 
-de PyCharm y una vez se resuelva se deberá asociar el commit a la incidencia y explicar en el commit el motivo del error y cómo se ha solucionado, incluyendo la fuente en caso de haber consultado información externa.
+Para la gestión de depuración, una vez se encuentre una excepción, se deberá crear un issue y explicar en que situación se genera esa incidencia y detallar, si se conoce, el motivo para que ocurra. Una vez creada se deberá investigar sobre el error, intentar aislarlo en código mediante la herramiena de depuración (Debug) de PyCharm y una vez se resuelva se deberá asociar el commit a la incidencia y explicar en el commit el motivo del error y cómo se ha solucionado, incluyendo la fuente en caso de haber consultado información externa.
 
 Un ejemplo de depuración de código se puede ver en esta issue: https://github.com/pablotabares/decide/issues/100
 
@@ -182,23 +178,21 @@ Un ejemplo de depuración de código se puede ver en esta issue: https://github.
 El protocolo de liberación de cambios que hemos seguido consiste en:
 
 - Alfa: Implementación de la funcionalidad asignada. Una vez realizada, se guardan los 
-  cambios en el repositorio de desarrollo de nuestro módulo (github.com/pablo-tabares/decide-ortosia-develop)
+  cambios en el repositorio de desarrollo de nuestro módulo (https://github.com/pablo-tabares/decide-ortosia-develop)
 - Beta: Una vez unificados todos los cambios en el repositorio de desarrollo, se ponen a prueba
   los cambios realizados con la herramienta Travis CI, con unos tests ya modificados para comprobar
   las nuevas implementaciones. Si los tests se completan de manera satisfactoria, se realiza un commit
-  al repositorio master de nuestro módulo (github.com/pablotabares/ortosia-votacion-prepro)
+  al repositorio master de nuestro módulo (https://github.com/pablotabares/ortosia-votacion-prepro)
 - Versión estable: una vez está el contenido en nuestro repositorio master, se realiza un pull-request 
-  al repositorio master en común con el resto de módulos (github.com/pablotabares/decide)
+  al repositorio master en común con el resto de módulos (https://github.com/pablotabares/decide)
  
 ## Despliegue:
-Como se menciona anteriormente, el despligue se realiza sobre la plataforma Heroku. Para que la aplicación se despligue de manera satisfactoria en dicha plataforma, deberá pasar los tests específicos para que queden registrados los cambios que se han realizado en el proyecto, dichos tests están autmoatizados con la herramienta Travis CI, explicada en el [Mapa de herramientas](#Mapa-de-herramientas). 
+El despligue se realiza sobre la plataforma Heroku. Para que la aplicación se despligue de manera satisfactoria en dicha plataforma, deberá pasar los tests específicos para que queden registrados los cambios que se han realizado en el proyecto, dichos tests están autmoatizados con la herramienta Travis CI, explicada en el [Mapa de herramientas](#Mapa-de-herramientas). Esto se debe a que el despliegue es, también, automático en nuestra rama Ortosia-Votacion-Prepro mediante el uso de Travis.
 
 ## Entregables:
-Hemos considerado que los entregables eran los milestones, en nuestro caso, 3 milestones.
-Tienen una nomenclatura interna en el equipo como Entregable MX, siendo X el número del milestone en cuestión. 
-En cada milestone, se realizaba un control de seguimiento de los avances del módulo en cuestión y recibir
-feedback, en forma de proposición de mejoras para el siguiente milestone. Hemos tratado de implementar las mejoras propuestas
-como la creación de un label propio para los issues concernientes a nuestro módulo, como se ha explicado en la sección de [Gestión de incidencias](#Gestión-de-incidencias) o una estructura definida para los títulos de los issues, como se explicará en la sección de [Gestión del código fuente](#Gestión-del-código-fuente)
+Hemos considerado que los entregables eran los milestones, en nuestro caso, 3 milestones. Siguen una nomenclatura interna en el equipo como Entregable MX, siendo X el número del milestone en cuestión. 
+
+En cada milestone, se realizaba un control de seguimiento de los avances del módulo en cuestión y recibir feedback, en forma de proposición de mejoras para el siguiente milestone. Hemos tratado de implementar las mejoras propuestas como la creación de un label propio para los issues concernientes a nuestro módulo, como se ha explicado en la sección de [Gestión de incidencias](#Gestión-de-incidencias) o una estructura definida para los títulos de los issues, como se explicará en la sección de [Gestión del código fuente](#Gestión-del-código-fuente)
 
 # Gestión del código fuente
 
@@ -232,18 +226,14 @@ En caso de haber errores y travis estar correctamente configurado, se deberá re
 
 # Mapa de herramientas
 
-IDE: 			PyCharm Community Edition
-Control de versiones: 	Git
-Repositorio: 		Github
-Control de repositorio: Terminal 
-Integración continua:	Travis CI
-Despliegue: 		Heroku
+* IDE: 			PyCharm Community Edition
+* Control de versiones: 	Git
+* Repositorio: 		Github
+* Control de repositorio: Terminal 
+* Integración continua:	Travis CI
+* Despliegue: 		Heroku
 
-Para el desarrollo del código, asi como el uso para el resto de herramientas mencionadas en la sección de [Entorno de Desarrollo](#Entorno-de-desarrollo),
-utilizaremos el IDE PyCharm, centralizando el uso del resto de herramientas. Utilizaremos el Terminal que incluye PyCharm para hacer las pertinentes acciones relacionadas
-con el repositorio alojado en Github. Una vez desarrollados los cambios en el IDE, para el control de los commits, se realizarán pruebas automatizadas, con el uso de la herramienta 
-Travis CI, a la cual se le especificará la rutina a realizar para comprobar que no contiene ningún error, de acuerdo con los tests especificados. Si dicha comprobación es satisfactoria, 
-Travis CI permite que la actualización se manifieste en el servicio de despliegue que utilizamos que hemos mencionado en la sección de [Despliegue](##Despliegue). 
+Para el desarrollo del código, asi como el uso para el resto de herramientas mencionadas en la sección de [Entorno de Desarrollo](#Entorno-de-desarrollo), utilizaremos el IDE PyCharm, centralizando el uso del resto de herramientas. Utilizaremos el Terminal que incluye PyCharm para hacer las pertinentes acciones relacionadas con el repositorio alojado en Github. Una vez desarrollados los cambios en el IDE, para el control de los commits, se realizarán pruebas automatizadas, con el uso de la herramienta  Travis CI que se comunicará con github y a la cual se le especificará la rutina a realizar para comprobar que no contiene ningún error, de acuerdo con los tests especificados. Si dicha comprobación es satisfactoria,  Travis CI permite que la actualización se manifieste en el servicio de despliegue que utilizamos que hemos mencionado en la sección de [Despliegue](##Despliegue). 
 
 # Ejercicio de propuesta de cambio
 
@@ -437,11 +427,11 @@ Una vez Travis CI cambie a color verde, señal de que todo ha salido correctamen
 
 Para esto tenemos dos opciones, por consola o por pull request. Para hacerlo por consola:
 
-'''
+```
 git checkout ortosia-votacion-prepro
 git merge ortosia-votacion-develop
 git push
-'''
+```
 
 Para hacer pull request accedemos a https://github.com/pablotabares/decide/pulls y le damos a new pull request. Tendremos que seleccionar las ramas de nuestros repositorio y mergear ortosia-votacion-develop into ortosia-votacion-prepro. Y luego combinamos nuestras ramas
 
@@ -450,9 +440,6 @@ Para hacer pull request accedemos a https://github.com/pablotabares/decide/pulls
 Tras esto tendremos que hacer lo mismo que anteriormente pero esta vez en la rama ortosia-votacion-master, comprobando que Travis CI realiza satisfactoriamente los test y hace despliega (deploy) correctamente. Es importante saber que saldrá en rojo en GitHub debido a que se comparten las variables de entornos en todas las ramas y nosotros tenemos una api key para que solo pueda desplegar los commits del manager en esa rama. Al no tener esa clave como variable de entorno, para no provocar errores en el resto de ramas, sale en rojo la integración continua pero hay otro proceso en Travis CI que se ejecuta correctamente y contiene el despliegue.
 
 Para ello, cuando acabe su ejecución accederemos a https://decide-ortosia-votacion.herokuapp.com/voting/home y comprobaremos que efectivamente los cambios se han realizado correctamente
-
-
-
 
 
 # Conclusiones y trabajo futuro
@@ -465,10 +452,4 @@ lo que nos ha ayudado a mejorar en nuestras capacidades de comunicación con equ
 Como propuestas de mejoras, creemos que sería mejor utilizar un tutorial a seguir en cada práctica, debido al bajo nivel previo en el uso de Terminal en cursos anteriores,
 ante cualquier error, aunque sea menor, necesitas de una cantidad de tiempo para arreglarlo en el que pierdes el hilo del desarrollo de la práctica. También proponemos dar la 
 opción del uso de interfaces gráficas para el uso de Git, de manera complementaria al uso de Terminal para el control de versiones, ya que es mucho más intuitivo que el uso de la terminal de comandos.
-
-
-
-
-
-
 
