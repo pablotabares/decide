@@ -11,7 +11,7 @@ install:
   - pip install -r requirements.txt
 before_script:
   - cd decide
-  - cp local_settings.example.py local_settings.py
+  - cp local_settings.travis.py local_settings.py
   - psql -c "create user decide with password 'decide'"
   - psql -c "create database decide owner decide"
   - python manage.py makemigrations
@@ -29,11 +29,11 @@ script:
 deploy:
   provider: script
   script: 
-    docker push ortosiacabina/decide;
-    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
-    heroku container:release web --app $HEROKU_APP_NAME;
-    heroku config:set WEB_CONCURRENCY=3;
-    heroku run --app $HEROKU_APP_NAME python manage.py migrate 
+  - docker push ortosiacabina/decide;
+  - docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+  - heroku container:release web --app $HEROKU_APP_NAME;
+  - heroku config:set WEB_CONCURRENCY=3;
+  - heroku run --app $HEROKU_APP_NAME python manage.py migrate 
   on:
     branch: ortosia-cabina
 sudo: required
