@@ -281,10 +281,14 @@ git push
 
 # Conclusiones y trabajo futuro
 
-Hemos obtenido una base bastante completa de numerosas herramientas utilizadas en la actualidad, citadas en la sección de [Mapa de herramientas],(#Mapa-de-herramientas)
+Hemos obtenido una base bastante completa de numerosas herramientas utilizadas en la actualidad, citadas en la sección de [Mapa de herramientas](#Mapa-de-herramientas),
 como Django para desarrollo de servicios web, Heroku para despliegue de las aplicaciones o Travis CI para desarrollar rutinas de control para la integración continua, 
 además del enfoque al trabajo es útil ya que es una primera toma de contacto en el desarrollo de proyectos con un mayor número de grupos participantes para su desarrollo, 
 lo que nos ha ayudado a mejorar en nuestras capacidades de comunicación con equipos externos a nuestro propio módulo, dándole una vista realista al proyecto en el que hemos trabajado.
+
+Como propuestas de mejoras, creemos que sería mejor utilizar un tutorial a seguir en cada práctica, debido al bajo nivel previo en el uso de Terminal en cursos anteriores,
+ante cualquier error, aunque sea menor, necesitas de una cantidad de tiempo para arreglarlo en el que pierdes el hilo del desarrollo de la práctica. También proponemos dar la 
+opción del uso de interfaces gráficas para el uso de Git, de manera complementaria al uso de Terminal para el control de versiones, ya que es mucho más intuitivo que el uso de la terminal de comandos.
 
 
 
