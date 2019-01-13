@@ -105,3 +105,11 @@ class Mixnet(models.Model):
             next_auths = next_auths[1:]
 
         return next_auths
+
+class ConnectionStatus(models.Model):
+    auth = models.ForeignKey(Auth, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    status = models.BooleanField()
+
+    def __str__(self):
+        return (str(self.status)+ ", "+str(self.auth) +", date: " +str(self.date))

@@ -1,16 +1,15 @@
 from Crypto.Util.number import inverse
 from django.views import View
 
-
 from django.conf import settings
-from django.shortcuts import get_object_or_404
+
 import hashlib
 from mixnet.zkp_form import ZKPForm
 from mixnet.mixcrypt import rand
 
-
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseForbidden, HttpResponse
+
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,16 +17,19 @@ from django.http import HttpResponseForbidden
 from django.http import HttpResponseBadRequest
 
 from .serializers import MixnetSerializer
-from .models import Auth, Mixnet, Key
+from .models import Auth, Mixnet, Key, ConnectionStatus
 from base.serializers import KeySerializer, AuthSerializer
 from mixnet.populate import createQuestion, createAnswers, createVotation, createUsers
 from base import mods
 from mixnet.forms import LoginForm
 from django.views.generic import TemplateView
 
-
-from django.shortcuts import render
 from django.shortcuts import render_to_response
+
+from mixnet.control_panel_utils import pingAuths, mixnetStatus, updateConnections
+
+
+
 """
 This class defines a series of related views, with each view specified by a function.
 """
@@ -42,7 +44,6 @@ class MixnetViewSet(viewsets.ModelViewSet):
     def create(self, request):
         """
         Creates a new mixnet and public key. A mixnet is a series of authorities and certain common properties.
-
          * auths: [ {"name": str, "url": str} ]
          * voting: id
          * position: int / nullable
@@ -302,8 +303,8 @@ class Result(View):
 class Populate(TemplateView):
     # HTML template to be used
     template_name = 'mixnet_populate.html'
-    
-    # Data necessary for the webpage to display
+
+	# Data necessary for the webpage to display
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -318,12 +319,14 @@ class Populate(TemplateView):
         context['question'] = question
         context['mixnet_url'] = settings.APIS.get('mixnet', settings.BASEURL)
 
-        return context
+	    return context
 
+		
     def get(self, request):
         form = LoginForm()
         return render(request, 'populate_login.html', {'form': form})
 
+		
     def post(self, request):
         # Extracts data from form
         form = LoginForm(request.POST)
@@ -352,3 +355,68 @@ class Populate(TemplateView):
             print(e)
             return HttpResponse("Unexpected server error")
         return HttpResponse("Unexpected server error")
+
+		
+
+# Class that defines the workings of the control panel
+class ControlPanel(TemplateView):
+    # HTML template to be used
+    template_name = 'mixnet_control_panel.html'
+	
+	# Data necessary for the webpage to display
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+	
+        # Retrieve the list of authorities and their ping
+        auths = pingAuths()
+
+        # Retrieve the list of mixnets and their status
+        mixnets = mixnetStatus()
+
+        # Retrieve the last connections of the authorities
+        auth_status = {}
+        for auth in auths:
+            auth_status[auth] = ConnectionStatus.objects.all().order_by('-date').filter(auth=auth)
+        
+        context['auths'] = auths
+        context['mixnets'] = mixnets
+        context['auth_status'] = auth_status
+        context['mixnet_url'] = settings.APIS.get('mixnet', settings.BASEURL)
+
+		return context
+		
+		
+	def get(self, request):
+        form = LoginForm()
+        return render(request, 'login_mixnet.html', {'form': form})
+
+		
+    def post(self, request):
+        # Extracts data from form
+        form = LoginForm(request.POST)
+        data = {
+            "username": form.data["username"],
+            "password": form.data["password"],
+        }
+        
+        # Logs in
+        token = mods.post('authentication/login', baseurl=settings.APIS.get('authentication', settings.BASEURL), json=data)
+        
+        # Tries to get user data
+        try:
+            user = mods.post('authentication/getuser', baseurl=settings.APIS.get('authentication', settings.BASEURL), json={"token": token["token"]})
+            # If it's not an admin
+            if(not user["is_staff"]):
+                return render(request, 'login_mixnet.html', {'form': form, "error": "You are not an admin. Begone!"})
+            # If it's an admin
+            else:
+                return render(request, "mixnet_control_panel.html", self.get_context_data())
+        except KeyError as k:
+            # If incorrect user/pass
+            return render(request, 'login_mixnet.html', {'form': form, "error": "Incorrect username or password"})
+        except Exception as e:
+            # If unknown error
+            print(e)
+            return HttpResponse("Unexpected server error")
+        return HttpResponse("Unexpected server error")
+
