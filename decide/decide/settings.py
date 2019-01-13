@@ -69,7 +69,7 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'https://decide-ortosia-censo.herokuapp.com/'
+BASEURL = 'http://localhost:8000'
 #BASEURL = 'https://decide-ortosia-visualizacion.herokuapp.com'
 
 MIDDLEWARE = [
@@ -166,8 +166,6 @@ except ImportError:
 INSTALLED_APPS = INSTALLED_APPS + MODULES
 
 STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "census/static"),
 ]
-
-import django_heroku
-django_heroku.settings(locals())
