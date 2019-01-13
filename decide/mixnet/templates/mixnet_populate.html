@@ -1,0 +1,84 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <style>
+        .center {
+        margin: auto;
+        width: 50%;
+        }
+
+        h2 {
+            font-family: Arial;
+            color:#264670;
+            text-align: center;
+            font-weight: bold;
+        }
+        h3 {
+            font-family: Arial;
+            color:#14253b;
+            text-align: center;
+            font-size: 20px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+{% load i18n static %}
+
+{% block content %}
+
+<!-- Title -->
+<br/>
+<h2>Populate</h2>
+<br/><br/>
+
+<h3 id="users">The following objects have been successfully created:</h3>
+
+<h3 id="answers">Question</h3>
+<div class="center">
+<table class="table">
+
+    <tr>
+    <td>{{ question }}</td>
+    </tr>
+</table>
+</div>
+
+<h3 id="answers">Options</h3>
+<div class="center">
+<table class="table">
+
+        {% for answer in answers %}
+    <tr>
+    <td>{{ answer.option }}</td>
+    </tr>
+        {% endfor %}
+</table>
+</div>
+
+<h3 id="users">Users</h3>
+<div class="center">
+<table class="table">
+    {% for user in users %}
+    <tr>
+    <td>{{ user.username }}</td>
+    </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+<h3 id="answers">Voting</h3>
+<div class="center">
+<table class="table">
+
+    <tr>
+    <td>{{ votation }}</td>
+    </tr>
+</table>
+</div>
+
+{% endblock %}
+
+{% block extrabody %}
+{% endblock %}

@@ -1,0 +1,23 @@
+<h1>Create options</h1>
+<form method="post">
+    {% csrf_token %}
+    <h2 class="mt-3">Question</h2>
+    <div class="form-row">
+        <div class="form-group col-lg-3"><p>Description</p>{{form.description}}</div>
+    </div>
+    <h2 class="mt-3">Options</h2>
+    {% for i in form.lista %}
+    <fieldset class="form-row">
+        <div class="form-group col-lg-3"><p>Option text</p>{{i.option}}</div>
+        <div class="form-group col-lg-3"><p>Weight</p>{{i.weight}}</div>
+    </fieldset>
+    {% endfor %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <button class="btn btn-info" id="add">Add another option to your question</button>
+            </div>
+        </div>
+    </div>
+</form>

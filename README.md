@@ -1,3 +1,8 @@
+[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![Build Status](https://travis-ci.org/pablotabares/decide.svg?branch=ortosia-prepro)](https://travis-ci.org/pablotabares/decide)
+[![Coverage Status](https://coveralls.io/repos/github/pablotabares/decide/badge.svg?branch=ortosia-prepro)](https://coveralls.io/github/pablotabares/decide)
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=pablotabares_decide&metric=alert_status)](https://sonarcloud.io/dashboard?id=pablotabares_decide)
+
 Plataforma voto electrónico educativa
 =====================================
 

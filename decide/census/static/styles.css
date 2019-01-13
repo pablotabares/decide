@@ -1,0 +1,117 @@
+
+.box{
+    padding:60px 0px;
+}
+
+.col-lg-5 {
+    width: 50% !important; 
+}
+
+.box-part{
+    border-radius:0;
+    padding:60px 10px;
+    margin:30px 0px;
+    height: 23em;
+}
+.text{
+    margin:20px 0px;
+}
+
+.accion{
+    padding: 20px 20px;
+}
+
+.row .columna:nth-child(odd){
+    border: 4px solid #f23232;
+}
+
+.row .columna:nth-child(even){
+    border: 4px solid #0066b2;
+}
+
+.big-title {
+    margin-bottom: 3em;
+}
+h3.big_title {
+    font-size: 2em;
+    color: #212121;
+    text-transform: uppercase;
+    position: relative;
+    text-align: center;
+    font-weight: 700;
+}
+
+h3.big_title:after {
+    content: '';
+    background: #0066b2;
+    height: 4px;
+    width: 7%;
+    position: absolute;
+    top: 46%;
+    left: 36%;
+}
+
+/*!
+ TITLE TEXT 2
+*/
+.big-title2 {
+    margin-bottom: 3em;
+}
+h4.big_title2 {
+    font-size: 1.5em;
+    color: #212121;
+    text-transform: uppercase;
+    position: relative;
+    text-align: center;
+    font-weight: 700;
+}
+
+h4.big_title2:after {
+    content: '';
+    background: #f23232;
+    height: 4px;
+    width: 7%;
+    position: absolute;
+    top: 46%;
+    left: 56%;
+}
+
+.fa{
+    display:inline-block;
+    font:normal normal normal 14px/1 FontAwesome;
+    font-size:inherit;
+    text-rendering:auto;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale
+}
+
+.fa-user:before{
+    content:"\f007";
+}
+
+.card {position: relative; border-radius: 3px; background-color: #fff;color: #4f5256;border: 1px solid #f2f2f2;margin-bottom: 16px;background:#fff;}
+.card-header{ padding: 16px;margin:0px;}
+.card-body {position: relative; padding: 16px;}
+
+.gaadiex-list {list-style-type: none; margin: 0;padding: 0;}
+.gaadiex-list>.gaadiex-list-item {padding: 0 22px;}
+.gaadiex-list-item-img  {
+    float: left;
+    width: 58px;
+    height: 58px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+.gaadiex-list-item i  {
+    float: left;
+    font-size:48px;
+    width: 58px;
+    height: 58px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+.border-b-1 {border-bottom: 1px solid rgba(162,162,162,.16);}

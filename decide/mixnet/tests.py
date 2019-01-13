@@ -38,8 +38,8 @@ class MixnetCase(APITestCase):
         self.assertEqual(response.status_code, 200)
 
         key = response.json()
+        
         self.key = key
-
         self.assertEqual(type(key["g"]), int)
         self.assertEqual(type(key["p"]), int)
         self.assertEqual(type(key["y"]), int)
