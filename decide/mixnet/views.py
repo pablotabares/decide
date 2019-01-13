@@ -318,8 +318,8 @@ class Populate(TemplateView):
         context['votation'] = votation
         context['question'] = question
         context['mixnet_url'] = settings.APIS.get('mixnet', settings.BASEURL)
+        return context
 
-	    return context
 
 		
     def get(self, request):
@@ -382,11 +382,10 @@ class ControlPanel(TemplateView):
         context['mixnets'] = mixnets
         context['auth_status'] = auth_status
         context['mixnet_url'] = settings.APIS.get('mixnet', settings.BASEURL)
-
-		return context
+        return context
 		
 		
-	def get(self, request):
+    def get(self, request):
         form = LoginForm()
         return render(request, 'login_mixnet.html', {'form': form})
 
