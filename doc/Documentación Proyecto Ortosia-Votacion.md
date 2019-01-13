@@ -268,7 +268,7 @@ Una vez descargada la máquina virtual tendremos que descargar la imagen que se 
 
 Más explicitamente los pasos que se han seguido en las figuras 1-3 han sido: abrir virtualbox>archivo>importar servicio virtualizado> clicar en la carpeta>buscar la imagen que nos hemos descargado de drive>importarla>seleccionarla en nuestras imagenes>darle a iniciar. Una vez dentro se nos pedirá una contraseña, todas las contraseñas de la máquina virtual es 'practica'. 
 
-Tras esto, convendría instalar [travis](##Instalación-de-travis) y [heroku](#Instalación-de-heroku), aunque no es completamente necesario, porque ambos estan ya configurados en el repositorio que vamos a descargar.
+Tras esto, convendría instalar [travis](#Instalación-de-travis) y [heroku](#Instalación-de-heroku), aunque no es completamente necesario, porque ambos estan ya configurados en el repositorio que vamos a descargar.
 
 ## Descargando el proyecto
 
