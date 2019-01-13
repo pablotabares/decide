@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'autotask',
 
     'corsheaders',
     'django_filters',
@@ -162,5 +163,9 @@ except ImportError:
 
 
 INSTALLED_APPS = INSTALLED_APPS + MODULES
+
 import django_heroku
 django_heroku.settings(locals())
+
+AUTOTASK_IS_ACTIVE = True
+
