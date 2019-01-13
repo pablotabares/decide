@@ -1,5 +1,14 @@
+from Crypto.Util.number import inverse
+from django.views import View
+
+
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+import hashlib
+from mixnet.zkp_form import ZKPForm
+from mixnet.mixcrypt import rand
+
+
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,9 +19,13 @@ from .models import Auth, Mixnet, Key
 from base.serializers import KeySerializer, AuthSerializer
 from base import mods
 
+
+from django.shortcuts import render
+from django.shortcuts import render_to_response
 """
 This class defines a series of related views, with each view specified by a function.
 """
+
 class MixnetViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows mixnets to be viewed or edited.
@@ -128,7 +141,8 @@ class Shuffle(APIView):
         # Attempts to get the position of this authority in the chain call; if it's not there, this is the first auth and thus
         # it must be zero.
         position = request.data.get("position", 0)
-        mn = get_object_or_404(Mixnet, voting_id=voting_id, auth_position=position)
+        mn = get_object_or_404(
+            Mixnet, voting_id=voting_id, auth_position=position)
 
         # Retrieves the vote and public key info
         msgs = request.data.get("msgs", [])
@@ -146,7 +160,7 @@ class Shuffle(APIView):
         # Prepares the shuffled and encrypted messages
         data = {
             "msgs": msgs,
-            "pk": { "p": p, "g": g, "y": y },
+            "pk": {"p": p, "g": g, "y": y},
         }
 
         # chained call to the next auth to gen the key
@@ -158,7 +172,7 @@ class Shuffle(APIView):
         if resp:
             msgs = resp
 
-        return  Response(msgs)
+        return Response(msgs)
 
 
 class Decrypt(APIView):
@@ -184,7 +198,8 @@ class Decrypt(APIView):
         # Attempts to get the position of this authority in the chain call; if it's not there, this is the first auth and thus
         # it must be zero.
         position = request.data.get("position", 0)
-        mn = get_object_or_404(Mixnet, voting_id=voting_id, auth_position=position)
+        mn = get_object_or_404(
+            Mixnet, voting_id=voting_id, auth_position=position)
 
 	    # Retrieves the encrypted votes and public key info
         msgs = request.data.get("msgs", [])
@@ -210,7 +225,7 @@ class Decrypt(APIView):
 	    # Prepares the partially disencrypted votes
         data = {
             "msgs": msgs,
-            "pk": { "p": p, "g": g, "y": y },
+            "pk": {"p": p, "g": g, "y": y},
         }
 
         # chained call to the next auth to gen the key
@@ -221,4 +236,47 @@ class Decrypt(APIView):
         if resp:
             msgs = resp
 
-        return  Response(msgs)
+        return Response(msgs)
+
+
+def fs_form(request):
+    if request.method == 'POST':
+        form = ZKPForm(request.POST)
+        if form.is_valid():
+
+            secret = form.cleaned_data['secret']
+            prime = int(form.cleaned_data['prime'])
+            hash_secret = int(hashlib.md5(
+                secret.encode()).hexdigest()[:8], 16) % prime
+            random1 = form.cleaned_data['r1']
+            random2 = form.cleaned_data['r2']
+            g = int(pow(rand(prime), 2, prime))
+            # g^x mod p
+            y = pow(g, hash_secret, prime)
+            # g^v mod p
+            t = pow(g, random1, prime)
+            # r
+            r = (random1 - random2 * hash_secret)
+            if (r < 0):
+                res = (inverse(pow(g, -r, prime), prime)
+                       * pow(y, random2, prime)) % prime
+            else:
+                res = (pow(g, r, prime) * pow(y, random2, prime)) % prime
+            boolean = t == res
+            if (t == res):
+                b = 'Alice has proven she knows the secret'
+            else:
+                b = 'Alice has not proven she knows the secret'
+            objects = {'secret': secret, 'prime': prime, 'hash_secret': hash_secret,
+                       'random1': random1, 'random2': random2,
+                       'g': g, 'y': y, 't': t, 'r': r, 'res': res, 'b': b}
+            return render_to_response('result.html', context=objects)
+    else:
+        form = ZKPForm()
+    return render(request, 'zkp.html', {'form': form})
+
+
+class Result(View):
+    def post(self, request, *args, **kwargs):
+
+        return render(request, 'result.html', context={})
