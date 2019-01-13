@@ -24,17 +24,17 @@ script:
   - coverage report
   - coveralls
   - cd ../docker
-  - docker build -t ortosiacabina/decide-ortosia .
-  - docker tag ortosiacabina/decide-ortosia registry.heroku.com/$HEROKU_APP_NAME/web
+  - docker build -t ortosiacabina/decide-prepro .
+  - docker tag ortosiacabina/decide-prepro registry.heroku.com/$HEROKU_PREPRO_APP_NAME/web
 deploy:
   provider: script
   script: 
-    docker push ortosiacabina/decide-ortosia;
-    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
-    heroku container:release web --app $HEROKU_APP_NAME;
-    heroku config:set WEB_CONCURRENCY=3 --app $HEROKU_APP_NAME;
-    heroku run --app $HEROKU_APP_NAME python manage.py makemigrations;
-    heroku run --app $HEROKU_APP_NAME python manage.py migrate 
+    docker push ortosiacabina/decide-prepro;
+    docker push registry.heroku.com/$HEROKU_PREPRO_APP_NAME/web;
+    heroku container:release web --app $HEROKU_PREPRO_APP_NAME;
+    heroku config:set WEB_CONCURRENCY=3 --app $HEROKU_PREPRO_APP_NAME;
+    heroku run --app $HEROKU_PREPRO_APP_NAME python manage.py makemigrations;
+    heroku run --app $HEROKU_PREPRO_APP_NAME python manage.py migrate 
   on:
     branch: ortosia-prepro
 sudo: required
