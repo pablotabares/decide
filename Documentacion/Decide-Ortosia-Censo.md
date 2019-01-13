@@ -11,7 +11,7 @@
 ### Enlaces de interés:
 *   [Rama de ortosia-censo](https://github.com/pablotabares/decide/tree/ortosia-censo)
 *   [Subsistema desplegado](https://decide-ortosia-censo.herokuapp.com/census/list)
-*   [Diario del grupo](#)
+*   [Diario del grupo](https://github.com/pablotabares/decide/blob/ortosia-censo/Documentacion/Diario%20del%20grupo.pdf)
 
 ---
 ## Índice
