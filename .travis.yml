@@ -29,14 +29,14 @@ script:
 deploy:
   provider: script
   script: 
-    docker push ortosiacabina/decide-cabina2;
-    docker push registry.heroku.com/$HEROKU_CABINA2_APP_NAME/web;
-    heroku container:release web --app $HEROKU_CABINA2_APP_NAME;
-    heroku config:set WEB_CONCURRENCY=3 -app $HEROKU_CABINA2_APP_NAME;
-    heroku run --app $HEROKU_CABINA2_APP_NAME python manage.py makemigrations;
-    heroku run --app $HEROKU_CABINA2_APP_NAME python manage.py migrate 
+    docker push ortosiacabina/decide-ortosia;
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+    heroku container:release web --app $HEROKU_APP_NAME;
+    heroku config:set WEB_CONCURRENCY=3 --app $HEROKU_APP_NAME;
+    heroku run --app $HEROKU_APP_NAME python manage.py makemigrations;
+    heroku run --app $HEROKU_APP_NAME python manage.py migrate 
   on:
-    branch: ortosia-cabina2
+    branch: master
 sudo: required
 services:
   - docker
