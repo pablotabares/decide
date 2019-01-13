@@ -15,6 +15,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import HttpResponseForbidden
+from django.http import HttpResponseBadRequest
 
 from .serializers import MixnetSerializer
 from .models import Auth, Mixnet, Key
@@ -60,6 +61,7 @@ class MixnetViewSet(viewsets.ModelViewSet):
             return HttpResponseForbidden("Forbidden")
         
         # Authorities: different authorities in charge of shuffling and decrypting. Can be in the same system or not
+        
         auths = request.data.get("auths")
 
         # Voting the mixnet is assigned to, specified by an ID
@@ -149,6 +151,11 @@ class Shuffle(APIView):
         mn = get_object_or_404(
             Mixnet, voting_id=voting_id, auth_position=position)
 
+        
+        if(mn.local_shuffle_count >= mn.local_authority_count):
+            return HttpResponseBadRequest("This mixnet has already shuffled once")
+        mn.local_shuffle_count = mn.local_shuffle_count + 1
+        mn.save()
         # Retrieves the vote and public key info
         msgs = request.data.get("msgs", [])
         pk = request.data.get("pk", None)
@@ -206,7 +213,12 @@ class Decrypt(APIView):
         mn = get_object_or_404(
             Mixnet, voting_id=voting_id, auth_position=position)
 
-	    # Retrieves the encrypted votes and public key info
+	    
+        if(mn.local_decrypt_count >= mn.local_authority_count):
+            return HttpResponseBadRequest("This mixnet has already decrypted once")
+        mn.local_decrypt_count = mn.local_decrypt_count + 1
+        mn.save()
+        # Retrieves the encrypted votes and public key info
         msgs = request.data.get("msgs", [])
         pk = request.data.get("pk", None)
 

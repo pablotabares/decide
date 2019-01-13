@@ -29,6 +29,16 @@ class Mixnet(models.Model):
                                related_name="mixnets_pub",
                                on_delete=models.SET_NULL)
 
+    
+    # How many authorities are using the same database
+    # This number will usually be 1
+    local_authority_count = models.PositiveIntegerField(default = 1)
+
+    # How many times has the decryption been done
+    local_decrypt_count = models.PositiveIntegerField(default = 0)
+
+    # How many times has the shuffling been done
+    local_shuffle_count = models.PositiveIntegerField(default = 0)
     # String representation of a mixnet
     def __str__(self):
         auths = ", ".join(a.name for a in self.auths.all())
