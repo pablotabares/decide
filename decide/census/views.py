@@ -1,5 +1,7 @@
 from django.db.utils import IntegrityError
+from django.shortcuts import redirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework.response import Response
 from django.views.generic.list import ListView

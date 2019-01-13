@@ -41,11 +41,14 @@ services:
   - postgresql
 addons:
   postgresql: "9.6"
+global:
   sonarcloud:
     organization: "pablotabares-github"
-global:
   - PGPORT=5432
 notifications:
   email: false
-
+before_install:
+ - cd docker
+ - docker-compose up -d
+ - cd ..
 
