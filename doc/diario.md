@@ -107,6 +107,8 @@ En este documento se detalla el trabajo realizado por todos los integrantes del 
 * 4 de enero
   * *3 horas* - **Todos los integrantes de este grupo** tienen una reunión para estructurar una primera versión de la memoria colectiva del trabajo.
   * *4 horas* - **Ángel Pérez Llorente** crea una nueva rama llamada ortosia-votacion-prepro con una versión anterior de ortosia-votacion debido a numerosos errores y el rechazo del *pull request* a ortosia-prepro. En la nueva rama se realiza el *pull request*.
+* 5 de enero
+ * *4 horas* - **Ángel Pérez Llorente** investiga como mandar tokens de auth en django y hace una integración con mixnet y auth para mandarles el token de admin
 * 7 de enero
   * *4 horas* - **José Ángel Lozano Pineda** modifica el método tally para evitar que se pueda realizar tally dos veces en una misma votación.
 * 10 de enero
@@ -118,5 +120,6 @@ En este documento se detalla el trabajo realizado por todos los integrantes del 
   * *3 horas* - **José Luis Sánchez Montiel** unifica el diario de grupo en un solo documento.
 * 13 de enero
   * *2 horas* - **José Luis Sánchez Montiel** termina de unificar el diario de grupo en un solo documento.
+  * *3 horas* - **Ángel Pérez Llorente** termina de la documentación del proyecto y añade imagenes.
 
  
