@@ -13,16 +13,16 @@ En este documento se detalla el trabajo realizado por todos los integrantes del 
   * *30 minutos* - **Ángel Pérez Llorente** contacta con todos los grupos para la creación de un grupo de Whatsapp con los mánager de cada módulo.
 * 16 de noviembre
   * *6 horas* - **Ángel Pérez Llorente** crea, configura y sube una máquina virtual de Ubuntu para que todo el grupo trabaje con la misma configuración. Además, incluye un tutorial de cómo desplegar el proyecto.
-* 17 de noviembre
+* 17 de noviembre  
+  * *1 hora* - **José Ángel Lozano Pineda** configura el proyecto en la máquina virtual.
   * *30 minutos* - **Ángel Pérez Llorente** descarga el proyecto del repositorio y realiza la configuración inicial.
   * *2 horas* - **Luis Valero García** toma el primer contacto con la máquina virtual para familiarse con ella.
-  * *1 hora* - **José Ángel Lozano Pineda** configura el proyecto en la máquina virtual.
 * 18 de noviembre
   * *2 horas* - **Ángel Pérez Llorente** toma el primer contacto con el proyecto para familiarizarse con el entorno de Decide.
 * 19 de noviembre
+  * *5 horas* - **José Ángel Lozano Pineda** toma el primer contacto con el proyecto para familiarizarse con el entorno de Decide.
   * *1 hora* - **José Luis Sánchez Montiel** instala la máquina virtual y descarga el proyecto del repositorio.
   * *2 horas* - **Luis Valero García** toma el primer contacto con el uso de la plataforma Git a través de comandos por terminal.
-  * *5 horas* - **José Ángel Lozano Pineda** toma el primer contacto con el proyecto para familiarizarse con el entorno de Decide.
 * 20 de noviembre
   * *4 horas* - **José Luis Sánchez Montiel** toma el primer contacto con el proyecto analizando los diferentes archivos para familiarizarse con el entorno de Decide.
   * *30 minutos* - **Luis Valero García** realiza la primera versión del archivo travis.yml.
@@ -61,8 +61,8 @@ En este documento se detalla el trabajo realizado por todos los integrantes del 
 * 13 de diciembre
   * *4 horas* - **Luis Valero García** concluye la funcionalidad de votaciones con varias preguntas.
 * 14 de diciembre
-  * *3 horas* - **Ángel Pérez Llorente** investiga sobre errores de persistencia en la base de datos, lo corrige e informa al resto de integrantes de este grupo sobre cómo resolverlo.
   * *4 horas* - **José Ángel Lozano Pineda** investiga sobre errores de persistencia en la base de datos.
+  * *3 horas* - **Ángel Pérez Llorente** investiga sobre errores de persistencia en la base de datos, lo corrige e informa al resto de integrantes de este grupo sobre cómo resolverlo.
   * *2 horas* - **José Luis Sánchez Montiel** investiga sobre errores de persistencia en la base de datos que se ven reflejados en la funcionalidad de crear votaciones tipo referéndum, entre otras.
 * 16 de diciembre
   * *30 minutos* - **José Luis Sánchez Montiel** incluye la librería Bootstrap en el módulo votación.
