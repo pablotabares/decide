@@ -24,8 +24,8 @@ script:
   - coverage report
   - coveralls
   - cd ../docker
-  - docker build -t ortosiacabina/decide-ortosia .
-  - docker tag ortosiacabina/decide-ortosia registry.heroku.com/$HEROKU_APP_NAME/web
+  - docker build -t ortosiacabina/decide-cabina2 .
+  - docker tag ortosiacabina/decide-cabina2 registry.heroku.com/$HEROKU_CABINA2_APP_NAME/web
 deploy:
   provider: script
   script: 
