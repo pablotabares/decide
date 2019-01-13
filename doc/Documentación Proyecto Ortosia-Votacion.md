@@ -266,9 +266,9 @@ Una vez descargada la máquina virtual tendremos que descargar la imagen que se 
 
 *Figura 3: Iniciando imagen*
 
-Más explicitamente los pasos que se han seguido en las figuras 1-3 han sido: abrir virtualbox>archivo>importar servicio virtualizado> clicar en la carpeta>buscar la imagen que nos hemos descargado de drive>importarla>seleccionarla en nuestras imagenes>darle a iniciar. Una vez dentro se nos pedirá una contraseña, todas las contraseñas de la máquina virtual es 'practica'. 
+Másconcretamente, los pasos que se han seguido en las figuras 1-3 han sido: abrir virtualbox>archivo>importar servicio virtualizado> clicar en la carpeta>buscar la imagen que nos hemos descargado de drive>importarla>seleccionarla en nuestras imágenes>darle a iniciar. Una vez inicializada, se nos pedirá una contraseña, todas las contraseñas de la máquina virtual es 'practica'. 
 
-Tras esto, convendría instalar [travis](#Instalación-de-travis) y [heroku](#Instalación-de-heroku), aunque no es completamente necesario, porque ambos estan ya configurados en el repositorio que vamos a descargar.
+Tras esto, convendría instalar [Travis CI](#Instalación-de-travis) y [Heroku](#Instalación-de-heroku), aunque no es completamente necesario, porque ambos estan ya configurados en el repositorio que vamos a descargar.
 
 ## Descargando el proyecto
 
@@ -284,13 +284,13 @@ El comando a escribir para descargar el proyecto sería:
 git clone https://github.com/pablotabares/decide.git --branch ortosia-votacion-develop
 ```
 
-Eso nos descarga automáticamente el proyecto en la rama que usamos para el desarrollo, aún así, si nos equivocamos de rama los siguientes comandos nos pueden ser de utilidad.
+El comando anterior nos descarga automáticamente el proyecto en la rama que usamos para el desarrollo. En caso de erorr de elección de rama, los siguientes comandos nos pueden ser de utilidad.
 
 Para asegurarnos de que estamos en la rama pertinente a nuestro desarrollo, ortosia-votacion-develop con el comando:
 ```
 git branch
 ```
-Otro comando que hace lo mismo y además te indica si estas commits por delante o detras del repo sería:
+Otro comando que además nos indica en que situaciónse encuentra el proyecto respecto a commits por delante o detrás del repo sería:
 ```
 git status
 ```
@@ -310,7 +310,7 @@ Cabe destacar que todos esos comandos han de ser ejecutados en una carpeta que c
 cd decide
 ```
 
-Antes de abrir pycharm (nuestro IDE) y aprovechando que estamos en esa carpeta instalaremos los requisitos de python por si han cambiado desde la última vez ejecutando:
+Antes de abrir PyCharm (nuestro IDE) y aprovechando que estamos en esa carpeta instalaremos los requisitos de python por si han cambiado desde la última vez ejecutando:
 
 ```
 pip3 install -r requirements.txt
@@ -318,19 +318,19 @@ pip3 install -r requirements.txt
 
 ## Abriendo el proyecto
 
-Para este apartado necesitaremos abrir pycharm, es el programar que se está indicando con una flecha azul en la figura 5:
+Para este apartado necesitaremos abrir PyCharm, es el programa que se está indicando con una flecha azul en la figura 5:
 
 ![Figura 5: Abriendo Pycharm](/doc/images/Pycharm1.PNG)
 
 *Figura 5: Abriendo Pycharm*
 
-Si hay un proyecto abierto, tendremos que abrir uno nuevo pulsando en file>open tal y como se ve en la figura 6, en caso contrario pycharm nos mostrará una ventana con 3 opciones y una de ella será open.
+Si hay un proyecto abierto, tendremos que abrir uno nuevo pulsando en file>open tal y como se ve en la figura 6, en caso contrario, PyCharm nos mostrará una ventana con 3 opciones y una de ella será open.
 
 ![Figura 6: Abriendo Pycharm](/doc/images/Pycharm2.PNG)
 
 *Figura 6: Abriendo Pycharm*
 
-Una vez se nos abra la ventana de open, tendremos que seleccionar el proyecto que hemos descargado, es importante que seleccionemos el segundo decide como se verá en la figura 7, en caso contrario, pycharm nos daría problemas al importar ciertas librerías
+Una vez abierto el menú de open, tendremos que seleccionar el proyecto que hemos descargado, es importante que seleccionemos el segundo decide como se verá en la figura 7, en caso contrario, pycharm nos daría problemas al importar ciertas librerías
 
 ![Figura 7: Abriendo Pycharm](/doc/images/Pycharm3.PNG)
 
@@ -338,19 +338,19 @@ Una vez se nos abra la ventana de open, tendremos que seleccionar el proyecto qu
 
 ## Configurando la base de datos
 
-Se recomienda, a partir de ahora, dejar de usar el terminal por defecto de ubuntu y usar el terminal del propio pycharm, que estará en el directorio correcto, para ello seleccionamos el botón que se ve en la figura 8:
+Se recomienda, a partir de ahora, dejar de usar el terminal por defecto de ubuntu y usar el terminal del propio PyCharm, que estará en el directorio correcto, para ello seleccionamos el botón que se ve en la figura 8:
 
 ![Figura 8: Abriendo terminal en pycharm](/doc/images/Pycharm4.PNG)
 
 *Figura 8: Abriendo terminal en Pycharm*
 
-Lo primero que haremos será crear nuestro local settings en base al local setting de ejemplo, podemos copiar y pegar de manera usual o ejecutando el siguiente comando en consola:
+Lo primero que haremos será crear nuestro local settings en base al local setting de ejemplo, podemos copiar y pegar de manera manual o ejecutando el siguiente comando en consola:
 
 ```
 cp local_settings.example.py local_settings.py
 ```
 
-Ahora tendremos que ejecutar una serie de comando en el terminal para configurar nuestra base de datos, que serán:
+Ahora tendremos que ejecutar una serie de comandos en el terminal para configurar nuestra base de datos, que serán:
 
 ```
 sudo su - postgres
@@ -375,12 +375,12 @@ Por último tendríamos que crearnos un superusuario para hacer operaciones en d
 python3 ./manage.py createsuperuser
 ```
 
-Debido a que la máquina virtual tiene dos pythons instalados es importante que se indique el 3 para que coja esa versión.
+Debido a que la máquina virtual tiene dos pythons instalados, es importante que se indique el 3 para que coja esa versión.
 
 
 ## Realizando un cambio
 
-Una vez tengamos el proyecto configurado, deberíamos analizar que cambio queremos hacer y el impacto que conlleve. En este caso haremos un cambio menor para comprobarlo fácilmente. Primero de todo lanzaremos el server con el siguiente comando:
+Una vez tengamos el proyecto configurado, deberíamos analizar que cambio queremos hacer y el impacto que conlleve. En este caso, haremos un cambio menor para comprobarlo fácilmente. En primer lugar, lanzaremos el server con el siguiente comando:
 
 ```
 python3 ./manage.py runserver
@@ -394,7 +394,7 @@ Veremos una vista como la siguiente:
 
 *Figura 9: Vista de la web*
 
-En la figura 9 vemos el html que se muestra antes del cambio, para el cambio accederemos al modulo de voting>templates>home, vamos por ejemplo a cambiar el titulo de la web, guardamos pulsando ctrl+s y volvemos a acceder a la web.
+En la figura 9 vemos el html que se muestra antes del cambio, para el cambio accederemos al módulo de voting>templates>home, vamos por ejemplo a cambiar el título de la web, guardamos pulsando ctrl+s y volvemos a acceder a la web.
 
 ![Figura 10: Vista](/doc/images/Vista2.PNG)
 
@@ -414,16 +414,16 @@ si todo se ejecuta correctamente entonces subiremos los cambios al repositorio.
 
 ## Subiendo al repositorio
 
-Cuando todo esté completamente correcto, subimos los cambios a nuestro repositorio:
+Cuando todo esté de acuerdo a los resultados esperados, subimos los cambios a nuestro repositorio:
 ```
 git add <nombre_de_archivo_cambiado>
 git commit -m “Titulo del mensaje” -m “Cuerpo del mensaje”
 git push
 ```
 
-## Comprobación de la integración continua en travis
+## Comprobación de la integración continua en Travis CI
 
-Una vez hecho el commit accederemos a la web de github para ver nuestro commit y comprobar que nos dice travis sobre nuestro commit.
+Una vez hecho el commit accederemos a la web de GitHub para ver nuestro commit y comprobar si Travis CI detecta algún error referente a nuestro commit.
 
 ![Figura 11: Commit](/doc/images/CommitTravis1.PNG)
 
@@ -431,7 +431,7 @@ Una vez hecho el commit accederemos a la web de github para ver nuestro commit y
 
 En la figura 11 podemos ver el circulo naranja de travis que significa que esta ejecutando los tests del proyecto, para ver más sobre travis podriamos clicar en el circulo y darle a details para ver como esta llevando la ejecución. 
 
-Una vez travis nos de el visto bueno, tendremos que mergear las ramas.
+Una vez Travis CI cambie a color verde, señal de que todo ha salido correctamente, debemos que combinar las ramas (merge).
 
 ## Merge de ramas
 
@@ -443,13 +443,13 @@ git merge ortosia-votacion-develop
 git push
 '''
 
-Para hacer pull request accedemos a https://github.com/pablotabares/decide/pulls y le damos a new pull request. Tendremos que seleccionar las ramas de nuestros repositorio y mergear ortosia-votacion-develop into ortosia-votacion-prepro. Y luego mergeamos nuestras ramas
+Para hacer pull request accedemos a https://github.com/pablotabares/decide/pulls y le damos a new pull request. Tendremos que seleccionar las ramas de nuestros repositorio y mergear ortosia-votacion-develop into ortosia-votacion-prepro. Y luego combinamos nuestras ramas
 
 ## Comprobación del despliegue
 
-Tras esto tendremos que hacer lo mismo que anteriormente pero en la rama ortosia-votacion-master, comprobando que travis pasa los tests y hace deploy correctamente. Aquí es importante saber que saldrá en rojo en github debido a que se comparten las variables de entornos en todas las ramas y nosotros tenemos una api key para que solo pueda desplegar los commits del manager en esa rama. Al no tener esa clave como variable de entorno, para no fastidiar el resto de ramas, sale en rojo la integración continua pero hay otro proceso en travis que se ejecuta correctamente y contiene el deploy.
+Tras esto tendremos que hacer lo mismo que anteriormente pero esta vez en la rama ortosia-votacion-master, comprobando que Travis CI realiza satisfactoriamente los test y hace despliega (deploy) correctamente. Es importante saber que saldrá en rojo en GitHub debido a que se comparten las variables de entornos en todas las ramas y nosotros tenemos una api key para que solo pueda desplegar los commits del manager en esa rama. Al no tener esa clave como variable de entorno, para no provocar errores en el resto de ramas, sale en rojo la integración continua pero hay otro proceso en Travis CI que se ejecuta correctamente y contiene el despliegue.
 
-Para ello cuando acabe su ejecución accederemos a https://decide-ortosia-votacion.herokuapp.com/voting/home y comprobaremos que efectivamente los cambios se han realizado correctamente
+Para ello, cuando acabe su ejecución accederemos a https://decide-ortosia-votacion.herokuapp.com/voting/home y comprobaremos que efectivamente los cambios se han realizado correctamente
 
 
 
