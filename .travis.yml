@@ -26,18 +26,15 @@ script:
   - cd ../docker
   - docker build -t ortosiacabina/decide .
   - docker tag ortosiacabina/decide registry.heroku.com/cabina-ortosia/web
+  - docker push ortosiacabina/decide;
+  - docker push registry.heroku.com/cabina-ortosia/web;
 deploy:
-  provider: script
+  provider: heroku
   api_key:
     secure: 3e21549d-a76b-40d2-8bd2-c3840b015279
-  script: 
-    docker push ortosiacabina/decide;
-    docker push registry.heroku.com/cabina-ortosia/web;
-    heroku container:release web --app cabina-ortosia;
-    heroku config:set WEB_CONCURRENCY=3;
-    heroku run --app cabina-ortosia python manage.py makemigrations;
-    heroku run --app cabina-ortosia python manage.py migrate 
+  app: cabina-ortosia
   on:
+    repo: pablotabares/decide
     branch: ortosia-cabina
 sudo: required
 services:
