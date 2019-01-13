@@ -6,7 +6,7 @@ env:
 before_install:
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - echo "$HEROKU_PASSWORD_CABINA" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
 install:
   - pip install -r requirements.txt
 before_script:
@@ -25,16 +25,17 @@ script:
   - coveralls
   - cd ../docker
   - docker build -t ortosiacabina/decide .
-  - docker tag ortosiacabina/decide registry.heroku.com/cabina-ortosia/web
-  - docker push ortosiacabina/decide;
-  - docker push registry.heroku.com/cabina-ortosia/web;
+  - docker tag ortosiacabina/decide registry.heroku.com/$HEROKU_CABINA_APP_NAME/web
 deploy:
-  provider: heroku
-  api_key:
-    secure: 3e21549d-a76b-40d2-8bd2-c3840b015279
-  app: cabina-ortosia
+  provider: script
+  script: 
+    docker push ortosiacabina/decide;
+    docker push registry.heroku.com/$HEROKU_CABINA_APP_NAME/web;
+    heroku container:release web --app $HEROKU_CABINA_APP_NAME;
+    heroku config:set WEB_CONCURRENCY=3;
+    heroku run --app $HEROKU_CABINA_APP_NAME python manage.py makemigrations;
+    heroku run --app $HEROKU_CABINA_APP_NAME python manage.py migrate 
   on:
-    repo: pablotabares/decide
     branch: ortosia-cabina
 sudo: required
 services:
@@ -48,5 +49,4 @@ global:
   - PGPORT=5432
 notifications:
   email: false
-
 
