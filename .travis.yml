@@ -1,12 +1,12 @@
 language: python
 python:
-- "3.6"
+- '3.6'
 services:
 - postgresql
 env:
 - DJANGO=2.0 DB=postgres
 global:
-  - PGPORT=5432
+- PGPORT=5432
 before_install:
 - cd decide
 - cd decide
@@ -24,5 +24,17 @@ before_script:
 - python manage.py migrate
 script:
 - python ./manage.py test
+after_success:
+- cd decide
+- cp settings_heroku.py settings.py
+- cd ..
+- cd ..
 addons:
-  postgresql: "9.6"
+  postgresql: '9.6'
+deploy:
+  provider: heroku
+  api_key:
+    secure: 2ufzwkfOcEXxAJ6hNLbKUQa8FhcWDqV35u6YOmpg1zTgg4uSUxrELKG3GUgmvCWMKg3T/F0tjqZ7UVkdPSArzikxde935mLu1kwRvuFdebj/U4YvUzEv9p/2boD35YoyNHrtYhVNRlNm1WM0GDcMJnQoR40v361jXWILZloaExs1SE9Kls+6jEGFjLv5tpL5Ki+gGxrbuBNHr4I4pE3j1imx5KloS1u8gKI8/RlG1EnhaVC4mj32xtQKsMjl6Qpkiu68IaiIBtr/zVWtYrXh/enoZ7zKnP7omYCIEWd08bNIxpdor3SXtYwwHKVRLrVfBimbH9PotqA8+yH0dEPOCsCNwQbnX1RvWnWSvLWEvSPFGxN67s6jNM0uXUf7fyicw8RurSI/jDSQFydlve0My2B8YWJdvUr4Sw1wJc1X45vcI7oaKMhoE6DB5Ykpy7PJQRiTpm3keF25htmK7zvMFCzaBS3sqhqshLza1wuQu9lKpfYZAX544dQaME0NwUUYAciikUsKQTlPoHv9+pVJsZxOKzNWa0wmjIwFYAm/yAkX1wjjneJdtqiAdjBLUwkPpoVVKwBp9bgsFEbe2VmYynRx3V8Z1B2fL55ZOiFrXGX4P7CY7gZOO+Vb7rVQxhMW1TzSwiTjhylS7vhiidDFwhmgRRA22vG9jYd+/ZUpYDw=
+  app:
+    ortosia-votacion-prepro: decide-ortosia-votacion
+  skip_cleanup: true
