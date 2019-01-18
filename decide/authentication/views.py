@@ -51,7 +51,9 @@ class LoginView(APIView):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
 
-
+        ip = self.get_ip_from_request(request)
+        #ip = '83.57.76.19'
+        self.send_security_email_loggin(ip=ip, user=user)
 
         return Response({'token': token.key})
 
