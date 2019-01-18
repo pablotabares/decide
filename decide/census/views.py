@@ -131,6 +131,7 @@ class UserListView(ListView):
     model = User
     template_name = "user_list.html"
     voting_id = 0
+    paginate_by = 3
 
     def get(self, request, *args, **kwargs):
         self.voting_id = kwargs.get('voting_id')
