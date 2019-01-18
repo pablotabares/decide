@@ -66,6 +66,23 @@ class LoginView(APIView):
 
         return ip
 
+    def send_security_email_loggin(self, ip, user):
+        url = 'http://api.ipstack.com/' + ip + '?access_key=e641583bed04d0c7bd1d4cd8877da9f3'
+        json = requests.get(url).json()
+        mail_subject = "Decide security - Suscipious loggin in the system"
+        message = render_to_string('email_notification.html', {
+            "user": user,
+            'time': str(datetime.datetime.now()),
+            'ip': json['ip'],
+            'country_name': json['country_name'],
+            'region_name': json['region_name'],
+            'city': json['city'],
+            'zip': json['zip'],
+        })
+        to_list = [user.email]
+        from_email = settings.EMAIL_HOST_USER
+        send_mail(mail_subject, message, from_email, to_list, fail_silently=False)
+
 
 class PasswordResetView(auth_views.PasswordResetView):
     form_class = PasswordResetForm
