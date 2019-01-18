@@ -23,7 +23,8 @@ from .serializers import UserSerializer
 from .tokens import activation_token
 from django.contrib.auth.models import User
 from django.conf import settings
-
+import datetime
+import requests
 
 class GetUserView(APIView):
     def post(self, request):
@@ -49,23 +50,20 @@ class LoginView(APIView):
         serializer = AuthCustomTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-
-        ip = self.get_ip_from_request(request)
-        #ip = '83.57.76.19'
+        #ip = self.get_ip_from_request(request)
+        ip = '83.57.76.19'
         self.send_security_email_loggin(ip=ip, user=user)
+        token, created = Token.objects.get_or_create(user=user)
 
         return Response({'token': token.key})
 
     def get_ip_from_request(self, request):
-
         if request.META.get('HTTP_CLIENT_IP'):
             ip = request.META.get('HTTP_CLIENT_IP')
         elif request.META.get('HTTP_X_FORWARDED_FOR'):
             ip = request.META.get('HTTP_X_FORWARDED_FOR')
         else:
             ip = request.META.get('REMOTE_ADDR')
-
         return ip
 
     def send_security_email_loggin(self, ip, user):
@@ -84,7 +82,6 @@ class LoginView(APIView):
         to_list = [user.email]
         from_email = settings.EMAIL_HOST_USER
         send_mail(mail_subject, message, from_email, to_list, fail_silently=False)
-
 
 class PasswordResetView(auth_views.PasswordResetView):
     form_class = PasswordResetForm
