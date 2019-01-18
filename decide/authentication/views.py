@@ -50,7 +50,21 @@ class LoginView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+
+
+
         return Response({'token': token.key})
+
+    def get_ip_from_request(self, request):
+
+        if request.META.get('HTTP_CLIENT_IP'):
+            ip = request.META.get('HTTP_CLIENT_IP')
+        elif request.META.get('HTTP_X_FORWARDED_FOR'):
+            ip = request.META.get('HTTP_X_FORWARDED_FOR')
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+
+        return ip
 
 
 class PasswordResetView(auth_views.PasswordResetView):
