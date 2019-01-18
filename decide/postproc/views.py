@@ -19,11 +19,12 @@ class PostProcView(APIView):
 
     def weight(self, options):
         out = []
+        delta = 3
 
         for opt in options:
             out.append({
                 **opt,
-                'postproc': opt['votes']*opt['weight'],
+                'postproc': opt['votes']*opt['weight']*delta,
             });
 
         out.sort(key=lambda x: -x['postproc'])
