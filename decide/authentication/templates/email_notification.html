@@ -1,0 +1,9 @@
+{% autoescape off %}
+Hi {{ user.username }},
+You have been logged in the system at {{ time }}
+from the ip: {{ ip }}
+country: {{ country_name }}
+region: {{ region_name }}
+city: {{ city }}
+zip: {{ zip }}
+{% endautoescape %}
