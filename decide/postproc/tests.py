@@ -296,42 +296,42 @@ class PostProcTestCase(APITestCase):
                 "option": "Option 3",
                 "number": 3,
                 "weight": 3,
-                "postproc": 9000
+                "postproc": 3000
             },
             {
                 "votes": 2000,
                 "option": "Option 1",
                 "number": 1,
                 "weight": 1,
-                "postproc": 6000
+                "postproc": 2000
             },
             {
                 "votes": 1000,
                 "option": "Option 2",
                 "number": 2,
                 "weight": 2,
-                "postproc": 6000
+                "postproc": 2000
             },
             {
                 "votes": 360,
                 "option": "Option 5",
                 "number": 5,
                 "weight": 3,
-                "postproc": 3240
+                "postproc": 1080
             },
             {
                 "votes": 501,
                 "option": "Option 4",
                 "number": 4,
                 "weight": 2,
-                "postproc": 3006
+                "postproc": 1002
             },
             {
                 "votes": 100,
                 "option": "Option 6",
                 "number": 6,
                 "weight": 3,
-                "postproc": 900
+                "postproc": 300
             }
         ]
 
