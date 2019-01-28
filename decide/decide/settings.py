@@ -45,6 +45,14 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+
+ALLOWED_HOSTS = ['*']
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000'
+)
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
@@ -68,10 +76,11 @@ MODULES = [
     'voting',
 ]
 
-# BASEURL = 'http://localhost:8000'
-BASEURL = 'https://ortosia-cabina.herokuapp.com'
+BASEURL = 'http://localhost:8000'
+# BASEURL = 'https://ortosia-cabina.herokuapp.com'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
