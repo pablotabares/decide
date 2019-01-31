@@ -19,6 +19,7 @@ class PostProcView(APIView):
 
     def weight(self, options):
         out = []
+        # A comment
 
         for opt in options:
             out.append({
